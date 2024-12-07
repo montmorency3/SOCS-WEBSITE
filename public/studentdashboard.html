@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to external styles -->
+  <!-- Internal Styles for Additional Adjustments -->
+  <style>
+    /* Import Poppins Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #FDFEFD;
+      color: #27455A;
+    }
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: url('images/trottier.png') no-repeat center center/cover;
+  filter: brightness(0.8);
+  z-index: -1; /* Keeps background behind everything */
+}
+
+
+    /* Sidebar */
+    .sidebar {
+      background-color: rgba(39, 69, 90, 0.9); /* Slight transparency */
+      color: white;
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      padding: 20px;
+    }
+
+    .sidebar h3 {
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .sidebar button {
+      background-color: white;
+      color: #27455A;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 15px;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+
+    .sidebar hr {
+      border: 0.5px solid #FDFEFD;
+      margin-top: 10px;
+    }
+
+    .sidebar p {
+      margin-top: 20px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+.hero {
+  margin-left: 250px;
+  position: absolute; /* Float it at the top */
+  top: 40px; /* Adjust position */
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #FFFFFF; /* Text color */
+  background: transparent; /* Remove any inherited background */
+  z-index: 10; /* Ensure it's above the background */
+}
+
+
+
+/* Main Content: Floating Cards */
+.main-content {
+  margin-left: 280px;
+  margin-top: 120px; /* Push the cards just below the title */
+  display: flex;
+  gap: 20px;
+  position: relative;
+  z-index: 5; /* Ensure cards are above background but below title */
+}
+
+.card {
+  background-color: rgba(213, 244, 246, 0.95); /* Light blue with slight transparency */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  width: 300px;
+  position: relative;
+  z-index: 2;
+}
+
+    .card h3 {
+      color: #27455A;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #27455A;
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
+
+    .card a {
+      color: #27455A;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Image -->
+  <div class="background"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3>WELCOME</h3>
+    <button>CREATE</button>
+    <ul>
+      <li>📅 Meetings</li>
+      <li>🗓 View Calendar</li>
+      <li>⚙️ Requests</li>
+      <li>📊 Vote on Poll</li>
+    </ul>
+    <hr>
+    <p>🔒 Log Out</p>
+  </aside>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    Student Dashboard
+  </div>
+
+  <!-- Main Content: Floating Cards -->
+  <div class="main-content">
+    <div class="card">
+      <h3>30 Minute Office Hour</h3>
+      <p><strong>16:00–17:00, Monday 25th Nov</strong></p>
+      <p>Class: Comp 307</p>
+      <p>Type: One-on-One</p>
+      <p>Occurrence: Weekly</p>
+      <a href="#">📋 Copy Link</a>
+    </div>
+
+    <div class="card">
+      <h3>1 Hour Office Hour</h3>
+      <p><strong>16:00–17:00, Monday 25th Nov</strong></p>
+      <p>Class: Comp 307</p>
+      <p>Type: One-on-One</p>
+      <p>Occurrence: Weekly</p>
+      <a href="#">📋 Copy Link</a>
+    </div>
+  </div>
+</body>
+</html>
