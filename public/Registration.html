@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Office Hour</title>
+  <!-- Internal Styles -->
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'HK Grotesk', sans-serif;
+      background-color: #27455A; /* Blue background */
+      color: #27455A;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* Align content to the right */
+      position: relative;
+    }
+
+    /* Background Image with Transparency */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/Trottier.png') no-repeat center center/cover;
+      opacity: 0.5; /* Transparency for the image */
+      z-index: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 50px;
+      background-color: rgba(39, 69, 90, 0.8);
+      color: white;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 1rem;
+    }
+
+    /* Booking Container */
+    .booking-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      width: 350px;
+      padding: 30px;
+      border-radius: 40px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      margin: 0 50px;
+      text-align: center;
+      position: relative;
+      z-index: 1; /* Above background */
+    }
+
+    .booking-container h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .booking-container label {
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 1rem;
+      color: #27455A;
+    }
+/* Booking Details Container */
+.booking-details-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.booking-details {
+  font-size: 1rem;
+  margin: 0; /* Removes default margin for cleaner alignment */
+  color: #27455A;
+}
+
+    .booking-container input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #BFDCE5;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      background-color: #27455A;
+      color: #FDFEFD;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #77A9B2;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Logo" width="120">
+    </div>
+    <div class="nav-links">
+      <a href="#">HOME</a>
+      <a href="#">ABOUT</a>
+      <a href="#">HELP</a>
+    </div>
+  </div>
+
+  <!-- Booking Container -->
+  <div class="booking-container">
+    <h1>CONFIRM OFFICE HOUR BOOKING</h1>
+    <form id="booking-form" action="#" method="POST">
+      <!-- McGill ID -->
+      <label for="mcgill-id">McGill ID</label>
+      <input type="text" id="mcgill-email" name="mcgill-id" placeholder="Enter your McGill Email" required>
+
+      <!-- Booking Details -->
+<div class="booking-details-container">
+  <p class="booking-details">You are booking an office hour for <strong>COMP303 at 15:00</strong></p>
+</div>
+
+      <!-- Checkbox -->
+      <div class="checkbox-container">
+        <input type="checkbox" id="confirm" name="confirm">
+        <label for="confirm">Click to confirm</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="button" class="submit-btn" id="submit-btn" disabled>SUBMIT</button>
+    </form>
+  </div>
+
+  <!-- JavaScript for Checkbox -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const confirmCheckbox = document.getElementById('confirm');
+      const submitButton = document.getElementById('submit-btn');
+
+      // Enable/disable the submit button based on checkbox state
+      confirmCheckbox.addEventListener('change', function () {
+        submitButton.disabled = !confirmCheckbox.checked;
+      });
+    });
+  </script>
+</body>
+</html>

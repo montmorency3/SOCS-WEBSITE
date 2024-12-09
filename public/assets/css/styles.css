@@ -1,44 +1,71 @@
-/* General Styles */
+/* General Body and Hero Background */
 body {
   margin: 0;
   font-family: 'HK Grotesk', sans-serif;
-  background-color: #FDFEFD;
-  color: #27455A;
+  color: white;
+  position: relative;
 }
 
 /* Navbar */
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 50px;
+  justify-content: space-between;
+  padding: 5px 20px;
   background-color: rgba(39, 69, 90, 0.8);
   color: white;
-  position: fixed; /* Navbar stays at the top */
+  position: fixed;
   width: 100%;
   z-index: 10;
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
 }
 
 .logo img {
-  width: 120px; /* Resize logo */
-  height: auto; /* Maintain aspect ratio */
+  width: 80px; /* Smaller logo size */
+  height: auto;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 15px;
+  margin: 0;
+  margin-right: auto;
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
   font-size: 1rem;
+  transition: color 0.3s;
 }
 
-.lang-switch a {
+.nav-links a:hover {
+  color: rgb(129, 167, 176);
+}
+
+.lang-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lang-switch a,
+.auth-links a {
   color: white;
   text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.lang-switch a:hover,
+.auth-links a:hover {
+  color: rgb(129, 167, 176);
 }
 
 .search-bar {
@@ -50,6 +77,7 @@ body {
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
+  width: 150px;
   margin-right: 5px;
 }
 
@@ -59,16 +87,49 @@ body {
   cursor: pointer;
 }
 
+.search-bar button img {
+  width: 20px;
+  height: auto;
+}
+
+.auth-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.auth-links a:not(:last-child) {
+  margin-right: 5px;
+}
+
+.auth-links .register-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  border: 2px solid white;
+  border-radius: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.auth-links .register-btn:hover {
+  background-color: white;
+  color: #27455A;
+}
+
 /* Hero Section */
 .hero {
   position: relative;
-  height: 100vh; /* Full screen height */
+  height: 100vh;
   display: flex;
-  align-items: center; /* Vertical center alignment */
-  justify-content: flex-start; /* Align content to the left */
-  padding: 0 50px; /* Add left padding for spacing */
-  background-color: #27455A; /* Blue Dianne */
-  overflow: hidden; /* Prevent content overflow */
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 50px;
+  background-color: #27455A;
+  overflow: hidden;
 }
 
 .hero::before {
@@ -78,17 +139,17 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('images/trottier.png') no-repeat center center/cover; /* Background image settings */
-  opacity: 0.6; /* Slight transparency */
-  filter: brightness(0.8); /* Darken for aesthetic blend */
-  z-index: 1; /* Place behind content */
+  background: url('images/trottier.png') no-repeat center center/cover;
+  opacity: 0.6;
+  filter: brightness(0.8);
+  z-index: 1;
 }
 
 .hero .content {
   position: relative;
-  z-index: 2; /* Ensure content appears above background */
+  z-index: 2;
   max-width: 600px;
-  text-align: left; /* Align text to the left */
+  text-align: left;
 }
 
 .hero h1 {
@@ -115,5 +176,102 @@ body {
 }
 
 .sign-in-btn:hover {
-  background-color: #77A9B2;
+  background-color: rgb(129, 167, 176);
+}
+
+/* Hero Section for Login/Register Pages */
+.hero-auth {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('images/trottier.png') no-repeat center center/cover;
+  background-color: #27455A;
+  filter: brightness(0.8);
+}
+
+.hero-auth::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+/* Form Container */
+.hero-auth .form-container {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.85);
+  padding: 40px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.hero-auth .form-container h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: white;
+}
+
+.hero-auth .form-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #333; /* Dark input fields */
+  border: 1px solid #555;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.hero-auth .form-container input::placeholder {
+  color: #aaa;
+}
+
+.hero-auth .auth-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: rgb(129, 167, 176);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.hero-auth .auth-btn:hover {
+  /*Slightly different shade*/
+  background-color: rgb(110, 147, 157);
+}
+
+.hero-auth .forgot-password {
+  display: block;
+  margin-top: 10px;
+  color: rgb(129, 167, 176);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.hero-auth .form-container p {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.hero-auth .form-container a {
+  color: rgb(129, 167, 176);
+  text-decoration: none;
+}
+
+.hero-auth .form-container a:hover {
+  text-decoration: underline;
 }
