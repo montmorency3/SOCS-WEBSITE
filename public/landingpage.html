@@ -4,11 +4,204 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SOCS Registration</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="public/assets/css/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=HK+Grotesk:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&display=swap">
 </head>
+
+<style>
+
+
+  /* General Styles */
+body {
+  margin: 0;
+  font-family: 'HK Grotesk', sans-serif;
+  background-color: #FDFEFD;
+  color: #27455A;
+}
+
+.hamburger {
+  display:none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  background-color: rgba(39, 69, 90, 0.8);
+  color: white;
+  position: fixed; /* Navbar stays at the top */
+  width: 100%;
+  z-index: 10;
+}
+
+.logo img {
+  width: 120px; /* Resize logo */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.lang-switch a {
+  color: white;
+  text-decoration: none;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh; /* Full screen height */
+  display: flex;
+  align-items: center; /* Vertical center alignment */
+  justify-content: flex-start; /* Align content to the left */
+  padding: 0 50px; /* Add left padding for spacing */
+  background-color: #27455A; /* Blue Dianne */
+  overflow: hidden; /* Prevent content overflow */
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('images/trottier.png') no-repeat center center/cover; /* Background image settings */
+  opacity: 0.6; /* Slight transparency */
+  filter: brightness(0.8); /* Darken for aesthetic blend */
+  z-index: 1; /* Place behind content */
+}
+
+.hero .content {
+  position: relative;
+  z-index: 2; /* Ensure content appears above background */
+  max-width: 600px;
+  text-align: left; /* Align text to the left */
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: #FFFFFF;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #FFFFFF;
+}
+
+.sign-in-btn {
+  background-color: #FDFEFD;
+  color: #27455A;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.sign-in-btn:hover {
+  background-color: #77A9B2;
+}
+
+
+.menu{
+  display:none;
+  margin: 0;
+  padding: 0;
+  width:fit-content;
+  position: relative;
+  top:150px;
+  z-index: 14;
+  color:white;
+}
+
+
+.menu.active{
+  display: flex;
+  align-items: center;
+  justify-content:space-around
+  
+}
+
+@media screen and (min-width: 769px) {
+
+  .menu.active{
+    display: none;
+  }
+
+  .menu{
+    display:none;
+    background-color: rgba(39, 69, 90, 0.8); /* Dark background similar to the navbar */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hamburger{
+    display:block;
+    margin-right: 40px;
+  }
+  
+  .navbar li{
+    display:none;
+  }
+
+  .search-bar{
+    display: none;
+  }
+
+  .navbar{
+    justify-content:space-around;
+    width: 100%;
+  }
+
+  .logo img {
+    margin-left: 0px;
+  }
+}
+</style>
+
+
+
+
 <body>
   <header>
+
     <nav class="navbar">
       <div class="logo">
         <img src="images/logo.png" alt="SOCS Logo">
@@ -25,10 +218,31 @@
         <input type="text" placeholder="Search">
         <button><img src="images/search-icon.png" alt="Search"></button>
       </div>
+
+
+      <div class="hamburger" id="hamburger">
+        <span>&#9776;</span>
+      </div>
+
     </nav>
+
+    
+
   </header>
 
+ 
+
+
   <main>
+    
+    <nav class="menu active" id="menu"> 
+      <div class="nav-links">
+        <a href="#">Home</a></li>
+        <a href="#">About</a></li>
+        <a href="#">Help</a></li>
+      </div>
+    </nav>
+
     <section class="hero">
       <div class="content">
         <h1>Welcome to the SOCS Registration!</h1>
@@ -37,5 +251,7 @@
       </div>
     </section>
   </main>
+  <script src = assets/javascript/landingpage.js>
+  </script>
 </body>
 </html>
