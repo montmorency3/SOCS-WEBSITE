@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <!-- Internal Styles -->
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body with Blue Background and Transparent Image */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #27455A; /* Blue background */
+      color: #27455A;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/Trottier.png') no-repeat center center/cover;
+      opacity: 0.5; /* Slight transparency for bleed-through effect */
+      z-index: 0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 60px;
+      height: 100vh;
+      background-color: #19344D;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 20px 0;
+      z-index: 1;
+    }
+
+    .sidebar-icon {
+      width: 30px;
+      height: 30px;
+      margin: 20px 0;
+      background-color: #FDFEFD;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .sidebar-icon:hover {
+      background-color: #77A9B2;
+    }
+
+    /* Main Container */
+    .main-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      width: 500px;
+      margin: auto;
+      border-radius: 20px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+/* Student Dashboard Heading */
+.dashboard-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative; /* Relative positioning */
+  z-index: 1;
+}
+
+    .main-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: #19344D;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1rem;
+      color: #19344D;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #BFDCE5;
+      border-radius: 10px;
+      font-size: 1rem;
+      background-color: #F7FAFC;
+      color: #27455A;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #77A9B2;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .submit-btn {
+      background-color: #19344D;
+      color: #FDFEFD;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .submit-btn:hover {
+      background-color: #77A9B2;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-icon">📅</div>
+    <div class="sidebar-icon">📊</div>
+    <div class="sidebar-icon">⚙️</div>
+    <div class="sidebar-icon">✏️</div>
+  </div>
+
+  <!-- Dashboard Heading -->
+  <div class="dashboard-heading">Student Dashboard</div>
+
+  <!-- Main Form -->
+  <div class="main-container">
+    <h1>REQUEST OFFICE HOUR</h1>
+    <form>
+      <!-- Date and Time -->
+      <div class="form-group">
+        <label for="date">Monday, 25th November 13:00–15:00</label>
+        <div class="time-row">
+          <input type="date" id="date" value="2024-11-25" />
+          <input type="time" id="start-time" value="13:00" />
+          <span>to</span>
+          <input type="time" id="end-time" value="15:00" />
+        </div>
+      </div>
+
+      <!-- Dropdowns -->
+      <div class="form-group time-row">
+        <select id="course">
+          <option>Select Course</option>
+          <option>COMP303</option>
+          <option>COMP202</option>
+        </select>
+        <select id="prof">
+          <option>Select Prof/TA</option>
+          <option>Prof. Smith</option>
+          <option>Prof. Chen</option>
+        </select>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <textarea rows="3" placeholder="Description..."></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn">SUBMIT</button>
+    </form>
+  </div>
+</body>
+</html>
