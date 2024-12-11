@@ -20,6 +20,13 @@ body {
   box-sizing: border-box;
 }
 
+.hamburger {
+  display:none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -274,4 +281,79 @@ body {
 
 .hero-auth .form-container a:hover {
   text-decoration: underline;
+}
+.menu {
+  display: none;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 100px;
+  z-index: 14;
+  background-color: rgba(74, 117, 148, 0.9); /* Darker background for better contrast */
+  width: 100%;
+  border-radius: 8px 8px 0 0; /* Rounded top corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+  transition: all 0.3s ease-in-out;
+}
+
+.menu.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px 20px;
+}
+@media screen and (min-width: 769px) {
+
+  .menu.active{
+    display: none;
+  }
+
+  .lang-switch{
+    display: none;
+  }
+  .menu{
+    display:none;
+    background-color: rgba(39, 69, 90, 0.8); /* Dark background similar to the navbar */
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .menu .nav-links {
+    display: flex;           /* Make the container a flexbox */
+    justify-content: space-around; /* Space the links evenly */
+    width: 100%;             /* Make sure the links take the full width of the container */
+    padding: 7px 0;         /* Add some vertical padding if needed */
+  }
+
+  .hamburger{
+    display:block;
+    margin-right: 15px;
+  }
+
+  .auth-links{
+    margin-right: 15px;
+  }
+
+  
+  .navbar li{
+    display:none;
+  }
+
+  .lang-container {
+    display:none;
+  }
+
+  .search-bar{
+    display: none;
+  }
+
+  .navbar{
+    justify-content:space-around;
+    width: 100%;
+  }
+
+  .logo img {
+    margin-left: 0px;
+  }
 }

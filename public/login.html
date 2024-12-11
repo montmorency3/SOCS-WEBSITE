@@ -8,29 +8,52 @@
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">
-      <img src="images/logo.png" alt="SOCS Logo">
-    </div>
-    <ul class="nav-links">
-      <li><a href="landingpage.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <div class="lang-container">
-      <div class="lang-switch">
-        <a href="#">FRANÇAIS</a>
-      </div>
-      <div class="auth-links">
-        <a href="login.html">Login</a>
-        <a href="register.html" class="register-btn">Register</a>
-      </div>
-      <div class="search-bar">
-        <input type="text" placeholder="Search">
-        <button><img src="images/search-icon.png" alt="Search"></button>
-      </div>
-    </div>
-  </nav>
 
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="../private/Images/logo.png" alt="SOCS Logo">
+      </div>
+      <ul class="nav-links">
+        <li><a href="landingpage.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <div class="lang-container">
+        <div class="lang-switch ">
+          <a href="#">FRANÇAIS</a>
+        </div>
+      </div>
+
+        <div class="auth-links" >
+          <a href="login.html">Login</a>
+          <a href="register.html" class="register-btn">Register</a>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" placeholder="Search">
+          <button><img src="../private/Images/search-icon.png" alt="Search"></button>
+        </div>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span>&#9776;</span>
+      </div>
+
+    </nav>
+
+  </header>
+
+ 
+  <main>
+
+    <nav class="menu" id="menu"> 
+      <div class="nav-links">
+        <a href="#">Home</a></li>
+        <a href="#">About</a></li>
+        <a href="#">Help</a></li>
+        <a href="#">FRANÇAIS</a></li>
+      </div>
+    </nav>
   <!-- Hero Section with Form -->
   <main class="hero hero-auth">
     <div class="form-container">
@@ -44,5 +67,7 @@
       <p>Don't have an account? <a href="register.html">Register now</a></p>
     </div>
   </main>
+  <script src = assets/javascript/hamburger.js>
+  </script>
 </body>
 </html>
