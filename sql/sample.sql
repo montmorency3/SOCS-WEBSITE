@@ -1,33 +1,32 @@
-CREATE TABLE Employees (
+CREATE TABLE EmployeeLogin (
     EmployeeID INT PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    Password VARCHAR(50) NOT NULL
+    Password VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES EmployeeInfo(EmployeeID) ON DELETE CASCADE
     
 );
 
--- Insert sample data into the Employees table
-INSERT INTO Employees (EmployeeID, FirstName, LastName, Password)
+-- Insert sample data into the Employees table with email addresses
+INSERT INTO EmployeeLogin (EmployeeID, Password, Email)
 VALUES 
-(111, 'John', 'Doe', 'Swag123' ),
-(222, 'Jane', 'Smith', 'Man123'),
-(333, 'Emily', 'Johnson', 'Girl444');
+(111, 'Swag123', 'john.doe@mcgill.ca'),
+(222, 'Man123', 'jane.smith@mcgill.ca'),
+(333, 'Girl444', 'emily.johnson@mcgill.ca');
 
-
-CREATE TABLE Students (
+-- Create Students table with an Email column
+CREATE TABLE StudentLogin (
     StudentID INT PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    Password VARCHAR(50) NOT NULL
-    
+    Password VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES StudentInfo(StudentID) ON DELETE CASCADE
 );
 
--- Insert sample data into the Employees table
-INSERT INTO Students (StudentID, FirstName, LastName, Password)
+-- Insert sample data into the Students table with email addresses
+INSERT INTO StudentLogin (StudentID, Password, Email)
 VALUES 
-(999, 'John', 'Moe', 'Swag123' ),
-(432, 'Jane', 'Kith', 'Man123'),
-(373, 'Emily', 'Johnman', 'Girl444');
+(999, 'Swag123', 'john.moe@mail.mcgill.ca'),
+(432, 'Man123', 'jane.kith@mail.mcgill.ca'),
+(373, 'Girl444', 'emily.johnman@mail.mcgill.ca');
 
 
 
