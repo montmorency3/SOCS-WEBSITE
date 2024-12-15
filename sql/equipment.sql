@@ -1,21 +1,21 @@
 CREATE TABLE AvailableEquipment(
+ID INT PRIMARY KEY,
 Equipment VARCHAR(50) NOT NULL,
-Amount INT NOT NULL,
-)
+Amount INT NOT NULL
+);
 
-INSERT INTO AvailableEquipment (Equipment, Amount)
+INSERT INTO AvailableEquipment (ID ,Equipment, Amount)
 VALUES 
-('Laptops', 50),
-('Projectors', 7),
-('Keyboards', 30);
+(001,'Laptops', 50),
+(002,'Projectors', 7),
+(003,'Keyboards', 30);
 
 
 CREATE TABLE LoanedEquipment(
-    StudentID INT NOT NULL PRIMARY KEY,
+    StudentID INT PRIMARY KEY,
     Equipment JSON NOT NULL,
     FOREIGN KEY (StudentID) REFERENCES StudentLogin(StudentID)
-
-)
+    );
 
 INSERT INTO LoanedEquipment (StudentID, Equipment)
 VALUES 
