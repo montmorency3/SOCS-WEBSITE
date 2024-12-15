@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Equipment</title>
+  <!-- Internal Styles -->
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #27455A;
+      color: #27455A;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Background Image */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/Trottier.png') no-repeat center center/cover;
+      opacity: 0.5;
+      z-index: 0;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: rgba(39, 69, 90, 0.9);
+      color: white;
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      padding: 20px;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .sidebar h3 {
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .sidebar button {
+      background-color: white;
+      color: #27455A;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 15px;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+
+    .sidebar hr {
+      border: 0.5px solid #FDFEFD;
+      margin-top: 10px;
+    }
+
+    .sidebar p {
+      margin-top: 20px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Equipment Request Container */
+    .equipment-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      width: 400px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      margin-left: 300px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .equipment-container h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .equipment-container label {
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 1rem;
+      color: #27455A;
+    }
+
+    .equipment-container input[type="text"],
+    .equipment-container input[type="time"],
+    .equipment-container select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #BFDCE5;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      background-color: #27455A;
+      color: #FDFEFD;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #77A9B2;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar with Navigation -->
+  <aside class="sidebar">
+    <div>
+      <h3>WELCOME</h3>
+      <button>CREATE</button>
+      <ul>
+        <li>📅 Meetings</li>
+        <li>🗓 View Calendar</li>
+        <li>⚙️ Requests</li>
+        <li>📊 Vote on Poll</li>
+      </ul>
+      <hr>
+    <p>🔒 <a href="#">Log Out</a></p>
+  </aside>
+
+  <!-- Equipment Request Container -->
+  <div class="equipment-container">
+    <h1>REQUEST EQUIPMENT</h1>
+    <form id="equipment-form" action="#" method="POST">
+      <!-- Student Name -->
+      <label for="student-name">Your Name</label>
+      <input type="text" id="student-name" name="student-name" placeholder="Enter your name" required>
+
+      <!-- Equipment Type -->
+      <label for="equipment-type">Equipment</label>
+      <select id="equipment-type" name="equipment-type" required>
+        <option value="">Select Equipment</option>
+        <option value="laptop">Laptop</option>
+        <option value="projector">Projector</option>
+        <option value="camera">Camera</option>
+        <option value="microphone">Microphone</option>
+      </select>
+
+      <!-- Pickup and Return Time -->
+      <label for="pickup-time">Pick-Up Time</label>
+      <input type="time" id="pickup-time" name="pickup-time" required>
+
+      <label for="return-time">Return Time</label>
+      <input type="time" id="return-time" name="return-time" required>
+
+      <!-- Confirmation Checkbox -->
+      <div class="checkbox-container">
+        <input type="checkbox" id="confirm" name="confirm">
+        <label for="confirm">I confirm my request</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn" id="submit-btn" disabled>SUBMIT</button>
+    </form>
+  </div>
+
+  <!-- JavaScript for Checkbox -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const confirmCheckbox = document.getElementById('confirm');
+      const submitButton = document.getElementById('submit-btn');
+
+      confirmCheckbox.addEventListener('change', function () {
+        submitButton.disabled = !confirmCheckbox.checked;
+      });
+    });
+  </script>
+</body>
+</html>
