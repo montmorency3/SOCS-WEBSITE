@@ -12,8 +12,8 @@ CREATE TABLE ProfessorAvailability (
 
 INSERT INTO ProfessorAvailability (ProfessorID, Availability)
 VALUES
-(111, '[{"Date": "2024-12-02", "StartTime": "10:00:00", "Duration": 120}, 
-        {"Date": "2024-12-10", "StartTime": "14:00:00", "Duration": 120}]');
+(111, '[{"Date": "2024-12-02", "StartTime": "10:00:00", "EndTime": "12:00:00"}, 
+        {"Date": "2024-12-10", "StartTime": "14:00:00", "EndTime": "12:00:00"}]');
 
 
 
