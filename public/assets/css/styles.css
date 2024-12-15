@@ -323,7 +323,7 @@ body {
   .menu .nav-links {
     display: flex;           /* Make the container a flexbox */
     justify-content: space-around; /* Space the links evenly */
-    width: 100%;             /* Make sure the links take the full width of the container */
+    width: 90%;             /* Make sure the links take the full width of the container */
     padding: 7px 0;         /* Add some vertical padding if needed */
   }
 
