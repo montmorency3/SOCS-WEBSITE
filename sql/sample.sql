@@ -1,63 +1,38 @@
-CREATE TABLE Employees (
+CREATE TABLE EmployeeLogin (
     EmployeeID INT PRIMARY KEY,
-    FirstName VARCHAR(50) NOT NULL,
-    LastName VARCHAR(50) NOT NULL,
-    HireDate DATE NOT NULL,
-    Salary DECIMAL(10, 2)
+    Password VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES EmployeeInfo(EmployeeID) ON DELETE CASCADE
+    
 );
 
--- Insert sample data into the Employees table
-INSERT INTO Employees (EmployeeID, FirstName, LastName, HireDate, Salary)
+-- Insert sample data into the Employees table with email addresses
+INSERT INTO EmployeeLogin (EmployeeID, Password, Email)
 VALUES 
-(1, 'John', 'Doe', '2020-01-15', 50000.00),
-(2, 'Jane', 'Smith', '2018-03-22', 60000.00),
-(3, 'Emily', 'Johnson', '2019-07-11', 55000.00);
+(111, 'Swag123', 'john.doe@mcgill.ca'),
+(222, 'Man123', 'jane.smith@mcgill.ca'),
+(333, 'Girl444', 'emily.johnson@mcgill.ca');
 
--- Create a table for departments
-CREATE TABLE Departments (
-    DepartmentID INT PRIMARY KEY,
-    DepartmentName VARCHAR(50) NOT NULL
+-- Create Students table with an Email column
+CREATE TABLE StudentLogin (
+    StudentID INT PRIMARY KEY,
+    Password VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES StudentInfo(StudentID) ON DELETE CASCADE
 );
 
--- Insert sample data into the Departments table
-INSERT INTO Departments (DepartmentID, DepartmentName)
+-- Insert sample data into the Students table with email addresses
+INSERT INTO StudentLogin (StudentID, Password, Email)
 VALUES 
-(1, 'Human Resources'),
-(2, 'Finance'),
-(3, 'IT');
+(999, 'Swag123', 'john.moe@mail.mcgill.ca'),
+(432, 'Man123', 'jane.kith@mail.mcgill.ca'),
+(373, 'Girl444', 'emily.johnman@mail.mcgill.ca');
 
--- Create a table for employee-department relationships
-CREATE TABLE EmployeeDepartments (
-    EmployeeID INT,
-    DepartmentID INT,
-    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
-    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
-);
 
--- Insert sample data into the EmployeeDepartments table
-INSERT INTO EmployeeDepartments (EmployeeID, DepartmentID)
-VALUES 
-(1, 1),
-(2, 2),
-(3, 3);
 
--- Query to retrieve all employees and their department names
-SELECT 
-    e.FirstName,
-    e.LastName,
-    d.DepartmentName
-FROM 
-    Employees e
-JOIN 
-    EmployeeDepartments ed ON e.EmployeeID = ed.EmployeeID
-JOIN 
-    Departments d ON ed.DepartmentID = d.DepartmentID;
+ 
 
--- Update salary of an employee
-UPDATE Employees
-SET Salary = 58000.00
-WHERE EmployeeID = 3;
 
--- Delete an employee record
-DELETE FROM Employees
-WHERE EmployeeID = 1;
+
+
+
