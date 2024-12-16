@@ -22,6 +22,7 @@
       background-color: #FDFEFD;
       color: #27455A;
       display: flex;
+      flex-direction: column; /* Changed to column for responsiveness */
     }
 
     /* Background Image */
@@ -173,6 +174,92 @@
     .submit-btn:hover {
       background-color: #77A9B2;
     }
+
+    /* Media Queries for Smaller Screens */
+    @media (max-width: 768px) {
+      /* Adjust Sidebar */
+      .sidebar {
+        width: 200px;
+        padding: 15px;
+      }
+
+      .main-content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+      }
+
+      .main-container {
+        width: 80%;
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      /* Sidebar collapses on small screens */
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 10px;
+      }
+
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+        height: auto;
+      }
+
+      .main-container {
+        width: 90%;
+        padding: 15px;
+      }
+
+      .rank-list {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .rank-number {
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+      }
+
+      .rank-item {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+
+      .submit-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      /* Additional adjustments for very small screens */
+      .main-container {
+        width: 95%;
+        padding: 10px;
+      }
+
+      .rank-number {
+        width: 20px;
+        height: 20px;
+        font-size: 0.8rem;
+      }
+
+      .rank-item {
+        font-size: 0.8rem;
+        padding: 6px;
+      }
+
+      .submit-btn {
+        padding: 10px;
+        font-size: 0.8rem;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -254,4 +341,3 @@
   </script>
 </body>
 </html>
-
