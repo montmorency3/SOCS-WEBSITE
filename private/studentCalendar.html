@@ -133,6 +133,97 @@
       font-weight: 600;
       font-size: 22px;
     }
+
+    /* Media Queries for Mobile View */
+    @media (max-width: 850px) {
+      /* Set the body to be a flex container and stack items vertically */
+      body {
+        flex-direction: column;
+        height: auto;
+      }
+
+      /* Sidebar adjustments for smaller screens */
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static; /* Remove fixed positioning */
+        padding: 15px;
+        background-color: rgba(39, 69, 90, 0.9);
+      }
+
+      /* Calendar container adjusts to full width on small screens */
+      .calendar-container {
+        margin-left: 0;
+        width: 100%;
+        height: auto;
+        padding: 10px;
+      }
+
+      /* Calendar adapts to smaller screen widths */
+      #calendar {
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      /* Adjust sidebar text size */
+      .sidebar h3 {
+        font-size: 18px;
+      }
+
+      .sidebar ul li {
+        font-size: 0.9rem;
+      }
+
+      /* Calendar container padding adjustment */
+      .calendar-container {
+        padding: 5px;
+      }
+
+      /* Calendar adjustments for very small screens */
+      #calendar {
+        width: 100%;
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      /* Make the sidebar smaller and responsive */
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        padding: 10px;
+      }
+
+      .sidebar h3 {
+        font-size: 16px;
+      }
+
+      .sidebar ul li {
+        font-size: 0.8rem;
+      }
+
+      /* Calendar container for extremely small screens */
+      .calendar-container {
+        margin-left: 0;
+        padding: 5px;
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      /* Adjust calendar to fit narrow screens */
+      #calendar {
+        width: 100%;
+        padding: 5px;
+      }
+
+      /* Remove padding and margins for ultra-narrow screens */
+      .calendar-container, #calendar {
+        margin-top: 10px;
+      }
+    }
   </style>
 </head>
 <body>
