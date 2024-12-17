@@ -1,9 +1,9 @@
 <?php
 // Database configuration
-$host = "localhost";       // Database server
-$dbname = "your_database"; // Database name
-$username = "your_username"; // Database username
-$password = "your_password"; // Database password
+$host = "127.0.0.1";       
+$dbname = "phpmyadmin"; 
+$username = "root"; 
+$password = ""; 
 
 // Create database connection
 $conn = new mysqli($host, $username, $password, $dbname);
