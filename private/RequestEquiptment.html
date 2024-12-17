@@ -1,69 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Request Equipment</title>
-  <!-- Internal Styles -->
   <style>
+    /* Import Poppins Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
     /* General Styles */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background-color: #27455A;
+      background-color: #FDFEFD;
       color: #27455A;
       height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      flex-direction: column;
+      height: 100vh;
     }
 
     /* Background Image */
-    body::before {
-      content: "";
-      position: absolute;
+    .background {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
-      background: url('images/Trottier.png') no-repeat center center/cover;
-      opacity: 0.5;
-      z-index: 0;
+      height: 100vh;
+      background: url('images/trottier.png') no-repeat center center/cover;
+      filter: brightness(0.8);
+      z-index: -1; /* Keeps background behind everything */
     }
 
     /* Sidebar */
     .sidebar {
-      background-color: rgba(39, 69, 90, 0.9);
+      background-color: rgba(39, 69, 90, 0.9); /* Slight transparency */
       color: white;
       width: 250px;
       height: 100vh;
       position: fixed;
       padding: 20px;
       top: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     .sidebar h3 {
       font-weight: 600;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
       text-transform: uppercase;
-    }
-
-    .sidebar button {
-      background-color: white;
-      color: #27455A;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      font-weight: 400;
-      margin-bottom: 20px;
     }
 
     .sidebar ul {
@@ -78,11 +61,20 @@
       align-items: center;
       gap: 10px;
       font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar li:hover {
+      transform: translateX(5px);
+    }
+
+    .sidebar li:last-child {
+      margin-bottom: 0; /* Remove extra space below the last list item */
     }
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
-      margin-top: 10px;
+      margin: 0px 0 0px; /* Set consistent top and bottom margin */
     }
 
     .sidebar p {
@@ -102,16 +94,21 @@
       text-decoration: underline;
     }
 
-    /* Equipment Request Container */
+    /* Centering Equipment Container */
     .equipment-container {
       background-color: rgba(255, 255, 255, 0.9);
       width: 400px;
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-      margin-left: 300px;
+
+      /* Centering the container */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
       text-align: center;
-      position: relative;
       z-index: 1;
     }
 
@@ -161,73 +158,62 @@
       border-radius: 40px;
       font-size: 1rem;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     .submit-btn:hover {
       background-color: #77A9B2;
     }
-
-    @media (max-width: 850px) {
-  /* Set the body as a flex container */
-  body {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center;
-    justify-content: flex-start; /* Align items at the top */
-    height: 100vh; /* Full viewport height */
-    margin: 0;
-  }
-
-  /* Adjust the sidebar for small screens */
-  .sidebar {
-    background-color: rgba(39, 69, 90, 0.9);
-    z-index: 3;
-    width: 100vw; /* Full width */
-    height: auto; /* Allow it to adapt to content height */
-    position: static; /* Remove the fixed positioning */
-    padding: 0;
-  }
-
-  /* Adjust the equipment container to take full width and height */
-  .equipment-container {
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    padding: 30px;
-    box-sizing: border-box; /* Ensure padding is included in width/height */
-    border-radius: 0; /* No rounded corners */
-    margin-left: 0; /* Remove left margin */
-    text-align: center;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-  }
-
-    }
   </style>
 </head>
 
 <body>
-  <!-- Sidebar with Navigation -->
+  <!-- Background Image -->
+  <div class="background"></div>
+
+  <!-- Sidebar -->
   <aside class="sidebar">
-    <div>
-      <h3>WELCOME</h3>
-      <ul>
-        <li>📅 Meetings</li>
-        <li>🗓 View Calendar</li>
-        <li>⚙️ Requests</li>
-        <li>📊 Vote on Poll</li>
-      </ul>
-      <hr>
-      <p>🔒 <a href="#">Log Out</a></p>
+    <h3>WELCOME</h3>
+    <ul>
+      <li>
+        <a href="studentdashboard.html">
+          🏠 My Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="studentCalendar.html">
+          🗓 View Calendar
+        </a>
+      </li>
+      <li>
+        <a href="VoteonPoll.html">
+          📊 Vote on Poll
+        </a>
+      </li>
+      <li>
+        <a href="RequestOfficeHour.html">
+          📅 Request Office Hours
+        </a>
+      </li>
+      <li>
+        <a href="RequestEquiptment.html">
+          💻 Request Equipment
+        </a>
+      </li>
+    </ul>
+    <hr>
+    <p>
+      <a href="../public/landingpage.html">
+        🔒 Log Out
+      </a>
+    </p>
   </aside>
 
-  <!-- Equipment Request Container -->
+  <!-- Equipment Request Form -->
   <div class="equipment-container">
     <h1>REQUEST EQUIPMENT</h1>
     <form id="equipment-form" action="../phpfiles/requestEquipment.php" method="POST">
-      <!-- Student Name -->
+      <!-- Student ID -->
       <label for="studentID">Your ID</label>
       <input type="text" id="studentID" name="studentID" placeholder="Enter your ID" required>
 
@@ -241,11 +227,11 @@
         <option value="Microphones">Microphones</option>
       </select>
 
-      <!-- Pickup and Return Time -->
+      <!-- Pickup Time -->
       <label for="pickup-time">Pick-Up Time</label>
       <input type="time" id="pickup-time" name="pickup-time" required>
 
-      <!-- Confirmation Checkbox -->
+      <!-- Checkbox -->
       <div class="checkbox-container">
         <input type="checkbox" id="confirm" name="confirm">
         <label for="confirm">I confirm my request</label>
@@ -256,7 +242,7 @@
     </form>
   </div>
 
-  <!-- JavaScript for Checkbox -->
+  <!-- JavaScript for Enabling Submit Button -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const confirmCheckbox = document.getElementById('confirm');
@@ -268,5 +254,4 @@
     });
   </script>
 </body>
-
 </html>

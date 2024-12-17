@@ -6,23 +6,18 @@
   <title>Student Dashboard</title>
   <!-- Internal Styles -->
   <style>
-    /* General Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       background-color: #FDFEFD;
       color: #27455A;
       display: flex;
-      flex-direction: column; /* Changed to column for responsiveness */
+      flex-direction: column;
     }
 
     /* Background Image */
@@ -39,18 +34,21 @@
 
     /* Sidebar */
     .sidebar {
-      background-color: rgba(39, 69, 90, 0.9);
+      background-color: rgba(39, 69, 90, 0.9); /* Slight transparency */
       color: white;
       width: 250px;
       height: 100vh;
       position: fixed;
       padding: 20px;
+      padding-bottom: 0px;
       top: 0;
+      display: flex;
+      flex-direction: column;
     }
 
     .sidebar h3 {
       font-weight: 600;
-      margin-bottom: 20px;
+      margin-bottom: 5px;
       text-transform: uppercase;
     }
 
@@ -64,11 +62,13 @@
       width: 100%;
       font-weight: 400;
       margin-bottom: 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .sidebar ul {
       list-style: none;
       padding: 0;
+      margin-bottom: 0;
     }
 
     .sidebar li {
@@ -78,11 +78,20 @@
       align-items: center;
       gap: 10px;
       font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar li:hover{
+      transform: translateX(5px);
     }
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
-      margin-top: 10px;
+      margin: 15px 0 0px; /* Set consistent top and bottom margin */
+    }
+
+    .sidebar li:last-child {
+      margin-bottom: 0; /* Remove extra space below the last list item */
     }
 
     .sidebar p {
@@ -268,15 +277,39 @@
 
   <!-- Sidebar -->
   <aside class="sidebar">
-    <h3>WELCOME</h3>
+    <h3>Vote on Poll</h3>
     <ul>
-      <li>📅 Meetings</li>
-      <li>🗓 View Calendar</li>
-      <li>⚙️ Requests</li>
-      <li>📊 Vote on Poll</li>
-    </ul>
+      <li>
+        <a href="studentdashboard.html" style="text-decoration: none; color: inherit;">
+          🏠 My Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="studentCalendar.html" style="text-decoration: none; color: inherit;">
+          🗓 View Calendar
+        </a>
+      </li>
+      <li>
+        <a href="VoteonPoll.html" style="text-decoration: none; color: inherit;">
+          📊 Vote on Poll
+        </a>
+      </li>
+      <li>
+        <a href="RequestOfficeHour.html" style="text-decoration: none; color: inherit;">
+          📅 Request Office Hours
+        </a>
+      </li>
+      <li>
+        <a href="RequestEquiptment.html" style="text-decoration: none; color: inherit;">
+          💻 Request Equipment
+        </a>
+      </li>
+      </ul>
     <hr>
-    <p>🔒 Log Out</p>
+    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
+      🔒 Log Out
+    </a>
+  </p>
   </aside>
 
   <!-- Main Content -->
