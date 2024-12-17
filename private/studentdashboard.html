@@ -69,7 +69,13 @@
       align-items: center;
       gap: 10px;
       font-size: 1rem;
+      transition: all 0.3s ease;
     }
+    
+    .sidebar li:hover{
+      transform: translateX(5px);
+    }
+    
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
@@ -210,13 +216,37 @@
   <aside class="sidebar">
     <h3>WELCOME</h3>
     <ul>
-      <li>📅 Meetings</li>
-      <li>🗓 View Calendar</li>
-      <li>⚙️ Requests</li>
-      <li>📊 Vote on Poll</li>
-    </ul>
+      <li>
+        <a href="studentdashboard.html" style="text-decoration: none; color: inherit;">
+          🏠 My Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="studentCalendar.html" style="text-decoration: none; color: inherit;">
+          🗓 View Calendar
+        </a>
+      </li>
+      <li>
+        <a href="VoteonPoll.html" style="text-decoration: none; color: inherit;">
+          📊 Vote on Poll
+        </a>
+      </li>
+      <li>
+        <a href="RequestOfficeHour.html" style="text-decoration: none; color: inherit;">
+          📅 Request Office Hours
+        </a>
+      </li>
+      <li>
+        <a href="RequestEquiptment.html" style="text-decoration: none; color: inherit;">
+          💻 Request Equipment
+        </a>
+      </li>
+      </ul>
     <hr>
-    <p>🔒 Log Out</p>
+    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
+      🔒 Log Out
+    </a>
+  </p>
   </aside>
 
   <!-- Hero Section -->
