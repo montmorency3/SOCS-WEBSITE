@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "EmployeeID already exists. Please choose a different ID.";
                 } else {
                     // Insert professor data into EmployeeLogin table
-                    $query = "INSERT INTO EmployeeLogin (EmployeeID, Password, Email, Role) VALUES ('$ID', '$hashedPassword', '$email', '$role')";
+                    $query = "INSERT INTO EmployeeLogin (EmployeeID, Password, Email) VALUES ('$ID', '$hashedPassword', '$email')";
 
                     if ($conn->query($query) === TRUE) {
                         echo "Signup successful! Your details have been added to the EmployeeLogin table.";
