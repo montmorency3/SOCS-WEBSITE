@@ -67,7 +67,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $conn->query($insertLoanQuery);
             }
 
-            echo "Equipment loaned successfully!";
+            // Send email notification
+            $to = "nigel.ojuang@mail.mcgill.ca"; // Replace with your email address
+            $subject = "New Equipment Loan Request";
+            $headers = "From: noreply@mcgill.ca" . "\r\n" .
+                       "Content-Type: text/html; charset=UTF-8";
+
+            $message = "
+            <html>
+                <head>
+                    <title>Equipment Loan Request</title>
+                </head>
+                <body>
+                    <h2>New Equipment Loan</h2>
+                    <p><strong>Student ID:</strong> $studentID</p>
+                    <p><strong>Equipment Type:</strong> $equipmentType</p>
+                    <p><strong>Current Available Amount:</strong> $newAmount</p>
+                </body>
+            </html>
+            ";
+
+            // Check if the email is sent successfully
+            if (mail($to, $subject, $message, $headers)) {
+                echo "Equipment loaned successfully! An email notification has been sent.";
+            } else {
+                echo "Equipment loaned successfully, but the email notification failed to send.";
+            }
         } else {
             echo "Sorry, $equipmentType is out of stock.";
         }
