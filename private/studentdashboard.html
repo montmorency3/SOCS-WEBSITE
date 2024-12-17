@@ -95,6 +95,31 @@
       background: transparent;
       z-index: 10;
     }
+    
+    /* Button Styling */
+.book-btn {
+  background-color: #286a99; /* Blue background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth animations */
+}
+
+.book-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.book-btn.booked {
+  background-color: green; /* Green background for booked */
+  color: white;
+  pointer-events: none; /* Prevent further clicks */
+}
+
 
     /* Table Layout for Events */
     .events-table {
@@ -233,7 +258,6 @@
       <th>Location</th>
       <th>Professor</th>
       <th>Course Code</th>
-    
       <th>Action</th>
     </tr>
   </thead>
@@ -244,7 +268,8 @@
       <td>Online</td>
       <td>Dr. Smith</td>
       <td>COMP307</td>
-      <td><button onclick="toggleBook(this)">Book</button></td>
+      <td><button class="book-btn" onclick="toggleBook(this)">Book</button></td>
+
     </tr>
     <tr>
       <td>Research Team Meeting</td>
@@ -252,7 +277,8 @@
       <td>Room 101</td>
       <td>Prof. Johnson</td>
       <td>BIOL350</td>
-      <td><button onclick="toggleBook(this)">Book</button></td>
+      <td><button class="book-btn" onclick="toggleBook(this)">Book</button></td>
+
     </tr>
     <tr>
       <td>Web Development Training</td>
@@ -260,7 +286,8 @@
       <td>Online</td>
       <td>Dr. Lee</td>
       <td>COMP202</td>
-      <td><button onclick="toggleBook(this)">Book</button></td>
+      <td><button class="book-btn" onclick="toggleBook(this)">Book</button></td>
+
     </tr>
     <tr>
       <td>Bot Detection Hackathon</td>
@@ -268,7 +295,8 @@
       <td>Campus Hall</td>
       <td>Prof. Brown</td>
       <td>COMP410</td>
-      <td><button onclick="toggleBook(this)">Book</button></td>
+      <td><button class="book-btn" onclick="toggleBook(this)">Book</button></td>
+
     </tr>
   </tbody>
 </table>
