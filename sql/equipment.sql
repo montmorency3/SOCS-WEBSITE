@@ -1,3 +1,5 @@
+-- Active: 1733630281008@@127.0.0.1@3306@phpmyadmin
+-- Active: 1733630281008@@127.0.0.1@3306@test
 CREATE TABLE AvailableEquipment(
 ID INT PRIMARY KEY,
 Equipment VARCHAR(50) NOT NULL,
@@ -17,10 +19,6 @@ CREATE TABLE LoanedEquipment(
     FOREIGN KEY (StudentID) REFERENCES StudentLogin(StudentID)
     );
 
-INSERT INTO LoanedEquipment (StudentID, Equipment)
-VALUES 
-(432, '{"Laptops": 1, "Keyboards": 1}'),
-(373, '{"Projectors": 1}');
 
 
 
