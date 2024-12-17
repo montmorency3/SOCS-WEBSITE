@@ -27,21 +27,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $role = $_POST['role'];  // Capture role (student or professor)
 
+    // Password validation
+    $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
+    if (!preg_match($pattern, $password)) {
+        echo "<script>alert('Password must have at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.'); window.history.back();</script>";
+        exit();
+    }
+
     // Input validation
     if (!empty($firstName) && !empty($lastName) && !empty($ID) && !empty($password) && !empty($email) && !empty($role)) {
         
-        // Convert first and last name to lowercase and construct the valid email prefix for students
-        $expectedStudentPrefix = strtolower($firstName . '.' . $lastName);
-        // Construct valid professor email prefix
-        $expectedProfessorPrefix = strtolower($firstName . '.' . $lastName);
+        // Convert first and last name to lowercase and construct the valid email prefix
+        $expectedPrefix = strtolower($firstName . '.' . $lastName);
 
         // Validate email format based on the role
         if ($role == 'student') {
-            // Student: email must match first and last name with @mail.mcgill.ca or @mcgill.ca domain
-            if (preg_match("/^" . preg_quote($expectedStudentPrefix, '/') . "@mail\.mcgill\.ca|$/", $email)) {
+            // Student: email must match first and last name with @mail.mcgill.ca
+            if (preg_match("/^" . preg_quote($expectedPrefix, '/') . "@mail\.mcgill\.ca$/", $email)) {
                 // Sanitize inputs to prevent SQL injection
                 $ID = mysqli_real_escape_string($conn, $ID);
-                $password = mysqli_real_escape_string($conn, $password);
                 $email = mysqli_real_escape_string($conn, $email);
                 
                 // Hash the password for security
@@ -64,20 +68,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
             } else {
-                echo "Invalid email format for student. Your email must match your first and last name in lowercase, e.g., john.doe@mail.mcgill.ca.";
+                echo "Invalid email format for student. Use: firstname.lastname@mail.mcgill.ca.";
             }
         } elseif ($role == 'employee') {
-            // Professor: email must match first and last name with @mcgill.ca domain
-            if (preg_match("/^" . preg_quote($expectedProfessorPrefix, '/') . "@mcgill\.ca$/", $email)) {
+            // Employee: email must match first and last name with @mcgill.ca
+            if (preg_match("/^" . preg_quote($expectedPrefix, '/') . "@mcgill\.ca$/", $email)) {
                 // Sanitize inputs to prevent SQL injection
                 $ID = mysqli_real_escape_string($conn, $ID);
-                $password = mysqli_real_escape_string($conn, $password);
                 $email = mysqli_real_escape_string($conn, $email);
                 
                 // Hash the password for security
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-                // Check if EmployeeID (for professors) already exists
+                // Check if EmployeeID already exists
                 $checkQuery = "SELECT * FROM EmployeeLogin WHERE EmployeeID = '$ID'";
                 $result = $conn->query($checkQuery);
 
@@ -94,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
             } else {
-                echo "Invalid email format for professor. Your email must match your first and last name in lowercase, e.g., john.doe@mcgill.ca.";
+                echo "Invalid email format for professor. Use: firstname.lastname@mcgill.ca.";
             }
         }
     } else {
