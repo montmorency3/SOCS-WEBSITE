@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 // Check if form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get input from form fields
-    $userID = $_POST['userID'];  // This will be the StudentID or EmployeeID based on selection
+    $userID = $_POST['ID'];  // This will be the StudentID or EmployeeID based on selection
     $email = $_POST['email'];
     $userPassword = $_POST['password'];
     $role = $_POST['role'];  // Get the selected role (Student or Professor)
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $email);
 
     // Validate email based on role
-    if ($role === 'Student') {
+    if ($role === 'student') {
         // For students, check if the email matches the first.last@mail.mcgill.ca format
         $emailParts = explode('@', $email);
         $emailDomain = end($emailParts);
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-    } elseif ($role === 'Professor') {
+    } elseif ($role === 'employee') {
         // For professors, the email should end with @mcgill.ca
         $emailParts = explode('@', $email);
         $emailDomain = end($emailParts);
@@ -61,7 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Query for professor login
         $query = "SELECT * FROM EmployeeLogin WHERE EmployeeID = '$userID' AND Email = '$email'";
-    } else {
+    }
+     else {
         echo "Invalid role selected.";
         exit();
     }
@@ -86,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Login failed
         echo "Invalid credentials or email domain mismatch.";
+        echo "Query: " . $query;
     }
 }
 
