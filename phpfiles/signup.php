@@ -1,6 +1,6 @@
 <?php
 // Database configuration
-$host = "localhost";       
+$host = "127.0.0.1";       
 $dbname = "phpmyadmin"; 
 $username = "root"; 
 $password = ""; 
