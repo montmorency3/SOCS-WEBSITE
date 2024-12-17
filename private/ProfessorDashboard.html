@@ -69,6 +69,7 @@
     .sidebar ul {
       list-style: none;
       padding: 0;
+      margin-bottom: 0;
     }
 
     .sidebar li:hover{
@@ -87,11 +88,15 @@
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
-      margin-top: 10px;
+      margin: 15px 0 10px; /* Set consistent top and bottom margin */
     }
-
+    
+    .sidebar li:last-child {
+      margin-bottom: 0; /* Remove extra space below the last list item */
+    }
+    
     .sidebar p {
-      margin-top: 20px;
+      margin: 0; /* Remove space above Log Out */
       font-weight: 400;
       display: flex;
       align-items: center;
@@ -100,14 +105,12 @@
 
     /* Day in a Glance Section */
     .day-summary {
-      margin-top: 0px;
-      padding-top: 10px;
-      border-top: 1px solid #FDFEFD;
+      margin-top: 20px;
     }
 
     .day-summary h4 {
       font-weight: 600;
-      margin-bottom: 0px;
+      margin-bottom: 10px;
     }
 
     .day-summary .summary-card {
@@ -247,13 +250,12 @@
         ⚙ Manage Bookings
       </a>
     </li>
-    <li>
-      <a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
-        🔒 Log Out
-      </a>
-    </li>
     </ul>
     <hr>
+    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
+        🔒 Log Out
+      </a>
+      </p>
     <div class="day-summary">
       <h4>Day at a Glance</h4>
       <div class="summary-card">
