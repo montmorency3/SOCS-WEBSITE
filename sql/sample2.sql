@@ -1,3 +1,4 @@
+
 CREATE TABLE StudentInfo (
     StudentID INT PRIMARY KEY,
     FirstName VARCHAR(50) NOT NULL,
