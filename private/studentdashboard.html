@@ -225,42 +225,69 @@
   </div>
 
   <!-- Table for Upcoming Events -->
-  <table class="events-table">
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Date & Time</th>
-        <th>Location</th>
-        <th>More Info</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Bot Detection Workshop</td>
-        <td>Dec 10, 2024 - 3:00 PM</td>
-        <td>Online</td>
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
-      <tr>
-        <td>Research Team Meeting</td>
-        <td>Dec 15, 2024 - 1:00 PM</td>
-        <td>Room 101</td>
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
-      <tr>
-        <td>Web Development Training</td>
-        <td>Dec 20, 2024 - 10:00 AM</td>
-        <td>Online</td>
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
-      <tr>
-        <td>Bot Detection Hackathon</td>
-        <td>Jan 5, 2025 - 9:00 AM</td>
-        <td>Campus Hall</td>
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
-    </tbody>
-  </table>
+<table class="events-table">
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Date & Time</th>
+      <th>Location</th>
+      <th>Professor</th>
+      <th>Course Code</th>
+    
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bot Detection Workshop</td>
+      <td>Dec 10, 2024 - 3:00 PM</td>
+      <td>Online</td>
+      <td>Dr. Smith</td>
+      <td>COMP307</td>
+      <td><button onclick="toggleBook(this)">Book</button></td>
+    </tr>
+    <tr>
+      <td>Research Team Meeting</td>
+      <td>Dec 15, 2024 - 1:00 PM</td>
+      <td>Room 101</td>
+      <td>Prof. Johnson</td>
+      <td>BIOL350</td>
+      <td><button onclick="toggleBook(this)">Book</button></td>
+    </tr>
+    <tr>
+      <td>Web Development Training</td>
+      <td>Dec 20, 2024 - 10:00 AM</td>
+      <td>Online</td>
+      <td>Dr. Lee</td>
+      <td>COMP202</td>
+      <td><button onclick="toggleBook(this)">Book</button></td>
+    </tr>
+    <tr>
+      <td>Bot Detection Hackathon</td>
+      <td>Jan 5, 2025 - 9:00 AM</td>
+      <td>Campus Hall</td>
+      <td>Prof. Brown</td>
+      <td>COMP410</td>
+      <td><button onclick="toggleBook(this)">Book</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- JavaScript -->
+<script>
+  function toggleBook(button) {
+    if (button.innerText === "Book") {
+      button.innerText = "Booked";
+      button.style.backgroundColor = "green";
+      button.style.color = "white";
+    } else {
+      button.innerText = "Book";
+      button.style.backgroundColor = "";
+      button.style.color = "";
+    }
+  }
+</script>
+
 
 </body>
 </html>
