@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Database configuration
 $host = "127.0.0.1";       
 $dbname = "phpmyadmin"; 
@@ -51,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "StudentID already exists. Please choose a different ID.";
                 } else {
                     // Insert student data into StudentLogin table
-                    $query = "INSERT INTO StudentLogin (StudentID, Password, Email, Role) VALUES ('$ID', '$hashedPassword', '$email', '$role')";
+                    $query = "INSERT INTO StudentLogin (StudentID, Password, Email) VALUES ('$ID', '$password', '$email')";
 
                     if ($conn->query($query) === TRUE) {
                         echo "Signup successful! Your details have been added to the StudentLogin table.";
@@ -81,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "EmployeeID already exists. Please choose a different ID.";
                 } else {
                     // Insert professor data into EmployeeLogin table
-                    $query = "INSERT INTO EmployeeLogin (EmployeeID, Password, Email, Role) VALUES ('$ID', '$hashedPassword', '$email', '$role')";
+                    $query = "INSERT INTO EmployeeLogin (EmployeeID, Password, Email, Role) VALUES ('$ID', '$password', '$email', '$role')";
 
                     if ($conn->query($query) === TRUE) {
                         echo "Signup successful! Your details have been added to the EmployeeLogin table.";
