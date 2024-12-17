@@ -8,9 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=HK+Grotesk:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&display=swap">
 </head>
 
-
 <body>
-  
   <header>
     <nav class="navbar">
       <div class="logo">
@@ -21,41 +19,30 @@
         <li><a href="about.html">About</a></li>
       </ul>
 
-      <div class="lang-container">
-        <div class="lang-switch ">
-          <a href="#">FRANÇAIS</a>
-        </div>
+      <div class="auth-links">
+        <a class="language" href="#">FRANÇAIS</a>
+        <a href="login.html">Login</a>
+        <a href="register.html" class="register-btn">Register</a>
       </div>
 
-        <div class="auth-links" >
-          <a href="login.html">Login</a>
-          <a href="register.html" class="register-btn">Register</a>
-        </div>
-
-        <div class="search-bar">
-          <input type="text" placeholder="Search">
-          <button><img src="images/search-icon.png" alt="Search"></button>
-        </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search">
+        <button><img src="images/search-icon.png" alt="Search"></button>
       </div>
+
       <div class="hamburger" id="hamburger">
         <span>&#9776;</span>
       </div>
-
     </nav>
-
   </header>
 
- 
-
-
   <main>
-
     <nav class="menu" id="menu"> 
       <div class="nav-links">
-        <a href="landingpage.html">Home</a></li>
-        <a href="about.html">About</a></li>
-        <a href="#">Help</a></li>
-        <a href="#">FRANÇAIS</a></li>
+        <a href="landingpage.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="#">Help</a>
+        <a class="language" href="#">FRANÇAIS</a>
       </div>
     </nav>
 
@@ -68,7 +55,83 @@
     </section>
   </main>
 
-  <script src = assets/javascript/hamburger.js>
+  <!-- Script Files -->
+  <script src="assets/javascript/hamburger.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const languageButtons = document.querySelectorAll(".language");
+  const frenchText = {
+    "Home": "Accueil",
+    "About": "À Propos",
+    "Help": "Aide",
+    "Login": "Connexion",
+    "Register": "Inscription",
+    "Welcome to the SOCS Registration!": "Bienvenue à l'inscription SOCS!",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.": 
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.",
+    "Sign In": "Se Connecter",
+  };
+
+  const englishText = {
+    "Accueil": "Home",
+    "À Propos": "About",
+    "Aide": "Help",
+    "Connexion": "Login",
+    "Inscription": "Register",
+    "Bienvenue à l'inscription SOCS!": "Welcome to the SOCS Registration!",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.": 
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.",
+    "Se Connecter": "Sign In",
+  };
+
+  // Function to switch language
+  function switchLanguage(language) {
+    const textElements = document.querySelectorAll("a, h1, p, button"); // Elements to translate
+
+    textElements.forEach(el => {
+      const content = el.textContent.trim();
+      if (language === "fr" && frenchText[content]) {
+        el.textContent = frenchText[content];
+      } else if (language === "en" && englishText[content]) {
+        el.textContent = englishText[content];
+      }
+    });
+
+    // Save language preference to localStorage
+    localStorage.setItem("language", language);
+  }
+
+  // Load language from localStorage on page load
+  const savedLanguage = localStorage.getItem("language") || "en";
+  switchLanguage(savedLanguage);
+
+  // Add event listeners to language buttons
+  languageButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const currentLanguage = button.textContent.trim();
+      if (currentLanguage === "FRANÇAIS") {
+        switchLanguage("fr");
+        updateButtonsText("ENGLISH");
+      } else {
+        switchLanguage("en");
+        updateButtonsText("FRANÇAIS");
+      }
+    });
+  });
+
+  // Function to update the language button text
+  function updateButtonsText(newLanguageText) {
+    languageButtons.forEach(button => {
+      button.textContent = newLanguageText;
+    });
+  }
+});
+
+
+
+
   </script>
 </body>
 </html>

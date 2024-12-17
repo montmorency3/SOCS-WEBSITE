@@ -309,16 +309,14 @@ body {
     display: none;
   }
 
-  .lang-switch{
-    display: none;
-  }
+
   .menu{
     display:none;
     background-color: rgba(39, 69, 90, 0.8); /* Dark background similar to the navbar */
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
 
   .menu .nav-links {
     display: flex;           /* Make the container a flexbox */
@@ -336,13 +334,20 @@ body {
     margin-right: 15px;
   }
 
+  .auth-links .language {
+    display: none; /* Hide the language link */
+  }
+
   
   .navbar li{
     display:none;
   }
 
   .lang-container {
-    display:none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: 20px; /* Adjust this value as needed */
   }
 
   .search-bar{

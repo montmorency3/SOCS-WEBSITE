@@ -1,3 +1,4 @@
+
 CREATE TABLE StudentAppointment(
 StudentID INT NOT NULL PRIMARY KEY,
 Professor VARCHAR(50) NOT NULL,
@@ -10,10 +11,7 @@ CREATE TABLE ProfessorAvailability (
     FOREIGN KEY (ProfessorID) REFERENCES EmployeeLogin(EmployeeID) ON DELETE CASCADE
 );
 
-INSERT INTO ProfessorAvailability (ProfessorID, Availability)
-VALUES
-(111, '[{"Date": "2024-12-02", "StartTime": "10:00:00", "EndTime": "12:00:00", "Location": "MC 103"}, 
-        {"Date": "2024-12-10", "StartTime": "14:00:00", "EndTime": "12:00:00", "Location": "MC 103"}]');
+
 
 
 
