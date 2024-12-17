@@ -62,7 +62,14 @@
         <input type="email" name="email" placeholder="Email" required>
         <input type="text" name="ID" placeholder="ID" required>
         <input type="password" name="password" placeholder="Password" required>
-        <button type="submit" class="auth-btn">Log In</button>
+
+        <label for="role">I am signing up as:</label>
+  <select name="role" id="role" required>
+    <option value="student">Student</option>
+    <option value="employee">Employee</option>
+  </select>
+  <br>
+<button type="submit" class="auth-btn">Log In</button>
         <a href="#" class="forgot-password">Forgot Password?</a>
       </form>
       <p>Don't have an account? <a href="register.html">Register now</a></p>
