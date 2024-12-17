@@ -120,6 +120,24 @@
   pointer-events: none; /* Prevent further clicks */
 }
 
+/* Submit Button Styling */
+.submit-btn {
+  background-color: #0056b3; /* Dark blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #1d3444; /* Slightly darker on hover */
+  transform: scale(1.05);
+}
+
 
     /* Table Layout for Events */
     .events-table {
@@ -301,6 +319,12 @@
   </tbody>
 </table>
 
+<!-- Submit Button -->
+<div style="margin-left: 320px; margin-top: 20px;">
+  <button class="submit-btn" onclick="submitBookings()">Submit Bookings</button>
+</div>
+
+
 <!-- JavaScript -->
 <script>
   function toggleBook(button) {
@@ -314,6 +338,16 @@
       button.style.color = "";
     }
   }
+  
+  function submitBookings() {
+  const bookedButtons = document.querySelectorAll('.book-btn.booked');
+  if (bookedButtons.length > 0) {
+    alert("Your bookings have been successfully submitted!");
+  } else {
+    alert("No bookings have been made yet. Please book an event before submitting.");
+  }
+}
+
 </script>
 
 
