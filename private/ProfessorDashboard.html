@@ -58,13 +58,23 @@
       width: 100%;
       font-weight: 400;
       margin-bottom: 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
+    
+    /* Hover Effect */
+      .sidebar button:hover {
+      background-color: #f4f4f4;
+  }
 
     .sidebar ul {
       list-style: none;
       padding: 0;
     }
 
+    .sidebar li:hover{
+      transform: translateX(5px);
+    }
+    
     .sidebar li {
       margin-bottom: 15px;
       font-weight: 300;
@@ -72,6 +82,7 @@
       align-items: center;
       gap: 10px;
       font-size: 1rem;
+      transition: all 0.3s ease;
     }
 
     .sidebar hr {
@@ -214,13 +225,34 @@
   <!-- Sidebar -->
   <aside class="sidebar">
     <h3>WELCOME</h3>
-    <button> CREATE OFFICE HOUR</button>
+    <button onclick="location.href='EditBookings.html'">CREATE OFFICE HOUR</button>
     <ul>
-      <li>📅 Meetings</li>
-      <li>🗓 View Calendar</li>
-      <li>📊 Create Poll</li>
-      <li> 🔒 Log Out </li>
-    </ul>
+            <li>
+      <a href="ProfessorDashboard.html" style="text-decoration: none; color: inherit;">
+        🏠 My Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="ProfessorCalendar.html" style="text-decoration: none; color: inherit;">
+        🗓 View Calendar
+      </a>
+    </li>
+    <li>
+      <a href="CreatePoll.html" style="text-decoration: none; color: inherit;">
+        📊 Create Poll
+      </a>
+    </li>
+    <li>
+      <a href="EditBookings.html" style="text-decoration: none; color: inherit;">
+        ⚙ Manage Bookings
+      </a>
+    </li>
+    <li>
+      <a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
+        🔒 Log Out
+      </a>
+    </li>
+      </ul>
     <hr>
     <div class="day-summary">
       <h4>Day at a Glance</h4>
