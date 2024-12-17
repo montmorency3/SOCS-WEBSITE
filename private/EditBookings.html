@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Bookings</title>
+  <style>
+    /* Import Poppins Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #FDFEFD;
+      color: #27455A;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Background Image */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url('images/trottier.png') no-repeat center center/cover;
+      filter: brightness(0.8);
+      z-index: -1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: rgba(39, 69, 90, 0.9);
+      color: white;
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    .sidebar h3 {
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 15px;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+
+    .sidebar hr {
+      border: 0.5px solid #FDFEFD;
+      margin-top: 10px;
+    }
+
+    .sidebar p {
+      margin-top: 20px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 270px;
+      padding: 30px;
+      width: calc(100% - 270px);
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .main-header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0;
+      color: white;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #2C3E50;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Two columns for time inputs */
+    .time-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .time-row .form-group {
+      flex: 1;
+    }
+
+    .button-group {
+      text-align: right;
+    }
+
+    .button-group button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      margin-left: 10px;
+    }
+
+    .btn-save {
+      background-color: #2C3E50;
+      color: white;
+    }
+
+    .btn-save:hover {
+      background-color: #34495E;
+    }
+
+    .btn-cancel {
+      background-color: #BDC3C7;
+      color: white;
+    }
+
+    .btn-cancel:hover {
+      background-color: #95A5A6;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Image -->
+  <div class="background"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3>Manage Bookings</h3>
+    <ul>
+      <li>🗓 Calendar Overview</li>
+      <li>⚙️ Manage Events</li>
+      <li>📊 Statistics</li>
+    </ul>
+    <hr>
+    <p>🔒 Log Out</p>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="main-header">
+      <h1>Manage Bookings</h1>
+    </div>
+
+    <div class="form-container">
+      <form>
+        <!-- Title -->
+        <div class="form-group">
+          <label for="title">Event Title</label>
+          <input type="text" id="title" placeholder="Enter event title" required>
+        </div>
+
+        <!-- Course Selection -->
+        <div class="form-group">
+          <label for="course">Course</label>
+          <select id="course" required>
+            <option value="">Select Course</option>
+            <option value="COMP202">COMP202</option>
+            <option value="COMP303">COMP303</option>
+            <option value="COMP307">COMP307</option>
+          </select>
+        </div>
+
+        <!-- Date -->
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" required>
+        </div>
+
+        <!-- Time Inputs in Same Row -->
+        <div class="time-row">
+          <div class="form-group">
+            <label for="startTime">Start Time</label>
+            <input type="time" id="startTime" required>
+          </div>
+          <div class="form-group">
+            <label for="endTime">End Time</label>
+            <input type="time" id="endTime" required>
+          </div>
+        </div>
+
+        <!-- Recurrence -->
+        <div class="form-group">
+          <label for="recurrence">Occurrence</label>
+          <select id="recurrence">
+            <option value="none">None</option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Biweekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group">
+          <label for="endDate">End Date</label>
+          <input type="date" id="endDate">
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" placeholder="Enter location or link">
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+          <button type="submit" class="btn-save">Save Changes</button>
+          <button type="button" class="btn-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
