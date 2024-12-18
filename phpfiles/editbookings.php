@@ -1,12 +1,22 @@
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Start the session
 session_start();
 
-// Fetch session ID and data for debugging purposes
-$sessionID = session_id();
-$sessionData = json_encode($_SESSION);
+// Check if the user is logged in and has the role of 'professor'
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
+    echo "<script>
+            alert('You must be logged in as a professor to access this page.');
+            window.location.href = '../public/login.html'; // Redirect to login page
+          </script>";
+    exit();
+}
 
-$_SESSION['ProfessorID'] = 111; // Hardcoded for testing purposes
+// Retrieve professor's userID
+$professorID = $_SESSION['userID'];
 
 // Database connection
 $host = "127.0.0.1";
