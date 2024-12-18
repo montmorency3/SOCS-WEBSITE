@@ -273,8 +273,8 @@ $conn->close();
   <aside class="sidebar">
     <h3>Vote on Poll</h3>
     <ul>
-      <li><a href="studentdashboard.html" class="link-dashboard" style="text-decoration: none; color: inherit;">🏠 My Dashboard</a></li>
-      <li><a href="studentCalendar.html" class="link-calendar" style="text-decoration: none; color: inherit;">🗓 View Calendar</a></li>
+      <li><a href="studentdashboard.php" class="link-dashboard" style="text-decoration: none; color: inherit;">🏠 My Dashboard</a></li>
+      <li><a href="studentCalendar.php" class="link-calendar" style="text-decoration: none; color: inherit;">🗓 View Calendar</a></li>
       <li><a href="VoteonPoll.php" class="link-poll" style="text-decoration: none; color: inherit;">📊 Vote on Poll</a></li>
       <li><a href="RequestOfficeHour.html" class="link-office-hours" style="text-decoration: none; color: inherit;">📅 Request Office Hours</a></li>
       <li><a href="RequestEquiptment.html" class="link-equipment" style="text-decoration: none; color: inherit;">💻 Request Equipment</a></li>

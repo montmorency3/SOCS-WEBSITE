@@ -231,10 +231,10 @@ if(ob_get_contents()) {
   <div class="background"></div>
   <aside class="sidebar">
     <h3>WELCOME</h3>
-    <button onclick="location.href='EditBookings.html'">CREATE OFFICE HOUR</button>
+    <button onclick="location.href='../phpfiles/editbookings.php'">CREATE OFFICE HOUR</button>
     <ul>
       <li>
-        <a href="ProfessorDashboard.html" style="text-decoration: none; color: inherit;">
+        <a href="ProfessorDashboard.php" style="text-decoration: none; color: inherit;">
           🏠 My Dashboard
         </a>
       </li>
@@ -249,7 +249,7 @@ if(ob_get_contents()) {
         </a>
       </li>
       <li>
-        <a href="EditBookings.html" style="text-decoration: none; color: inherit;">
+        <a href="../phpfiles/editbookings.php" style="text-decoration: none; color: inherit;">
           ⚙ Manage Bookings
         </a>
       </li>
