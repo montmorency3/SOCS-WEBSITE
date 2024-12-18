@@ -34,6 +34,7 @@
       z-index: -1;
     }
 
+
     /* Sidebar */
     .sidebar {
       background-color: rgba(39, 69, 90, 0.9);
@@ -112,7 +113,8 @@
     }
 
     #calendar {
-      width: 100%;
+      width: 95%;
+      height:95%;
       max-width: 1200px;
       background: rgba(255, 255, 255, 0.9);
       padding: 20px;
@@ -185,6 +187,30 @@
     .edit-modal button:hover {
       background-color: #34495E;
     }
+
+
+
+    @media (max-width: 600px) {
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%; /* Full width for sidebar */
+    position: relative; /* Remove fixed positioning to stack */
+    height: auto; /* Adjust height to content */
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .calendar-container {
+    margin-left: 0; /* Remove left margin to prevent offset */
+    width: 100%; /* Full width for the main content */
+    margin: 0px;
+    padding: 0px;
+  }
+}
   </style>
 </head>
 <body>
