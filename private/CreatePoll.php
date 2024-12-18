@@ -1,8 +1,12 @@
 <?php
 session_start();
+// Check if the user is logged in and has the role of 'professor'
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
-    echo "You must be logged in as a professor to view this page.";
-    exit();
+  echo "<script>
+          alert('You must be logged in as a professor to access this page.');
+          window.location.href = '../public/login.html'; // Redirect to login page
+        </script>";
+  exit();
 }
 ?>
 

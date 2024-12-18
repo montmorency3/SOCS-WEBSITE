@@ -6,6 +6,15 @@ session_start();
 $sessionID = session_id();
 $sessionData = json_encode($_SESSION); // Convert session variables to JSON
 
+// Check if the user is logged in and has the role of 'professor'
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
+  echo "<script>
+          alert('You must be logged in as a professor to access this page.');
+          window.location.href = '../public/login.html'; // Redirect to login page
+        </script>";
+  exit();
+}
+
 ob_start();
 include '../phpfiles/generateProfMeetings.php';
 if(ob_get_contents()) {
