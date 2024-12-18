@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Query for professor login
         $query = "SELECT * FROM EmployeeLogin WHERE EmployeeID = '$userID' AND Email = '$email'";
     }
-     else {
+    else {
         echo "Invalid role selected.";
         exit();
     }
@@ -70,16 +70,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Execute the query
     $result = $conn->query($query);
 
-// Check if login is successful
+    // Check if login is successful
     if ($result && $result->num_rows > 0) {
         // Fetch user info
         $row = $result->fetch_assoc();
-        $storedPassword = $row['Password']; //   The hashed password from the database
+        $storedPassword = $row['Password']; // The hashed password from the database
 
         // Verify if the password matches the hashed password
         if (password_verify($userPassword, $storedPassword)) {
             // Successful login
-            echo "Login successful! Welcome " . htmlspecialchars($role) . " with Email: " . htmlspecialchars($email);
+            // Redirect to the student dashboard
+            header("Location: ../private/studentdashboard.php");
+            exit();  // Ensure no further code is executed after the redirect
         } else {
             // Login failed
             echo "Invalid credentials.";
@@ -87,10 +89,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Login failed
         echo "Invalid credentials or email domain mismatch.";
-        echo "Query: " . $query;
     }
 }
-
 
 // Close database connection
 $conn->close();

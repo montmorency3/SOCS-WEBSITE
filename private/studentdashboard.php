@@ -177,7 +177,6 @@
     </thead>
     <tbody>
       <?php
-        // Include PHP file to fetch events
         include '../phpfiles/generateOH.php';
       ?>
     </tbody>

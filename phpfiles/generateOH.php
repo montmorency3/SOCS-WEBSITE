@@ -1,7 +1,7 @@
 <?php
 // Database connection
 $host = "127.0.0.1";
-$dbname = "your_database_name";
+$dbname = "phpmyadmin";
 $username = "root";
 $password = "";
 
@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 // Query for professor availability, names, and courses
 $query = "
     SELECT 
-        e.Name AS ProfessorName, 
+        e.LastName AS ProfessorName, 
         JSON_UNQUOTE(e.Courses) AS Courses, 
         pa.Availability
     FROM EmployeeInfo e
@@ -21,7 +21,6 @@ $query = "
 ";
 
 $result = $conn->query($query);
-$events = [];
 
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -30,19 +29,22 @@ if ($result && $result->num_rows > 0) {
 
         foreach ($availabilities as $availability) {
             foreach ($courses as $course) {
-                $events[] = [
-                    'event' => 'Scheduled Event',
-                    'date_time' => $availability['date'] . ' - ' . $availability['time'],
-                    'location' => $availability['location'],
-                    'professor' => $row['ProfessorName'],
-                    'course_code' => $course
-                ];
+                // Output the table row for each availability
+                echo '<tr>';
+                echo '<td>Scheduled Event</td>';
+                echo '<td>' . htmlspecialchars($availability['date'] . ' - ' . $availability['time']) . '</td>';
+                echo '<td>' . htmlspecialchars($availability['location']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['ProfessorName']) . '</td>';
+                echo '<td>' . htmlspecialchars($course) . '</td>';
+                echo '<td><button class="book-btn" onclick="toggleBook(this)">Book</button></td>';
+                echo '</tr>';
             }
         }
     }
+} else {
+    // No events found
+    echo '<tr><td colspan="6">No events available.</td></tr>';
 }
-$conn->close();
 
-// Output as JSON
-header('Content-Type: application/json');
-echo json_encode($events);
+$conn->close();
+?>
