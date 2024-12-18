@@ -225,7 +225,7 @@ $conn->close();
       </a>
     </li>
     <li>
-      <a href="../private/CreatePoll.html" style="text-decoration: none; color: inherit;">
+      <a href="../private/CreatePoll.php" style="text-decoration: none; color: inherit;">
         📊 Create Poll
       </a>
     </li>

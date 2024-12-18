@@ -230,7 +230,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
       </a>
     </li>
     <li>
-      <a href="CreatePoll.html" class="link-create-poll" style="text-decoration: none; color: inherit;">
+      <a href="CreatePoll.php" class="link-create-poll" style="text-decoration: none; color: inherit;">
         📊 Create Poll
       </a>
     </li>
