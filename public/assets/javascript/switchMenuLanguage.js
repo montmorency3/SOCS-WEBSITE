@@ -5,6 +5,10 @@ const translations = {
     "Login": "Connexion",
     "Register": "Inscription",
     "FR": "EN",
+    "Welcome to the SOCS Registration!": "Bienvenue sur l'inscription SOCS!",
+    "About Us": "À propos de Nous",
+    "welcome": "Bienvenue sur SOCS, une plateforme dédiée à la simplification et à l'amélioration des processus d'inscription des étudiants. Notre mission est de fournir une expérience utilisateur transparente et de garantir un accès facile aux ressources pédagogiques.",
+    "Our team" : "Notre équipe est composée de développeurs et d'éducateurs passionnés et engagés dans l'innovation, la convivialité et la qualité. Si vous avez des questions ou avez besoin d'aide, veuillez nous contacter via notre section Aide."
 }
 
   // Function to translate page text
@@ -17,6 +21,18 @@ const translations = {
     document.querySelector('.menu-about-link').textContent = translations["About"];
     document.querySelector('.menu-help-link').textContent = translations["Help"];
 
+    if ( document.querySelector('.welcome')){
+      document.querySelector('.welcome').textContent = translations["Welcome to the SOCS Registration!"];
+    }
+    if ( document.querySelector('.about')){
+      document.querySelector('.about').textContent = translations["About Us"];
+    }
+    if ( document.querySelector('.firstP')){
+      document.querySelector('.firstP').textContent = translations["welcome"];
+    }
+    if ( document.querySelector('.secondP')){
+      document.querySelector('.secondP').textContent = translations["Our team"];
+    }
 
     // Change button text
     document.querySelector('.language').textContent = translations["FR"];
