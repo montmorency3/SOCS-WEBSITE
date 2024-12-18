@@ -15,6 +15,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
     exit();
 }
 
+
 // Retrieve professor's userID
 $professorID = $_SESSION['userID'];
 
@@ -46,6 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("All fields are required. Please fill in the form correctly.");
     }
 
+     // Generate a unique booking ID
+     $uniqueID = uniqid();
+     $bookingURL = "http://localhost/SOCS-WEBSITE/public/urlBookingPage.html?id=" . $uniqueID;
+ 
+
     // Sanitize input to prevent XSS
     $title = htmlspecialchars($title);
     $course = htmlspecialchars($course);
@@ -56,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // New booking object
     $newBooking = [
+        "id" => $uniqueID,
         "title" => $title,
         "course" => $course,
         "date" => $date,
@@ -89,8 +96,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("iss", $professorID, $updatedAvailability, $updatedAvailability);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Office hours updated successfully!');</script>";
-    } else {
+        echo "<script>
+                alert('Office hours updated successfully! Share this link: $bookingURL');
+                console.log('Booking link: $bookingURL');
+              </script>";    } else {
         echo "<script>alert('Error updating office hours: " . $stmt->error . "');</script>";
     }
 
