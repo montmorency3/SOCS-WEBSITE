@@ -212,7 +212,7 @@ $conn->close();
   <!-- Sidebar -->
   <aside class="sidebar">
     <h3>Poll Results</h3>
-    <button onclick="location.href='../private/EditBookings.html'">CREATE OFFICE HOUR</button>
+    <button onclick="location.href='editbookings.php'">CREATE OFFICE HOUR</button>
     <ul>
     <li>
       <a href="../private/ProfessorDashboard.php" style="text-decoration: none; color: inherit;">
@@ -231,7 +231,7 @@ $conn->close();
     </li>
     <li><a href="viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
     <li>
-      <a href="../private/EditBookings.html" style="text-decoration: none; color: inherit;">
+      <a href="editbookings.php" style="text-decoration: none; color: inherit;">
         ⚙ Manage Bookings
       </a>
     </li>
