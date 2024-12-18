@@ -1,36 +1,43 @@
 <?php
-// Database configuration
-$host = "localhost";
-$dbname = "phpmyadmin"; // Update to your DB name
-$username = "root";
-$password = "";
+// Database connection
+$conn = mysqli_connect("localhost", "root", "", "your_database_name");
 
-// Create database connection
-$conn = new mysqli($host, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!$conn) {
+  die("Database connection failed: " . mysqli_connect_error());
 }
 
-// Fetch the most recent poll data (you can modify this to fetch a specific poll)
-$sql = "SELECT * FROM Polls ORDER BY id DESC LIMIT 1"; 
-$result = $conn->query($sql);
-
-// Initialize variables to store poll data
+// Fetch Poll Data
 $pollData = [];
-if ($result && $result->num_rows > 0) {
-    $pollData = $result->fetch_assoc();
+$query = "SELECT * FROM polls";
+$result = mysqli_query($conn, $query);
+
+if ($result && mysqli_num_rows($result) > 0) {
+  while ($row = mysqli_fetch_assoc($result)) {
+    $pollData[] = $row;
+  }
+} else {
+  $pollData = null; // No data found
 }
-$conn->close();
+
+// Format DateTime Function
+function formatDateTime($dateTime)
+{
+  return date('F j, Y, g:i A', strtotime($dateTime));
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vote on OH Poll</title>
+  <link rel="stylesheet" href="assets/css/private.css">
+
+  <title>Student Dashboard</title>
+  <!-- Internal Styles -->
   <style>
-    /* Reuse your existing styles */
+    /* All your existing styles are retained here */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -43,6 +50,7 @@ $conn->close();
       display: flex;
       flex-direction: column;
     }
+
     .background {
       position: fixed;
       top: 0;
@@ -53,178 +61,53 @@ $conn->close();
       filter: brightness(0.8);
       z-index: -1;
     }
-    .sidebar {
-      background-color: rgba(39, 69, 90, 0.9);
-      color: white;
-      width: 250px;
-      height: 100vh;
-      position: fixed;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar h3 {
-      font-weight: 600;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-    }
 
-    .sidebar button {
-      background-color: white;
-      color: #27455A;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      font-weight: 400;
-      margin-bottom: 20px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin-bottom: 0;
-    }
-
-    .sidebar li {
-      margin-bottom: 15px;
-      font-weight: 300;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar li:hover{
-      transform: translateX(5px);
-    }
-
-    .sidebar hr {
-      border: 0.5px solid #FDFEFD;
-      margin: 15px 0 0px; /* Set consistent top and bottom margin */
-    }
-
-    .sidebar li:last-child {
-      margin-bottom: 0; /* Remove extra space below the last list item */
-    }
-
-    .sidebar p {
-      margin-top: 20px;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .main-content {
-      margin-left: 250px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: calc(100% - 250px);
-      height: 100vh;
-    }
-    .main-container {
-      background-color: rgba(255, 255, 255, 0.9);
-      width: 500px;
-      border-radius: 20px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-      padding: 30px;
-      text-align: center;
-    }
-    .rank-list { display: flex; flex-direction: column; gap: 20px; }
-    .rank-row { display: flex; align-items: center; gap: 10px; }
-    .rank-number {
-      font-weight: bold; font-size: 1.2rem; color: #FFFFFF;
-      background-color: #27455A; border-radius: 50%;
-      width: 30px; height: 30px; display: flex;
-      justify-content: center; align-items: center;
-    }
-    .rank-item {
-      flex: 1; background-color: #E4ECF2; border-radius: 10px;
-      padding: 10px; text-align: center; font-size: 1rem; cursor: grab;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    .submit-btn {
-      background-color: #19344D; color: #FFFFFF; border: none;
-      padding: 15px; border-radius: 40px; font-size: 1rem;
-      font-weight: bold; cursor: pointer; width: 100%; margin-top: 30px;
-    }
-    .submit-btn:hover { background-color: #77A9B2; }
+    /* Sidebar and other styles here */
   </style>
 </head>
+
 <body>
+  <!-- Background Image -->
   <div class="background"></div>
 
   <!-- Sidebar -->
   <aside class="sidebar">
     <h3>Vote on Poll</h3>
     <ul>
-      <li>
-        <a href="studentdashboard.html" style="text-decoration: none; color: inherit;">
-          🏠 My Dashboard
-        </a>
-      </li>
-      <li>
-        <a href="studentCalendar.html" style="text-decoration: none; color: inherit;">
-          🗓 View Calendar
-        </a>
-      </li>
-      <li>
-        <a href="VoteonPoll.html" style="text-decoration: none; color: inherit;">
-          📊 Vote on Poll
-        </a>
-      </li>
-      <li>
-        <a href="RequestOfficeHour.html" style="text-decoration: none; color: inherit;">
-          📅 Request Office Hours
-        </a>
-      </li>
-      <li>
-        <a href="RequestEquiptment.html" style="text-decoration: none; color: inherit;">
-          💻 Request Equipment
-        </a>
-      </li>
-      </ul>
+      <li><a href="studentdashboard.html" style="text-decoration: none; color: inherit;">🏠 My Dashboard</a></li>
+      <li><a href="studentCalendar.html" style="text-decoration: none; color: inherit;">🗓 View Calendar</a></li>
+      <li><a href="VoteonPoll.php" style="text-decoration: none; color: inherit;">📊 Vote on Poll</a></li>
+    </ul>
     <hr>
-    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
-      🔒 Log Out
-    </a>
-  </p>
+    <p>
+    <div class="lang_logout_container">
+      <a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">🔒 Log Out</a>
+      <a href="#" class="menu-language">FR</a>
+    </div>
+    </p>
   </aside>
 
   <!-- Main Content -->
   <div class="main-content">
     <div class="main-container">
       <h1>Vote on OH Poll</h1>
-      <h3><?= htmlspecialchars($pollData['poll_title'] ?? 'Poll') ?></h3>
+      <h3>Rank Days</h3>
       <div class="rank-list" id="rankList">
-        <div class="rank-row" data-index="1">
-          <div class="rank-number">1</div>
-          <div class="rank-item" draggable="true">
-            <?= htmlspecialchars($pollData['date1'] . ', ' . $pollData['time1'] ?? 'N/A') ?>
-          </div>
-        </div>
-        <div class="rank-row" data-index="2">
-          <div class="rank-number">2</div>
-          <div class="rank-item" draggable="true">
-            <?= htmlspecialchars($pollData['date2'] . ', ' . $pollData['time2'] ?? 'N/A') ?>
-          </div>
-        </div>
-        <div class="rank-row" data-index="3">
-          <div class="rank-number">3</div>
-          <div class="rank-item" draggable="true">
-            <?= htmlspecialchars($pollData['date3'] . ', ' . $pollData['time3'] ?? 'N/A') ?>
-          </div>
-        </div>
-        <div class="rank-row" data-index="4">
-          <div class="rank-number">4</div>
-          <div class="rank-item" draggable="true">
-            <?= htmlspecialchars($pollData['date4'] . ', ' . $pollData['time4'] ?? 'N/A') ?>
-          </div>
-        </div>
+        <?php if (isset($pollData) && is_array($pollData)): ?>
+          <?php $rank = 1; ?>
+          <?php foreach ($pollData as $data): ?>
+            <div class="rank-row" data-index="<?php echo $rank; ?>">
+              <div class="rank-number"><?php echo $rank; ?></div>
+              <div class="rank-item" draggable="true">
+                <?php echo htmlspecialchars($data['title'] ?? 'No Title'); ?> -
+                <?php echo formatDateTime($data['datetime'] ?? 'now'); ?>
+              </div>
+            </div>
+            <?php $rank++; ?>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>No poll data available.</p>
+        <?php endif; ?>
       </div>
 
       <!-- Submit Button -->
@@ -232,7 +115,7 @@ $conn->close();
     </div>
   </div>
 
-  <!-- JavaScript for Drag-and-Drop -->
+  <!-- Drag-and-Drop JavaScript -->
   <script>
     const rankItems = document.querySelectorAll(".rank-item");
     const rankList = document.getElementById("rankList");
@@ -260,11 +143,12 @@ $conn->close();
         const draggedRow = draggedItem.parentNode;
         const tempContent = targetRow.querySelector(".rank-item").innerHTML;
 
-        // Swap contents only, numbers remain fixed
         targetRow.querySelector(".rank-item").innerHTML = draggedItem.innerHTML;
         draggedItem.innerHTML = tempContent;
       }
     });
   </script>
+  <script src="assets/javascript/switchLanguageStudents.js"></script>
 </body>
+
 </html>

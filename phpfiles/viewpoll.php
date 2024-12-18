@@ -214,7 +214,7 @@ $conn->close();
       </a>
     </li>
     <li>
-      <a href="../private/ProfessorCalendar" style="text-decoration: none; color: inherit;">
+      <a href="../private/ProfessorCalendar.html" style="text-decoration: none; color: inherit;">
         🗓 View Calendar
       </a>
     </li>
