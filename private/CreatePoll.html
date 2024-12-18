@@ -175,6 +175,29 @@
     .btn-cancel:hover {
       background-color: #95A5A6;
     }
+
+
+    @media (max-width: 600px) {
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%; /* Full width for sidebar */
+    position: relative; /* Remove fixed positioning to stack */
+    height: auto; /* Adjust height to content */
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .main-content {
+    margin-left: 0; /* Remove left margin to prevent offset */
+    width: 100%; /* Full width for the main content */
+    margin: 0px;
+    padding: 0px;
+  }
+}
   </style>
 </head>
 <body>
