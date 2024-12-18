@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Database configuration
 $host = "localhost";       
 $dbname = "phpmyadmin"; 
@@ -78,6 +79,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verify if the password matches the hashed password
         if (password_verify($userPassword, $storedPassword)) {
+
+            $_SESSION['userID'] = $userID;
+            $_SESSION['email'] = $email;
+            $_SESSION['role'] = $role;
+
             // Successful login
             // Redirect to the student dashboard
             header("Location: ../private/studentdashboard.php");

@@ -1,10 +1,24 @@
+<?php
+// Start the session at the top of the page
+session_start();
+
+// Fetch session ID and data for debugging
+$sessionID = session_id();
+$sessionData = json_encode($_SESSION); // Convert session variables to JSON
+
+// Include generateOH.php after starting the session
+ob_start(); // Start output buffering
+include '../phpfiles/generateOH.php';
+$generateOHContent = ob_get_clean(); // Capture the output of generateOH.php into a variable
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Dashboard</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Link to external styles -->
+  <link rel="stylesheet" href="landing.css">
+  
   <style>
     /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -177,7 +191,8 @@
     </thead>
     <tbody>
       <?php
-        include '../phpfiles/generateOH.php';
+      // Output the content captured from generateOH.php
+      echo $generateOHContent;
       ?>
     </tbody>
   </table>
@@ -189,6 +204,9 @@
 
   <!-- JavaScript -->
   <script>
+    console.log('Session ID: <?php echo $sessionID; ?>');
+    console.log('Session Data:', <?php echo $sessionData; ?>);
+
     function toggleBook(button) {
       if (button.innerText === "Book") {
         button.innerText = "Booked";
