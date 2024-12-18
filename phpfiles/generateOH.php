@@ -42,10 +42,11 @@ if ($resultCourses && $resultCourses->num_rows > 0) {
     exit();
 }
 
-// Query for professor availability, names, and courses, filtered by the student's courses
+// Query for professor availability, names, IDs, and courses, filtered by the student's courses
 $query = "
     SELECT 
         e.LastName AS ProfessorName, 
+        e.EmployeeID AS ProfessorID,
         JSON_UNQUOTE(e.Courses) AS Courses, 
         pa.Availability
     FROM EmployeeInfo e
@@ -86,14 +87,22 @@ if ($result && $result->num_rows > 0) {
 
             // If the student is enrolled in any courses the professor teaches at this time
             if (!empty($coursesAtThisTime)) {
-                // Output the table row for each availability with concatenated courses
-                echo '<tr>';
+                // Output the table row for each availability with separate attributes
+                echo '<tr 
+                    data-professor-id="' . htmlspecialchars($row['ProfessorID']) . '" 
+                    data-date="' . htmlspecialchars($availability['date']) . '" 
+                    data-time="' . htmlspecialchars($availability['time']) . '" 
+                    data-course-codes="' . htmlspecialchars(implode(',', $coursesAtThisTime)) . '">';
                 echo '<td>Scheduled Event</td>';
                 echo '<td>' . htmlspecialchars($availability['date'] . ' - ' . $availability['time']) . '</td>';
                 echo '<td>' . htmlspecialchars($availability['location']) . '</td>';
-                echo '<td>' . htmlspecialchars($row['ProfessorName']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['ProfessorName'] . ' (' . $row['ProfessorID'] . ')') . '</td>'; // Name (ID) format
                 echo '<td>' . htmlspecialchars(implode(', ', $coursesAtThisTime)) . '</td>'; // Concatenate the courses
-                echo '<td><button class="book-btn" onclick="toggleBook(this)">Book</button></td>';
+                echo '<td><button class="book-btn" 
+                    data-professor-id="' . htmlspecialchars($row['ProfessorID']) . '" 
+                    data-date="' . htmlspecialchars($availability['date']) . '" 
+                    data-time="' . htmlspecialchars($availability['time']) . '" 
+                    onclick="toggleBook(this)">Book</button></td>';
                 echo '</tr>';
             }
         }

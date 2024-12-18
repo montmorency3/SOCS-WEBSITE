@@ -2,9 +2,6 @@
 // Start the session at the top of the page
 session_start();
 
-
-
-
 // Fetch session ID and data for debugging
 $sessionID = session_id();
 $sessionData = json_encode($_SESSION); // Convert session variables to JSON
@@ -207,27 +204,59 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
 
   <!-- JavaScript -->
   <script>
-    console.log('Session ID: <?php echo $sessionID; ?>');
-    console.log('Session Data:', <?php echo $sessionData; ?>);
+    // Array to store all booked events
+    let bookedEvents = [];
 
+    // Function to toggle the booking status of a button
     function toggleBook(button) {
+      const professorID = button.getAttribute('data-professor-id');
+      const date = button.getAttribute('data-date');
+      const time = button.getAttribute('data-time');
+
       if (button.innerText === "Book") {
         button.innerText = "Booked";
         button.classList.add("booked");
+
+        // Add the booking to the array
+        bookedEvents.push({ professorID, date, time });
       } else {
         button.innerText = "Book";
         button.classList.remove("booked");
+
+        // Remove the booking from the array
+        bookedEvents = bookedEvents.filter(event => !(event.professorID === professorID && event.date === date && event.time === time));
       }
     }
 
+    // Function to submit all booked events
     function submitBookings() {
-      const bookedButtons = document.querySelectorAll('.book-btn.booked');
-      if (bookedButtons.length > 0) {
-        alert("Your bookings have been successfully submitted!");
-      } else {
-        alert("No bookings have been made yet. Please book an event before submitting.");
-      }
-    }
+  if (bookedEvents.length > 0) {
+    console.log("Booked Events:", JSON.stringify(bookedEvents)); // Check the data to be sent
+
+    // Send data as JSON instead of query string
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "../phpfiles/newBooking.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    // Debug: Check if send is called
+    console.log("Sending data...");
+
+    xhr.send(JSON.stringify(bookedEvents));
+
+    xhr.onload = function () {
+      if (xhr.status == 200) {
+    console.log("Server Response:", xhr.responseText); // Debug response
+    alert("Your bookings have been successfully submitted!");
+    bookedEvents = [];
+  } else {
+    console.error("Server Error:", xhr.responseText);
+    alert("Error submitting bookings.");
+  }
+    };
+  } else {
+    alert("No bookings have been made yet. Please book an event before submitting.");
+  }
+}
   </script>
 </body>
 </html>
