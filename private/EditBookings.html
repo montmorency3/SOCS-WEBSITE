@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/private.css">
+
   <title>Manage Bookings</title>
   <style>
     /* Import Poppins Font */
@@ -226,31 +228,36 @@
     <button onclick="location.href='editbookings.html'">CREATE OFFICE HOUR</button>
     <ul>
     <li>
-      <a href="ProfessorDashboard.html" style="text-decoration: none; color: inherit;">
+      <a href="ProfessorDashboard.html"  class="link-dashboard" style="text-decoration: none; color: inherit;">
         🏠 My Dashboard
       </a>
     </li>
     <li>
-      <a href="ProfessorCalendar.html" style="text-decoration: none; color: inherit;">
+      <a href="ProfessorCalendar.html" class="link-calendar" style="text-decoration: none; color: inherit;">
         🗓 View Calendar
       </a>
     </li>
     <li>
-      <a href="CreatePoll.html" style="text-decoration: none; color: inherit;">
+      <a href="CreatePoll.html" class="link-create-poll" style="text-decoration: none; color: inherit;">
         📊 Create Poll
       </a>
     </li>
-    <li><a href="../phpfiles/viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
+    <li><a href="../phpfiles/viewpoll.php" class="link-view-poll" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
     <li>
-      <a href="EditBookings.html" style="text-decoration: none; color: inherit;">
+      <a href="EditBookings.html" class="link-manage" style="text-decoration: none; color: inherit;">
         ⚙ Manage Bookings
       </a>
     </li>
     </ul>
     <hr>
-    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
-        🔒 Log Out
-      </a></p>
+    <p>
+      <div class="lang_logout_container">
+        <a href="../public/landingpage.html" class="link-logout" style="text-decoration: none; color: inherit;">
+          🔒 Log Out
+        </a>
+        <a href="#" class="menu-language">FR</a>
+      </div>
+    </p>
   </aside>
 
   <!-- Main Content -->
@@ -329,5 +336,7 @@
     </div>
     
   </div>
+  <script src="assets/javascript/switchLanguageMenu.js"> </script>
+
 </body>
 </html>

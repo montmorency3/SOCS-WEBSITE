@@ -154,6 +154,8 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
     }
+
+    
   </style>
 </head>
 <body>
