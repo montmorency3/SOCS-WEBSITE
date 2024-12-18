@@ -20,7 +20,7 @@ if(ob_get_contents()) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professor Dashboard</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Link to external styles -->
+  <link rel="stylesheet" href="assets/css/private.css">
   <style>
     /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -234,32 +234,37 @@ if(ob_get_contents()) {
     <button onclick="location.href='../phpfiles/editbookings.php'">CREATE OFFICE HOUR</button>
     <ul>
       <li>
-        <a href="ProfessorDashboard.php" style="text-decoration: none; color: inherit;">
+        <a href="ProfessorDashboard.php" class="link-dashboard" style="text-decoration: none; color: inherit;">
           🏠 My Dashboard
         </a>
       </li>
       <li>
-        <a href="ProfessorCalendar.php" style="text-decoration: none; color: inherit;">
+        <a href="ProfessorCalendar.php" class="link-calendar" style="text-decoration: none; color: inherit;">
           🗓 View Calendar
         </a>
       </li>
       <li>
-        <a href="CreatePoll.html" style="text-decoration: none; color: inherit;">
+        <a href="CreatePoll.html" class="link-create-poll" style="text-decoration: none; color: inherit;">
           📊 Create Poll
         </a>
       </li>
       <li><a href="../phpfiles/viewpoll.php" class="link-view-poll" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
       <li>
-        <a href="../phpfiles/editbookings.php" style="text-decoration: none; color: inherit;">
+        <a href="../phpfiles/editbookings.php" class="link-manage" style="text-decoration: none; color: inherit;">
           ⚙ Manage Bookings
         </a>
       </li>
     </ul>
     <hr>
-    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
-        🔒 Log Out
-      </a>
+    <p>
+    <div class="lang_logout_container">
+        <a href="../public/landingpage.html" class="link-logout" style="text-decoration: none; color: inherit;">
+          🔒 Log Out
+        </a>
+        <a href="#" class="menu-language">FR</a>
+      </div>
     </p>
+
     <div class="day-summary">
       <h4>Day at a Glance</h4>
       <div class="summary-card">
@@ -289,5 +294,6 @@ if(ob_get_contents()) {
       ?>
     </tbody>
   </table>
+  <script src="assets/javascript/switchLanguageMenu.js"> </script>
 </body>
 </html>
