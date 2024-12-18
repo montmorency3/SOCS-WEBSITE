@@ -1,3 +1,4 @@
+-- Active: 1734491529260@@127.0.0.1@3306@phpmyadmin
 
 CREATE TABLE StudentInfo (
     StudentID INT PRIMARY KEY,
