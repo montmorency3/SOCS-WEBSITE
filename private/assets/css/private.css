@@ -3,3 +3,11 @@
     float:right;
     color:white;
 }
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+}
