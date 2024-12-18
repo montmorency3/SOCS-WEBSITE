@@ -239,7 +239,7 @@ if(ob_get_contents()) {
         </a>
       </li>
       <li>
-        <a href="ProfessorCalendar.html" style="text-decoration: none; color: inherit;">
+        <a href="ProfessorCalendar.php" style="text-decoration: none; color: inherit;">
           🗓 View Calendar
         </a>
       </li>
