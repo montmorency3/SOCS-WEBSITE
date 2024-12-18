@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Request Equipment</title>
+  <link rel="stylesheet" href="assets/css/private.css">
+
   <style>
     /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -173,39 +175,42 @@
 
   <!-- Sidebar -->
   <aside class="sidebar">
-    <h3>WELCOME</h3>
+    <h3>Vote on Poll</h3>
     <ul>
       <li>
-        <a href="studentdashboard.html">
+        <a href="studentdashboard.html" class="link-dashboard" style="text-decoration: none; color: inherit;">
           🏠 My Dashboard
         </a>
       </li>
       <li>
-        <a href="studentCalendar.html">
+        <a href="studentCalendar.html" class="link-calendar" style="text-decoration: none; color: inherit;">
           🗓 View Calendar
         </a>
       </li>
       <li>
-        <a href="VoteonPoll.html">
+        <a href="VoteonPoll.html" class="link-poll" style="text-decoration: none; color: inherit;">
           📊 Vote on Poll
         </a>
       </li>
       <li>
-        <a href="RequestOfficeHour.html">
+        <a href="RequestOfficeHour.html" class="link-office-hours" style="text-decoration: none; color: inherit;">
           📅 Request Office Hours
         </a>
       </li>
       <li>
-        <a href="RequestEquiptment.html">
+        <a href="RequestEquiptment.html" class="link-equipment" style="text-decoration: none; color: inherit;">
           💻 Request Equipment
         </a>
       </li>
     </ul>
     <hr>
     <p>
-      <a href="../public/landingpage.html">
-        🔒 Log Out
-      </a>
+      <div class="lang_logout_container">
+        <a href="../public/landingpage.html" class="link-logout" style="text-decoration: none; color: inherit;">
+          🔒 Log Out
+        </a>
+        <a href="#" class="menu-language">FR</a>
+      </div>
     </p>
   </aside>
 
@@ -253,5 +258,7 @@
       });
     });
   </script>
+    <script src="assets/javascript/switchLanguageStudents.js"> </script>
+
 </body>
 </html>

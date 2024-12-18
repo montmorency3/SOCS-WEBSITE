@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/private.css">
+
   <title>Office Hour Calendar</title>
 
   <!-- FullCalendar Library -->
@@ -242,39 +244,43 @@
 
   <!-- Sidebar Navigation -->
   <aside class="sidebar">
-    <h3>Calendar</h3>
+    <h3>Vote on Poll</h3>
     <ul>
       <li>
-        <a href="studentdashboard.html" style="text-decoration: none; color: inherit;">
+        <a href="studentdashboard.html" class="link-dashboard" style="text-decoration: none; color: inherit;">
           🏠 My Dashboard
         </a>
       </li>
       <li>
-        <a href="studentCalendar.html" style="text-decoration: none; color: inherit;">
+        <a href="studentCalendar.html" class="link-calendar" style="text-decoration: none; color: inherit;">
           🗓 View Calendar
         </a>
       </li>
       <li>
-        <a href="VoteonPoll.html" style="text-decoration: none; color: inherit;">
+        <a href="VoteonPoll.html" class="link-poll" style="text-decoration: none; color: inherit;">
           📊 Vote on Poll
         </a>
       </li>
       <li>
-        <a href="RequestOfficeHour.html" style="text-decoration: none; color: inherit;">
+        <a href="RequestOfficeHour.html" class="link-office-hours" style="text-decoration: none; color: inherit;">
           📅 Request Office Hours
         </a>
       </li>
       <li>
-        <a href="RequestEquiptment.html" style="text-decoration: none; color: inherit;">
+        <a href="RequestEquiptment.html" class="link-equipment" style="text-decoration: none; color: inherit;">
           💻 Request Equipment
         </a>
       </li>
-      </ul>
+    </ul>
     <hr>
-    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">
-      🔒 Log Out
-    </a>
-  </p>
+    <p>
+      <div class="lang_logout_container">
+        <a href="../public/landingpage.html" class="link-logout" style="text-decoration: none; color: inherit;">
+          🔒 Log Out
+        </a>
+        <a href="#" class="menu-language">FR</a>
+      </div>
+    </p>
   </aside>
 
   <!-- Calendar Container -->
@@ -327,5 +333,7 @@
       calendar.render();
     });
   </script>
+  <script src="assets/javascript/switchLanguageStudents.js"> </script>
+
 </body>
 </html>
