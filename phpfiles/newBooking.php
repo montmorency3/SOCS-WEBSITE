@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 ini_set('display_errors', 1);
@@ -15,6 +14,10 @@ $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+// Print session variables to the console log
+$sessionData = json_encode($_SESSION);
+echo "<script>console.log('Session Data: ', $sessionData);</script>";
 
 // Check if the request is a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -84,6 +87,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo "<script>console.log('No matching availability found for this booking.');</script>";
                 }
 
+                // After successfully updating the professor's availability, handle the student's booking
+                if (isset($_SESSION['userID'])) {
+                    $studentID = $_SESSION['userID'];
+                    $newBooking = [
+                        'professorID' => $professorID,
+                        'date' => $date,
+                        'time' => $time
+                    ];
+
+                    // Check if the student already has appointments
+                    $checkQuery = "SELECT Appointments FROM StudentAppointment WHERE StudentID = ?";
+                    $checkStmt = $conn->prepare($checkQuery);
+                    $checkStmt->bind_param("i", $studentID);
+                    $checkStmt->execute();
+                    $checkResult = $checkStmt->get_result();
+
+                    if ($checkResult->num_rows > 0) {
+                        // If the student already has bookings, append the new booking to the existing array
+                        $row = $checkResult->fetch_assoc();
+                        $existingBookings = json_decode($row['Appointments'], true);
+
+                        // Append new booking to the array
+                        $existingBookings[] = $newBooking;
+
+                        // Update the booking JSON in the database
+                        $updateQuery = "UPDATE StudentAppointment SET Appointments = ? WHERE StudentID = ?";
+                        $updateStmt = $conn->prepare($updateQuery);
+                        $updateStmt->bind_param("si", json_encode($existingBookings), $studentID);
+                        $updateStmt->execute();
+
+                        if ($updateStmt->affected_rows > 0) {
+                            echo "<script>console.log('New booking successfully added to StudentAppointments for student $studentID.');</script>";
+                        } else {
+                            echo "<script>console.log('Failed to update booking in StudentAppointments.');</script>";
+                        }
+
+                        $updateStmt->close();
+                    } else {
+                        // If the student does not have any bookings, insert a new record with the first booking
+                        $insertQuery = "INSERT INTO StudentAppointment (StudentID, Appointments) VALUES (?, ?)";
+                        $insertStmt = $conn->prepare($insertQuery);
+                        $insertStmt->bind_param("is", $studentID, json_encode([$newBooking]));
+                        $insertStmt->execute();
+
+                        if ($insertStmt->affected_rows > 0) {
+                            echo "<script>console.log('Booking successfully added to StudentAppointments for student $studentID.');</script>";
+                        } else {
+                            echo "<script>console.log('Failed to insert booking into StudentAppointments.');</script>";
+                        }
+
+                        $insertStmt->close();
+                    }
+
+                    $checkStmt->close();
+                } else {
+                    echo "<script>console.log('Student ID not found in session.');</script>";
+                }
             } else {
                 echo "<script>console.log('Professor ID $professorID not found in the database.');</script>";
             }

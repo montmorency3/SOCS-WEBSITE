@@ -1,103 +1,96 @@
 <?php
-session_start();
-$_SESSION['ProfessorID'] = 666; // Hardcoded for testing purposes
+//Enable Error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
+$_SESSION['ProfessorID'] = 111; // Hardcoded for testing purposes
 
 // Database connection
 $host = "127.0.0.1";
-$dbname = "phpmyadmin";
+$dbname = "phpmyadmin"; //update
 $username = "root";
 $password = "";
 
 // Establish connection
 $conn = new mysqli($host, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+
 
 $successMessage = '';
 $errorMessage = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Input variables
-    $professorID = $_SESSION['ProfessorID'];
-    $date = $_POST['date'];
-    $startTime = $_POST['startTime'];
-    $endTime = $_POST['endTime'];
-    $location = $_POST['location'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Collect form data
+    $professorID = isset($_SESSION['ProfessorID']) ? $_SESSION['ProfessorID'] : null;
+    $title = isset($_POST['title']) ? $_POST['title'] : null;
+    $course = isset($_POST['course']) ? $_POST['course'] : null;
+    $date = isset($_POST['date']) ? $_POST['date'] : null;
+    $startTime = isset($_POST['startTime']) ? $_POST['startTime'] : null;
+    $endTime = isset($_POST['endTime']) ? $_POST['endTime'] : null;
+    $location = isset($_POST['location']) ? $_POST['location'] : null;
 
-    // Validation: Check empty fields
-    if (empty($date) || empty($startTime) || empty($endTime) || empty($location)) {
-        $errorMessage = "Please fill out all required fields.";
-    } else {
-        // Prepare the new availability slot as JSON
-        $newAvailability = json_encode([
-            ["date" => $date, "time" => "$startTime - $endTime", "location" => $location]
-        ]);
-
-        // SQL Query with ON DUPLICATE KEY UPDATE
-        $insertQuery = "INSERT INTO ProfessorAvailability (ProfessorID, Availability) VALUES (?, ?)
-                        ON DUPLICATE KEY UPDATE Availability = VALUES(Availability)";
-        $stmt = $conn->prepare($insertQuery);
-        if ($stmt) {
-            $stmt->bind_param("is", $professorID, $newAvailability);
-            if ($stmt->execute()) {
-                $successMessage = "Office hours updated successfully!";
-            } else {
-                $errorMessage = "Error updating office hours: " . $stmt->error;
-            }
-            $stmt->close();
-        } else {
-            $errorMessage = "Database query failed: " . $conn->error;
-        }
+    // Validate required fields
+    if (!$title || !$course || !$date || !$startTime || !$endTime || !$location) {
+        die("All fields are required. Please fill in the form correctly.");
     }
-    $conn->close();
+
+    // Sanitize input to prevent XSS
+    $title = htmlspecialchars($title);
+    $course = htmlspecialchars($course);
+    $date = htmlspecialchars($date);
+    $startTime = htmlspecialchars($startTime);
+    $endTime = htmlspecialchars($endTime);
+    $location = htmlspecialchars($location);
+
+    // New booking object
+    $newBooking = [
+        "title" => $title,
+        "course" => $course,
+        "date" => $date,
+        "time" => "$startTime - $endTime",
+        "location" => $location
+    ];
+
+    // Check if the professor already has a row in the table
+    $sql = "SELECT Availability FROM ProfessorAvailability WHERE ProfessorID = '$professorID'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // If row exists, fetch current Availability
+        $row = $result->fetch_assoc();
+        $currentAvailability = json_decode($row['Availability'], true); // Decode JSON array
+
+        // Append the new booking
+        $currentAvailability[] = $newBooking;
+    } else {
+        // If no row exists, initialize with the new booking
+        $currentAvailability = [$newBooking];
+    }
+
+    // Re-encode the updated availability to JSON
+    $updatedAvailability = json_encode($currentAvailability);
+
+    // Insert or update the row
+    $sql = "INSERT INTO ProfessorAvailability (ProfessorID, Availability) 
+            VALUES ('$professorID', '$updatedAvailability') 
+            ON DUPLICATE KEY UPDATE Availability = '$updatedAvailability'";
+
+    // Execute the query and handle success or failure
+    if ($conn->query($sql) === TRUE) {
+        echo "Office hours updated successfully!";
+        echo "<br><br>";
+        echo "Submitted Data:";
+        echo "<br>Title: " . $title;
+        echo "<br>Course: " . $course;
+        echo "<br>Date: " . $date;
+        echo "<br>Time: " . $startTime . " - " . $endTime;
+        echo "<br>Location: " . $location;
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
 }
+        $conn->close();
+        ?>
+
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Office Hours</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        label { display: block; margin-top: 10px; }
-        input, button { margin-top: 5px; padding: 8px; width: 100%; }
-        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-        .success-message { color: green; font-weight: bold; text-align: center; }
-        .error-message { color: red; font-weight: bold; text-align: center; }
-        form { max-width: 400px; margin: auto; }
-    </style>
-</head>
-<body>
-    <h2>Manage Office Hours</h2>
-
-    <!-- Success or Error Messages -->
-    <?php if (!empty($successMessage)): ?>
-        <p class="success-message"><?php echo $successMessage; ?></p>
-    <?php endif; ?>
-
-    <?php if (!empty($errorMessage)): ?>
-        <p class="error-message"><?php echo $errorMessage; ?></p>
-    <?php endif; ?>
-
-    <!-- Form -->
-    <form method="POST" action="">
-        <label>Date:</label>
-        <input type="date" name="date" required>
-
-        <label>Start Time:</label>
-        <input type="time" name="startTime" required>
-
-        <label>End Time:</label>
-        <input type="time" name="endTime" required>
-
-        <label>Location:</label>
-        <input type="text" name="location" placeholder="Enter Location" required>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
