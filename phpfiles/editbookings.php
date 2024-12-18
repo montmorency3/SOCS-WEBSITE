@@ -1,8 +1,10 @@
 <?php
-//Enable Error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Start the session
+session_start();
 
+// Fetch session ID and data for debugging purposes
+$sessionID = session_id();
+$sessionData = json_encode($_SESSION);
 
 $_SESSION['ProfessorID'] = 111; // Hardcoded for testing purposes
 
