@@ -1,3 +1,4 @@
+
 CREATE TABLE Polls (
     id INT AUTO_INCREMENT PRIMARY KEY,
     poll_title VARCHAR(255) NOT NULL,
