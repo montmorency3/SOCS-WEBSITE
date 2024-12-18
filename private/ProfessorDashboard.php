@@ -1,7 +1,18 @@
 <?php
 session_start();
-// Include the PHP logic file that generates the professor's meetings
-include('generateProfMeetings.php');
+
+
+// Fetch session ID and data for debugging
+$sessionID = session_id();
+$sessionData = json_encode($_SESSION); // Convert session variables to JSON
+
+ob_start();
+include '../phpfiles/generateProfMeetings.php';
+if(ob_get_contents()) {
+  $generateOHContent = ob_get_clean();
+} else {
+  $generateOHContent = "Error loading content";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -217,10 +228,7 @@ include('generateProfMeetings.php');
   </style>
 </head>
 <body>
-  <!-- Background Image -->
   <div class="background"></div>
-
-  <!-- Sidebar -->
   <aside class="sidebar">
     <h3>WELCOME</h3>
     <button onclick="location.href='EditBookings.html'">CREATE OFFICE HOUR</button>
@@ -254,13 +262,12 @@ include('generateProfMeetings.php');
     <div class="day-summary">
       <h4>Day at a Glance</h4>
       <div class="summary-card">
-        <h2><?php echo $bookedCount; ?></h2>
+        <h2><?php echo $upcomingBookingsCount; ?></h2>
         <p>Upcoming Booked Events</p>
       </div>
     </div>
   </aside>
-
-  <!-- Hero Section -->
+  
   <div class="hero">
     Professor Dashboard
   </div>
@@ -272,24 +279,13 @@ include('generateProfMeetings.php');
         <th>Event</th>
         <th>Date & Time</th>
         <th>Location</th>
-        <th>More Info</th>
       </tr>
     </thead>
     <tbody>
-      <?php if ($bookedCount > 0): ?>
-        <?php foreach ($bookedAppointments as $appointment): ?>
-          <tr>
-            <td><?php echo htmlspecialchars($appointment['event']); ?></td>
-            <td><?php echo htmlspecialchars($appointment['date']); ?></td>
-            <td><?php echo htmlspecialchars($appointment['location']); ?></td>
-            <td><a href="#" class="event-link">More Info</a></td>
-          </tr>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <tr>
-          <td colspan="4">No booked events available.</td>
-        </tr>
-      <?php endif; ?>
+      <?php 
+      // This will output the booked events
+      echo $generateOHContent; 
+      ?>
     </tbody>
   </table>
 </body>

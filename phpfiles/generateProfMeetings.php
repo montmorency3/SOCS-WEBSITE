@@ -26,7 +26,7 @@ $query = "
     SELECT 
         el.LastName AS ProfessorName, 
         pa.Availability
-    FROM EmployeeLogin el
+    FROM EmployeeInfo el
     JOIN ProfessorAvailability pa ON el.EmployeeID = pa.ProfessorID
     WHERE el.EmployeeID = '$professorID'
 ";
@@ -35,6 +35,9 @@ $result = $conn->query($query);
 
 // Array to track time slots to avoid duplicates
 $seenTimeSlots = [];
+
+// Variable to count the number of upcoming bookings
+$upcomingBookingsCount = 0;
 
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -54,6 +57,9 @@ if ($result && $result->num_rows > 0) {
                 continue; // Skip this availability if it's not 'B' (Booked)
             }
 
+            // Increment the upcoming bookings count
+            $upcomingBookingsCount++;
+
             // Output the table row for each booked availability with only Event, Date & Time, Location
             echo '<tr>';
             echo '<td>Booked Event</td>';
@@ -66,6 +72,9 @@ if ($result && $result->num_rows > 0) {
     // No booked events found
     echo '<tr><td colspan="3">No booked events for this professor.</td></tr>';
 }
+
+// Output the number of upcoming bookings
+echo "<p>Total upcoming bookings: $upcomingBookingsCount</p>";
 
 $conn->close();
 ?>

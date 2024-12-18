@@ -2,6 +2,9 @@
 // Start the session at the top of the page
 session_start();
 
+
+
+
 // Fetch session ID and data for debugging
 $sessionID = session_id();
 $sessionData = json_encode($_SESSION); // Convert session variables to JSON
