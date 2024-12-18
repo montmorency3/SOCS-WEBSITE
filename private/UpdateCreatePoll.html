@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manage Bookings</title>
+  <title>Create Poll</title>
   <style>
     /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
-      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
       background-color: #FDFEFD;
       color: #27455A;
       display: flex;
-      flex-direction: column;
+      height: 100vh;
     }
 
     /* Background Image */
@@ -102,8 +100,7 @@
     .main-content {
       margin-left: 270px;
       padding: 30px;
-      width: calc(95% - 270px);
-
+      width: calc(100% - 270px);
     }
 
     .main-header {
@@ -147,15 +144,27 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* Two columns for time inputs */
-    .time-row {
+    /* Flexbox Row for Alignment */
+    .form-row {
       display: flex;
-      justify-content: space-between;
-      gap: 20px;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
-    .time-row .form-group {
+    .form-row label {
+      font-weight: 600;
+      flex: 0 0 100px; /* Consistent width for all labels */
+      text-align: left;
+    }
+
+    .form-row input, .form-row select {
       flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
     }
 
     .button-group {
@@ -189,31 +198,6 @@
     .btn-cancel:hover {
       background-color: #95A5A6;
     }
-
-
-    
-
-      @media (max-width: 600px) {
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%; /* Full width for sidebar */
-    position: relative; /* Remove fixed positioning to stack */
-    height: auto; /* Adjust height to content */
-    padding: 0px;
-    margin: 0px;
-  }
-
-  .main-content {
-    margin-left: 0; /* Remove left margin to prevent offset */
-    width: 100%; /* Full width for the main content */
-    margin: 0px;
-    padding: 0px;
-  }
-}
   </style>
 </head>
 <body>
@@ -222,8 +206,8 @@
 
   <!-- Sidebar -->
   <aside class="sidebar">
-    <h3>Manage Bookings</h3>
-    <button onclick="location.href='editbookings.html'">CREATE OFFICE HOUR</button>
+    <h3>Create Poll</h3>
+    <button onclick="location.href='EditBookings.html'">CREATE OFFICE HOUR</button>
     <ul>
     <li>
       <a href="ProfessorDashboard.html" style="text-decoration: none; color: inherit;">
@@ -240,7 +224,6 @@
         📊 Create Poll
       </a>
     </li>
-    <li><a href="../phpfiles/viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
     <li>
       <a href="EditBookings.html" style="text-decoration: none; color: inherit;">
         ⚙ Manage Bookings
@@ -256,19 +239,41 @@
   <!-- Main Content -->
   <div class="main-content">
     <div class="main-header">
-      <h1>Manage Bookings</h1>
+      <h1>Create Poll</h1>
     </div>
 
     <div class="form-container">
-      <form action="../phpfiles/editbookings.php" method="POST">
-        <!-- Title -->
-        <div class="form-group">
-          <label for="title">Event Title</label>
-          <input type="text" id="title" name="title" placeholder="Enter event title" required>
+      <form action="../phpfiles/poll.php" method="POST">
+        <!-- Poll Title -->
+        <div class="form-row">
+          <label for="pollTitle">Poll Title</label>
+          <input type="text" id="pollTitle" name="pollTitle" placeholder="Enter poll title" required>
         </div>
-    
+
+        <!-- Date and Time Rows -->
+        <div class="form-row">
+          <label for="date1">Date 1</label>
+          <input type="date" id="date1" name="date1" required>
+          <label for="time1">Time 1</label>
+          <input type="time" id="time1" name="time1" required>
+        </div>
+
+        <div class="form-row">
+          <label for="date2">Date 2</label>
+          <input type="date" id="date2" name="date2" required>
+          <label for="time2">Time 2</label>
+          <input type="time" id="time2" name="time2" required>
+        </div>
+
+        <div class="form-row">
+          <label for="date3">Date 3</label>
+          <input type="date" id="date3" name="date3" required>
+          <label for="time3">Time 3</label>
+          <input type="time" id="time3" name="time3" required>
+        </div>
+
         <!-- Course Selection -->
-        <div class="form-group">
+        <div class="form-row">
           <label for="course">Course</label>
           <select id="course" name="course" required>
             <option value="">Select Course</option>
@@ -277,57 +282,14 @@
             <option value="COMP307">COMP307</option>
           </select>
         </div>
-    
-        <!-- Date -->
-        <div class="form-group">
-          <label for="date">Date</label>
-          <input type="date" id="date" name="date" required>
-        </div>
-    
-        <!-- Time Inputs in Same Row -->
-        <div class="time-row">
-          <div class="form-group">
-            <label for="startTime">Start Time</label>
-            <input type="time" id="startTime" name="startTime" required>
-          </div>
-          <div class="form-group">
-            <label for="endTime">End Time</label>
-            <input type="time" id="endTime" name="endTime" required>
-          </div>
-        </div>
-    
-        <!-- Recurrence -->
-        <div class="form-group">
-          <label for="recurrence">Occurrence</label>
-          <select id="recurrence" name="recurrence">
-            <option value="none">None</option>
-            <option value="weekly">Weekly</option>
-            <option value="biweekly">Biweekly</option>
-            <option value="monthly">Monthly</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-    
-        <!-- End Date -->
-        <div class="form-group">
-          <label for="endDate">End Date</label>
-          <input type="date" id="endDate" name="endDate">
-        </div>
-    
-        <!-- Location -->
-        <div class="form-group">
-          <label for="location">Location</label>
-          <input type="text" id="location" name="location" placeholder="Enter location or link">
-        </div>
-    
-        <!-- Buttons -->
+
+        <!-- Submit and Cancel Buttons -->
         <div class="button-group">
-          <button type="submit" class="btn-save">Save Changes</button>
-          <button type="button" class="btn-cancel" onclick="window.location.href='ProfessorDashboard.html';">Cancel</button>
+          <button type="submit" class="btn-save">Create Poll</button>
+          <button type="button" class="btn-cancel" onclick="location.href='ProfessorDashboard.html'">Cancel</button>
         </div>
       </form>
     </div>
-    
   </div>
 </body>
 </html>
