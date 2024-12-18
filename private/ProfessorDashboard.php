@@ -1,9 +1,14 @@
+<?php
+session_start();
+// Include the PHP logic file that generates the professor's meetings
+include('generateProfMeetings.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Dashboard</title>
+  <title>Professor Dashboard</title>
   <link rel="stylesheet" href="styles.css"> <!-- Link to external styles -->
   <style>
     /* Import Poppins Font */
@@ -62,9 +67,9 @@
     }
     
     /* Hover Effect */
-      .sidebar button:hover {
+    .sidebar button:hover {
       background-color: #f4f4f4;
-  }
+    }
 
     .sidebar ul {
       list-style: none;
@@ -72,7 +77,7 @@
       margin-bottom: 0;
     }
 
-    .sidebar li:hover{
+    .sidebar li:hover {
       transform: translateX(5px);
     }
     
@@ -183,18 +188,8 @@
       text-decoration: underline;
     }
 
-    /* Responsive Adjustments
-    @media (max-width: 820px) {
-      .sidebar {
-        width: 200px;
-      }
-      .hero, .events-table {
-        margin-left: 220px;
-      }
-    } */
-
+    /* Responsive Adjustments */
     @media (max-width: 850px) {
-
       body{
         width:100vw;
       }
@@ -210,14 +205,14 @@
         width: 100%;
       }
 
-      button{
-        width:100vw;
-      }
-      .hero{
-        display:none;
-        margin-top: 200px;
+      button {
+        width: 100vw;
       }
 
+      .hero {
+        display: none;
+        margin-top: 200px;
+      }
     }
   </style>
 </head>
@@ -259,16 +254,8 @@
     <div class="day-summary">
       <h4>Day at a Glance</h4>
       <div class="summary-card">
-        <h2>12</h2>
-        <p>Upcoming Events</p>
-      </div>
-      <div class="summary-card">
-        <h2>5</h2>
-        <p>Office Hours Today</p>
-      </div>
-      <div class="summary-card">
-        <h2>8</h2>
-        <p>Student Bookings</p>
+        <h2><?php echo $bookedCount; ?></h2>
+        <p>Upcoming Booked Events</p>
       </div>
     </div>
   </aside>
@@ -289,36 +276,21 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Bot Detection Workshop</td>
-        <td>Dec 10, 2024 - 3:00 PM</td>
-        <td>Online</td>
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
-      <tr>
-        <td>Research Team Meeting</td>
-        <td>Dec 15, 2024 - 1:00 PM</td>
-        <td>Room 101</td>
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
-      <tr>
-        <td>Web Development Training</td>
-        <td>Dec 20, 2024 - 10:00 AM</td>
-        <td>Online</td>
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
-      <tr>
-        <td>Bot Detection Hackathon</td>
-        <td>Jan 5, 2025 - 9:00 AM</td>
-
-  
-
-        <td>Campus Hall</td>
-
-        <td><a href="#" class="event-link">More Info</a></td>
-      </tr>
+      <?php if ($bookedCount > 0): ?>
+        <?php foreach ($bookedAppointments as $appointment): ?>
+          <tr>
+            <td><?php echo htmlspecialchars($appointment['event']); ?></td>
+            <td><?php echo htmlspecialchars($appointment['date']); ?></td>
+            <td><?php echo htmlspecialchars($appointment['location']); ?></td>
+            <td><a href="#" class="event-link">More Info</a></td>
+          </tr>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <tr>
+          <td colspan="4">No booked events available.</td>
+        </tr>
+      <?php endif; ?>
     </tbody>
   </table>
-
 </body>
 </html>

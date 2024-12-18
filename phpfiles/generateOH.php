@@ -30,7 +30,6 @@ $queryStudentCourses = "
     WHERE StudentID = '$studentID'
 ";
 
-
 $resultCourses = $conn->query($queryStudentCourses);
 $courses = [];
 
@@ -71,6 +70,11 @@ if ($result && $result->num_rows > 0) {
                 continue; // Skip this time slot if it's already been processed
             }
             $seenTimeSlots[] = $timeSlot; // Mark the time slot as seen
+
+            // Check if the status of the appointment is 'NB' (Not Booked)
+            if ($availability['status'] !== 'NB') {
+                continue; // Skip this availability if it's not 'NB' (Not Booked)
+            }
 
             // Collect courses that the student is enrolled in and that the professor teaches
             $coursesAtThisTime = [];

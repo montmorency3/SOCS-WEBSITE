@@ -83,21 +83,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['userID'] = $userID;
             $_SESSION['email'] = $email;
             $_SESSION['role'] = $role;
-
+        
             // Successful login
-            // Redirect to the student dashboard
-            header("Location: ../private/studentdashboard.php");
+            if ($role === 'student') {
+                // Redirect to the student dashboard
+                header("Location: ../private/studentdashboard.php");
+            } elseif ($role === 'employee') {
+                // Redirect to the professor dashboard
+                header("Location: ../private/ProfessorDashboard.php");
+            }
             exit();  // Ensure no further code is executed after the redirect
         } else {
             // Login failed
             echo "Invalid credentials.";
-        } 
-    } else {
-        // Login failed
-        echo "Invalid credentials or email domain mismatch.";
+        }
     }
-}
 
+}
 // Close database connection
 $conn->close();
 ?>
