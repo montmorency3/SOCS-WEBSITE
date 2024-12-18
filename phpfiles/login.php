@@ -75,11 +75,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Fetch user info
         $row = $result->fetch_assoc();
         $storedPassword = $row['Password']; // The hashed password from the database
-
+    
         // Verify if the password matches the hashed password
         if (password_verify($userPassword, $storedPassword)) {
             // Successful login
-            echo "Login successful! Welcome " . htmlspecialchars($role) . " with Email: " . htmlspecialchars($email);
+            session_start(); // Start a session if needed
+            $_SESSION['user_email'] = $email; // Store user information in session if necessary
+            
+            // Redirect to login.html
+            header("Location: login.html");
+            exit(); // Stop further execution after redirect
         } else {
             // Login failed
             echo "Invalid credentials.";
@@ -89,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Invalid credentials or email domain mismatch.";
         echo "Query: " . $query;
     }
+
 }
 
 // Close database connection
