@@ -32,6 +32,28 @@ $conn = new mysqli($host, $username, $password, $dbname);
 $successMessage = '';
 $errorMessage = '';
 
+// Fetch courses taught by the professor
+$courses = [];
+$sql = "SELECT Courses FROM EmployeeInfo WHERE EmployeeID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $professorID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $coursesJson = $row['Courses'];
+
+    // Decode JSON courses
+    $courses = json_decode($coursesJson, true);
+    if (empty($courses)) {
+        $courses[] = "No courses found"; // Fallback if JSON is empty
+    }
+} else {
+    $courses[] = "No courses found"; // Handle case when no courses are assigned
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
     $professorID = isset($_SESSION['ProfessorID']) ? $_SESSION['ProfessorID'] : null;
@@ -379,15 +401,18 @@ $conn->close();
         </div>
     
         <!-- Course Selection -->
-        <div class="form-group">
-          <label for="course">Course</label>
-          <select id="course" name="course" required>
-            <option value="">Select Course</option>
-            <option value="COMP202">COMP202</option>
-            <option value="COMP303">COMP303</option>
-            <option value="COMP307">COMP307</option>
-          </select>
+            <div class="form-group">
+            <label for="course">Course</label>
+            <select id="course" name="course" required>
+                <option value="">Select Course</option>
+                <?php foreach ($courses as $course): ?>
+                    <option value="<?php echo htmlspecialchars($course); ?>">
+                        <?php echo htmlspecialchars($course); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
+
     
         <!-- Date -->
         <div class="form-group">
