@@ -3,6 +3,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+session_start();
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
+    echo "You must be logged in as a professor to view this page.";
+    exit();
+}
+
 // Database configuration
 $host = "localhost";
 $dbname = "phpmyadmin"; // Your database name
@@ -206,7 +212,7 @@ $conn->close();
   <!-- Sidebar -->
   <aside class="sidebar">
     <h3>Poll Results</h3>
-    <button onclick="location.href='EditBookings.html'">CREATE OFFICE HOUR</button>
+    <button onclick="location.href='../private/EditBookings.html'">CREATE OFFICE HOUR</button>
     <ul>
     <li>
       <a href="../private/ProfessorDashboard.php" style="text-decoration: none; color: inherit;">

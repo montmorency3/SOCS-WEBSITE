@@ -3,6 +3,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+session_start();
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'student') {
+    echo "You must be logged in as a student to vote.";
+    exit();
+}
+
 // Database configuration
 $host = "localhost";
 $dbname = "phpmyadmin"; // Update to your DB name
