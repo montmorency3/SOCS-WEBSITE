@@ -42,12 +42,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endTime = htmlspecialchars($endTime);
     $location = htmlspecialchars($location);
 
-    // Prepare the INSERT query
+    // New booking object
+    $newBooking = [
+        "title" => $title,
+        "course" => $course,
+        "date" => $date,
+        "time" => "$startTime - $endTime",
+        "location" => $location
+    ];
+
+    // Check if the professor already has a row in the table
+    $sql = "SELECT Availability FROM ProfessorAvailability WHERE ProfessorID = '$professorID'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // If row exists, fetch current Availability
+        $row = $result->fetch_assoc();
+        $currentAvailability = json_decode($row['Availability'], true); // Decode JSON array
+
+        // Append the new booking
+        $currentAvailability[] = $newBooking;
+    } else {
+        // If no row exists, initialize with the new booking
+        $currentAvailability = [$newBooking];
+    }
+
+    // Re-encode the updated availability to JSON
+    $updatedAvailability = json_encode($currentAvailability);
+
+    // Insert or update the row
     $sql = "INSERT INTO ProfessorAvailability (ProfessorID, Availability) 
-        VALUES ('$professorID', 
-        '[{\"title\":\"$title\",\"course\":\"$course\",\"date\":\"$date\",\"time\":\"$startTime - $endTime\",\"location\":\"$location\"}]')
-        ON DUPLICATE KEY UPDATE 
-        Availability = '[{\"title\":\"$title\",\"course\":\"$course\",\"date\":\"$date\",\"time\":\"$startTime - $endTime\",\"location\":\"$location\"}]'";
+            VALUES ('$professorID', '$updatedAvailability') 
+            ON DUPLICATE KEY UPDATE Availability = '$updatedAvailability'";
 
     // Execute the query and handle success or failure
     if ($conn->query($sql) === TRUE) {
