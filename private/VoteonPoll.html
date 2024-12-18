@@ -319,39 +319,20 @@
   </aside>
 
   <!-- Main Content -->
-  <div class="main-content">
-    <div class="main-container">
-      <h1>Vote on OH Poll</h1>
-      <h3><?= htmlspecialchars($pollData['poll_title']) ?> (<?= htmlspecialchars($pollData['course']) ?>)</h3>
-      <div class="rank-list" id="rankList">
-        <div class="rank-row" data-index="1">
-          <div class="rank-number">1</div>
-          <div class="rank-item" draggable="true">
-            <?= formatDateTime($pollData['date1'], $pollData['time1']); ?>
-          </div>
-        </div>
-        <div class="rank-row" data-index="2">
-          <div class="rank-number">2</div>
-          <div class="rank-item" draggable="true">
-            <?= formatDateTime($pollData['date2'], $pollData['time2']); ?>
-          </div>
-        </div>
-        <div class="rank-row" data-index="3">
-          <div class="rank-number">3</div>
-          <div class="rank-item" draggable="true">
-            <?= formatDateTime($pollData['date3'], $pollData['time3']); ?>
-          </div>
-        </div>
-        <div class="rank-row" data-index="4">
-          <div class="rank-number">4</div>
-          <div class="rank-item" draggable="true">
-            <?= formatDateTime($pollData['date4'], $pollData['time4']); ?>
-          </div>
-        </div>
-      </div>
-      <button class="submit-btn">SUBMIT</button>
+<div class="main-content">
+  <div class="main-container">
+    <h1>Vote on OH Poll</h1>
+    <h3>No polls to vote on</h3>
+    <div class="rank-list" id="rankList">
+      <p style="text-align: center; font-size: 1rem; color: #555;">
+        No polls available at the moment. Please check back later.
+      </p>
     </div>
+    <a href="VoteonPoll.php">
+      <button class="submit-btn">Refresh</button>
+    </a>
   </div>
+</div>
 
 
   <!-- Drag-and-Drop JavaScript -->

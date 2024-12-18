@@ -25,7 +25,9 @@ $pollData = [];
 if ($result && $result->num_rows > 0) {
     $pollData = $result->fetch_assoc();
 } else {
-    die("No poll data found.");
+    // Redirect to VoteonPoll.html if no data is found
+    header("Location: VoteonPoll.html");
+    exit; // Make sure to stop further execution
 }
 
 // Helper function to format date and time
@@ -36,40 +38,42 @@ function formatDateTime($date, $time) {
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $ranks = $_POST['rank']; // Array of ranks [1, 2, 3, 4] with positions
-    $pollId = intval($_POST['poll_id']);
+  $ranks = $_POST['rank']; // Array of original 'data-index' values
+  $pollId = intval($_POST['poll_id']);
 
-    if (count($ranks) === 4) {
-        // Points system: 1st = 4 points, 2nd = 3 points, 3rd = 2 points, 4th = 1 point
-        $points = [4, 3, 2, 1];
-        $voteCounts = [0, 0, 0, 0];
+  if (count($ranks) === 4) {
+      // Points system: 1st = 4 points, 2nd = 3 points, 3rd = 2 points, 4th = 1 point
+      $points = [4, 3, 2, 1];
 
-        foreach ($ranks as $index => $rank) {
-            // Map the ranks to the correct votes field (vote1, vote2, etc.)
-            $voteCounts[$rank - 1] = $points[$index];
-        }
+      // Initialize votes array
+      $voteCounts = [0, 0, 0, 0];
 
-        // SQL to update the votes
-        $sql = "UPDATE Polls 
-                SET votes1 = votes1 + ?, 
-                    votes2 = votes2 + ?, 
-                    votes3 = votes3 + ?, 
-                    votes4 = votes4 + ? 
-                WHERE id = ?";
+      foreach ($ranks as $position => $dataIndex) {
+          // Subtract 1 to map to the correct index (e.g., dataIndex=1 maps to votes1)
+          $voteCounts[$dataIndex - 1] = $points[$position];
+      }
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iiiii", $voteCounts[0], $voteCounts[1], $voteCounts[2], $voteCounts[3], $pollId);
+      // SQL to update the votes
+      $sql = "UPDATE Polls 
+              SET votes1 = votes1 + ?, 
+                  votes2 = votes2 + ?, 
+                  votes3 = votes3 + ?, 
+                  votes4 = votes4 + ? 
+              WHERE id = ?";
 
-        if ($stmt->execute()) {
-            echo "<script>alert('Votes submitted successfully!');</script>";
-        } else {
-            echo "<script>alert('Error updating votes: " . $stmt->error . "');</script>";
-        }
+      $stmt = $conn->prepare($sql);
+      $stmt->bind_param("iiiii", $voteCounts[0], $voteCounts[1], $voteCounts[2], $voteCounts[3], $pollId);
 
-        $stmt->close();
-    } else {
-        echo "<script>alert('Invalid vote submission.');</script>";
-    }
+      if ($stmt->execute()) {
+          echo "<script>alert('Votes submitted successfully!');</script>";
+      } else {
+          echo "<script>alert('Error updating votes: " . $stmt->error . "');</script>";
+      }
+
+      $stmt->close();
+  } else {
+      echo "<script>alert('Invalid vote submission.');</script>";
+  }
 }
 
 $conn->close();
@@ -265,7 +269,7 @@ $conn->close();
     <ul>
       <li><a href="studentdashboard.html" class="link-dashboard" style="text-decoration: none; color: inherit;">🏠 My Dashboard</a></li>
       <li><a href="studentCalendar.html" class="link-calendar" style="text-decoration: none; color: inherit;">🗓 View Calendar</a></li>
-      <li><a href="VoteonPoll.html" class="link-poll" style="text-decoration: none; color: inherit;">📊 Vote on Poll</a></li>
+      <li><a href="VoteonPoll.php" class="link-poll" style="text-decoration: none; color: inherit;">📊 Vote on Poll</a></li>
       <li><a href="RequestOfficeHour.html" class="link-office-hours" style="text-decoration: none; color: inherit;">📅 Request Office Hours</a></li>
       <li><a href="RequestEquiptment.html" class="link-equipment" style="text-decoration: none; color: inherit;">💻 Request Equipment</a></li>
     </ul>
@@ -341,17 +345,23 @@ $conn->close();
       const targetRow = e.target.closest(".rank-row");
       if (targetRow && draggedItem) {
         const draggedRow = draggedItem.parentNode;
-        const tempContent = targetRow.querySelector(".rank-item").innerHTML;
 
-        // Swap contents only, numbers remain fixed
-        targetRow.querySelector(".rank-item").innerHTML = draggedItem.innerHTML;
-        draggedItem.innerHTML = tempContent;
-        updateRanks();
+        // Swap the whole rows instead of just swapping contents
+        rankList.insertBefore(draggedRow, targetRow);
+        rankList.insertBefore(targetRow, draggedRow.nextSibling);
+
+        updateRanks(); // Ensure the ranks are updated
       }
     });
+
     function updateRanks() {
-      rankRows.forEach((row, index) => {
-        row.querySelector("input[name='rank[]']").value = index + 1;
+      const rows = document.querySelectorAll(".rank-row");
+      rows.forEach((row, index) => {
+        // Update the rank number visually
+        row.querySelector(".rank-number").textContent = index + 1;
+
+        // Update the hidden input value for submission
+        row.querySelector("input[name='rank[]']").value = row.getAttribute("data-index");
       });
     }
   </script>
