@@ -318,21 +318,21 @@ $conn->close();
     <button onclick="location.href='editbookings.php'">CREATE OFFICE HOUR</button>
     <ul>
     <li>
-      <a href="ProfessorDashboard.php" style="text-decoration: none; color: inherit;">
+      <a href="../private/ProfessorDashboard.php" style="text-decoration: none; color: inherit;">
         🏠 My Dashboard
       </a>
     </li>
     <li>
-      <a href="ProfessorCalendar.html" style="text-decoration: none; color: inherit;">
+      <a href="../private/ProfessorCalendar.html" style="text-decoration: none; color: inherit;">
         🗓 View Calendar
       </a>
     </li>
     <li>
-      <a href="CreatePoll.html" style="text-decoration: none; color: inherit;">
+      <a href="../private/CreatePoll.html" style="text-decoration: none; color: inherit;">
         📊 Create Poll
       </a>
     </li>
-    <li><a href="../phpfiles/viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
+    <li><a href="viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
     <li>
       <a href="editbookings.php" style="text-decoration: none; color: inherit;">
         ⚙ Manage Bookings
