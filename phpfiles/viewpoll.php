@@ -77,7 +77,7 @@ $conn->close();
       left: 0;
       width: 100%;
       height: 100vh;
-      background: url('..private/Images/Trottier.png') no-repeat center center/cover;
+      background: url('../private/Images/Trottier.png') no-repeat center center/cover;
       filter: brightness(0.8);
       z-index: -1;
     }
@@ -209,23 +209,23 @@ $conn->close();
     <button onclick="location.href='EditBookings.html'">CREATE OFFICE HOUR</button>
     <ul>
     <li>
-      <a href="../private/Pro" style="text-decoration: none; color: inherit;">
+      <a href="../private/ProfessorDashboard.php" style="text-decoration: none; color: inherit;">
         🏠 My Dashboard
       </a>
     </li>
     <li>
-      <a href="ProfessorCalendar.html" style="text-decoration: none; color: inherit;">
+      <a href="../private/ProfessorCalendar" style="text-decoration: none; color: inherit;">
         🗓 View Calendar
       </a>
     </li>
     <li>
-      <a href="CreatePoll.html" style="text-decoration: none; color: inherit;">
+      <a href="../private/CreatePoll.html" style="text-decoration: none; color: inherit;">
         📊 Create Poll
       </a>
     </li>
-    <li><a href="../phpfiles/viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
+    <li><a href="viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
     <li>
-      <a href="EditBookings.html" style="text-decoration: none; color: inherit;">
+      <a href="../private/EditBookings.html" style="text-decoration: none; color: inherit;">
         ⚙ Manage Bookings
       </a>
     </li>
