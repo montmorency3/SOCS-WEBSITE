@@ -19,7 +19,7 @@
       </ul>
 
       <div class="auth-links">
-        <a class="language" href="#">FRANÇAIS</a>
+        <a class="language" href="#">FR</a>
         <a href="login.html" class="login-link">Login</a>
         <a href="register.html" class="register-btn register-link">Register</a>
       </div>
@@ -41,7 +41,7 @@
         <a href="landingpage.html" class="menu-home-link">Home</a>
         <a href="about.html" class="menu-about-link">About</a>
         <a href="#" class="menu-help-link">Help</a>
-        <a href="#" class="menu-language">FRANÇAIS</a>
+        <a href="#" class="menu-language">FR</a>
       </div>
     </nav>
 
@@ -61,84 +61,86 @@
   </main>
 
   <script src="assets/javascript/hamburger.js"></script>
-  <script>
-    // Translations for English to French
-    const translations = {
-      "Home": "Accueil",
-      "About": "À propos",
-      "Help": "Aide",
-      "Login": "Connexion",
-      "Register": "Inscription",
-      "FRANÇAIS": "ENGLISH",
-      "Welcome to SOCS, a platform dedicated to simplifying and improving student registration processes.": 
-        "Bienvenue sur SOCS, une plateforme dédiée à la simplification et à l'amélioration des processus d'inscription des étudiants.",
-      "Our mission is to provide a seamless user experience and ensure easy access to educational resources.": 
-        "Notre mission est d'offrir une expérience utilisateur fluide et de garantir un accès facile aux ressources éducatives.",
-      "Our team consists of passionate developers and educators committed to innovation, user-friendliness, and quality.": 
-        "Notre équipe est composée de développeurs et d'éducateurs passionnés, engagés dans l'innovation, la convivialité et la qualité.",
-      "If you have questions or need support, please reach out via our Help section.": 
-        "Si vous avez des questions ou besoin d'aide, veuillez nous contacter via la section Aide."
-    };
-
-    // Function to translate page text
-    function translatePageToFrench() {
-      document.querySelector('.home-link').textContent = translations["Home"];
-      document.querySelector('.about-link').textContent = translations["About"];
-      document.querySelector('.login-link').textContent = translations["Login"];
-      document.querySelector('.register-link').textContent = translations["Register"];
-      document.querySelector('.menu-home-link').textContent = translations["Home"];
-      document.querySelector('.menu-about-link').textContent = translations["About"];
-      document.querySelector('.menu-help-link').textContent = translations["Help"];
-      document.querySelector('.hero-title').textContent = translations["About"];
-      document.querySelectorAll('.hero-text')[0].textContent = translations["Welcome to SOCS, a platform dedicated to simplifying and improving student registration processes."];
-      document.querySelectorAll('.hero-text')[1].textContent = translations["Our mission is to provide a seamless user experience and ensure easy access to educational resources."] +
-        " " + translations["Our team consists of passionate developers and educators committed to innovation, user-friendliness, and quality."] +
-        " " + translations["If you have questions or need support, please reach out via our Help section."];
-
-      // Change button text
-      document.querySelector('.language').textContent = translations["FRANÇAIS"];
-      document.querySelector('.menu-language').textContent = translations["FRANÇAIS"];
-
-      localStorage.setItem('language', 'french');
-    }
-
-    // Function to translate page back to English
-    function translatePageToEnglish() {
-      location.reload(); // Reloads the page to reset to English
-      localStorage.setItem('language', 'english');
-    }
-
-    // Check Local Storage for Language Preference
-    function loadLanguagePreference() {
-      const language = localStorage.getItem('language');
-      if (language === 'french') {
-        translatePageToFrench();
-      }
-    }
-
-    // Event Listeners for Language Switch
-    document.querySelector('.language').addEventListener('click', (e) => {
-      e.preventDefault();
-      const currentLanguage = e.target.textContent;
-      if (currentLanguage === "FRANÇAIS") {
-        translatePageToFrench();
-      } else {
-        translatePageToEnglish();
-      }
-    });
-
-    document.querySelector('.menu-language').addEventListener('click', (e) => {
-      e.preventDefault();
-      const currentLanguage = e.target.textContent;
-      if (currentLanguage === "FRANÇAIS") {
-        translatePageToFrench();
-      } else {
-        translatePageToEnglish();
-      }
-    });
-
-    // Load language on page load
-    loadLanguagePreference();
-  </script>
+  <script src="assets/javascript/switchMenuLanguage.js"> </script>
 </body>
 </html>
+<!-- 
+    // // Translations for English to French
+    // const translations = {
+    //   "Home": "Accueil",
+    //   "About": "À propos",
+    //   "Help": "Aide",
+    //   "Login": "Connexion",
+    //   "Register": "Inscription",
+    //   "FRANÇAIS": "ENGLISH",
+    //   "Welcome to SOCS, a platform dedicated to simplifying and improving student registration processes.": 
+    //     "Bienvenue sur SOCS, une plateforme dédiée à la simplification et à l'amélioration des processus d'inscription des étudiants.",
+    //   "Our mission is to provide a seamless user experience and ensure easy access to educational resources.": 
+    //     "Notre mission est d'offrir une expérience utilisateur fluide et de garantir un accès facile aux ressources éducatives.",
+    //   "Our team consists of passionate developers and educators committed to innovation, user-friendliness, and quality.": 
+    //     "Notre équipe est composée de développeurs et d'éducateurs passionnés, engagés dans l'innovation, la convivialité et la qualité.",
+    //   "If you have questions or need support, please reach out via our Help section.": 
+    //     "Si vous avez des questions ou besoin d'aide, veuillez nous contacter via la section Aide."
+    // };
+
+    // // Function to translate page text
+    // function translatePageToFrench() {
+    //   document.querySelector('.home-link').textContent = translations["Home"];
+    //   document.querySelector('.about-link').textContent = translations["About"];
+    //   document.querySelector('.login-link').textContent = translations["Login"];
+    //   document.querySelector('.register-link').textContent = translations["Register"];
+    //   document.querySelector('.menu-home-link').textContent = translations["Home"];
+    //   document.querySelector('.menu-about-link').textContent = translations["About"];
+    //   document.querySelector('.menu-help-link').textContent = translations["Help"];
+    //   document.querySelector('.hero-title').textContent = translations["About"];
+    //   document.querySelectorAll('.hero-text')[0].textContent = translations["Welcome to SOCS, a platform dedicated to simplifying and improving student registration processes."];
+    //   document.querySelectorAll('.hero-text')[1].textContent = translations["Our mission is to provide a seamless user experience and ensure easy access to educational resources."] +
+    //     " " + translations["Our team consists of passionate developers and educators committed to innovation, user-friendliness, and quality."] +
+    //     " " + translations["If you have questions or need support, please reach out via our Help section."];
+
+    //   // Change button text
+    //   document.querySelector('.language').textContent = translations["FRANÇAIS"];
+    //   document.querySelector('.menu-language').textContent = translations["FRANÇAIS"];
+
+    //   localStorage.setItem('language', 'french');
+    // }
+
+    // // Function to translate page back to English
+    // function translatePageToEnglish() {
+    //   location.reload(); // Reloads the page to reset to English
+    //   localStorage.setItem('language', 'english');
+    // }
+
+    // // Check Local Storage for Language Preference
+    // function loadLanguagePreference() {
+    //   const language = localStorage.getItem('language');
+    //   if (language === 'french') {
+    //     translatePageToFrench();
+    //   }
+    // }
+
+    // // Event Listeners for Language Switch
+    // document.querySelector('.language').addEventListener('click', (e) => {
+    //   e.preventDefault();
+    //   const currentLanguage = e.target.textContent;
+    //   if (currentLanguage === "FRANÇAIS") {
+    //     translatePageToFrench();
+    //   } else {
+    //     translatePageToEnglish();
+    //   }
+    // });
+
+    // document.querySelector('.menu-language').addEventListener('click', (e) => {
+    //   e.preventDefault();
+    //   const currentLanguage = e.target.textContent;
+    //   if (currentLanguage === "FRANÇAIS") {
+    //     translatePageToFrench();
+    //   } else {
+    //     translatePageToEnglish();
+    //   }
+    // });
+
+    // // Load language on page load
+    // loadLanguagePreference();
+
+ -->
