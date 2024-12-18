@@ -248,6 +248,7 @@ if(ob_get_contents()) {
           📊 Create Poll
         </a>
       </li>
+      <li><a href="../phpfiles/viewpoll.php" class="link-view-poll" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
       <li>
         <a href="../phpfiles/editbookings.php" style="text-decoration: none; color: inherit;">
           ⚙ Manage Bookings
