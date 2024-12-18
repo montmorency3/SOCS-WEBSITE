@@ -315,10 +315,10 @@ $conn->close();
   <!-- Sidebar -->
   <aside class="sidebar">
     <h3>Manage Bookings</h3>
-    <button onclick="location.href='editbookings.html'">CREATE OFFICE HOUR</button>
+    <button onclick="location.href='editbookings.php'">CREATE OFFICE HOUR</button>
     <ul>
     <li>
-      <a href="ProfessorDashboard.html" style="text-decoration: none; color: inherit;">
+      <a href="ProfessorDashboard.php" style="text-decoration: none; color: inherit;">
         🏠 My Dashboard
       </a>
     </li>
@@ -334,7 +334,7 @@ $conn->close();
     </li>
     <li><a href="../phpfiles/viewpoll.php" style="text-decoration: none; color: inherit;">📊 View Poll</a></li>
     <li>
-      <a href="EditBookings.html" style="text-decoration: none; color: inherit;">
+      <a href="editbookings.php" style="text-decoration: none; color: inherit;">
         ⚙ Manage Bookings
       </a>
     </li>
