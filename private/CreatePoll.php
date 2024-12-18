@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
+    echo "You must be logged in as a professor to view this page.";
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
