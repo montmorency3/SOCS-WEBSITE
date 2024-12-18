@@ -167,7 +167,7 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
     <h3>WELCOME</h3>
     <ul>
       <li><a href="studentdashboard.php" style="color: inherit; text-decoration: none;">🏠 My Dashboard</a></li>
-      <li><a href="studentCalendar.html" style="color: inherit; text-decoration: none;">🗓 View Calendar</a></li>
+      <li><a href="studentCalendar.php" style="color: inherit; text-decoration: none;">🗓 View Calendar</a></li>
       <li><a href="VoteonPoll.html" style="color: inherit; text-decoration: none;">📊 Vote on Poll</a></li>
       <li><a href="RequestOfficeHour.html" style="color: inherit; text-decoration: none;">📅 Request Office Hours</a></li>
       <li><a href="RequestEquiptment.html" style="color: inherit; text-decoration: none;">💻 Request Equipment</a></li>
