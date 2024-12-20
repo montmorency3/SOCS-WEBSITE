@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
    // Generate a unique booking ID
    $uniqueID = uniqid();
-   $bookingURL = "http://localhost/SOCS-WEBSITE/public/urlBookingPage.html?id=" . $uniqueID;
+   $bookingURL = "http://localhost/SOCS-WEBSITE/public/urlBookingPage.php?id=$uniqueID&date=$date&startTime=$startTime";
 
 
   // Generate time range
