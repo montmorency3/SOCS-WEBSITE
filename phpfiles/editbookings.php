@@ -19,6 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!$date || !$startTime || !$endTime || !$location) {
       die("All fields (Date, Start Time, End Time, Location) are required.");
   }
+   // Generate a unique booking ID
+   $uniqueID = uniqid();
+   $bookingURL = "http://localhost/SOCS-WEBSITE/public/urlBookingPage.html?id=" . $uniqueID;
+
 
   // Generate time range
   $time = "$startTime - $endTime";
@@ -64,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($stmt->execute()) {
       echo "<script>
-              alert('Office hours added successfully with status NB!');
+              alert('Office hours added successfully with status NB!, Share this link: $bookingURL');
               window.location.href = 'editbookings.php';
             </script>";
   } else {
