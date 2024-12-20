@@ -12,10 +12,8 @@ const translations = {
     "View Poll": "voir le sondage",
   };
   
-  // Function to translate page to French
   function translatePageToFrench() {
   
-    // Translate links in the sidebar
     document.querySelector('.link-dashboard').textContent = "🏠 " + translations["My Dashboard"];
     document.querySelector('.link-calendar').textContent = "🗓 " + translations["View Calendar"];
     document.querySelector('.menu-language').textContent = translations["FR"];
@@ -61,7 +59,6 @@ const translations = {
     }
   }
   
-  // Event Listeners for Language Switch
   document.querySelector('.menu-language').addEventListener('click', (e) => {
     e.preventDefault();
     const currentLanguage = e.target.textContent.trim();
@@ -71,7 +68,6 @@ const translations = {
       translatePageToEnglish();
     }
   });
-  
-  // Load language on page load
+
   loadLanguagePreference();
   
