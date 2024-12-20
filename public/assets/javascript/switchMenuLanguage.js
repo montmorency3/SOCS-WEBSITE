@@ -19,7 +19,10 @@ const translations = {
     document.querySelector('.register-link').textContent = translations["Register"];
     document.querySelector('.menu-home-link').textContent = translations["Home"];
     document.querySelector('.menu-about-link').textContent = translations["About"];
-    document.querySelector('.menu-help-link').textContent = translations["Help"];
+
+    if (document.querySelector('.menu-help-link')){
+      document.querySelector('.menu-help-link').textContent = translations["Help"];
+    }
 
     if ( document.querySelector('.welcome')){
       document.querySelector('.welcome').textContent = translations["Welcome to the SOCS Registration!"];
@@ -65,6 +68,17 @@ const translations = {
       translatePageToEnglish();
     }
   });
+
+  document.querySelector('.menu-language').addEventListener('click', (e) => {
+    e.preventDefault();
+    const currentLanguage = e.target.textContent;
+    if (currentLanguage === "FR") {
+      translatePageToFrench();
+    } else {
+      translatePageToEnglish();
+    }
+  });
+
 
   // Load language on page load
   loadLanguagePreference();
