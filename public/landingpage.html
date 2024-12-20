@@ -41,7 +41,6 @@
       <div class="nav-links">
         <a href="landingpage.html" class="menu-home-link">Home</a>
         <a href="about.html" class="menu-about-link">About</a>
-        <a href="#" class="menu-help-link">Help</a>
         <a href="#" class="menu-language">FR</a>
       </div>
     </nav>
@@ -65,83 +64,3 @@
 </html>
 
   
-  
-<!--   
-  
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-  const languageButtons = document.querySelectorAll(".language");
-  const frenchText = {
-    "Home": "Accueil",
-    "About": "À Propos",
-    "Help": "Aide",
-    "Login": "Connexion",
-    "Register": "Inscription",
-    "Welcome to the SOCS Registration!": "Bienvenue à l'inscription SOCS!",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.": 
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.",
-    "Sign In": "Se Connecter",
-  };
-
-  const englishText = {
-    "Accueil": "Home",
-    "À Propos": "About",
-    "Aide": "Help",
-    "Connexion": "Login",
-    "Inscription": "Register",
-    "Bienvenue à l'inscription SOCS!": "Welcome to the SOCS Registration!",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.": 
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ipsum augue, tincidunt ut arcu id, venenatis efficitur leo.",
-    "Se Connecter": "Sign In",
-  };
-
-  // Function to switch language
-  function switchLanguage(language) {
-    const textElements = document.querySelectorAll("a, h1, p, button"); // Elements to translate
-
-    textElements.forEach(el => {
-      const content = el.textContent.trim();
-      if (language === "fr" && frenchText[content]) {
-        el.textContent = frenchText[content];
-      } else if (language === "en" && englishText[content]) {
-        el.textContent = englishText[content];
-      }
-    });
-
-    // Save language preference to localStorage
-    localStorage.setItem("language", language);
-  }
-
-  // Load language from localStorage on page load
-  const savedLanguage = localStorage.getItem("language") || "en";
-  switchLanguage(savedLanguage);
-
-  // Add event listeners to language buttons
-  languageButtons.forEach(button => {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      const currentLanguage = button.textContent.trim();
-      if (currentLanguage === "FRANÇAIS") {
-        switchLanguage("fr");
-        updateButtonsText("ENGLISH");
-      } else {
-        switchLanguage("en");
-        updateButtonsText("FRANÇAIS");
-      }
-    });
-  });
-
-  // Function to update the language button text
-  function updateButtonsText(newLanguageText) {
-    languageButtons.forEach(button => {
-      button.textContent = newLanguageText;
-    });
-  }
-});
-
-
-
-
-  </script> -->
