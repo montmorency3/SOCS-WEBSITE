@@ -11,7 +11,6 @@ const translations = {
     "Our team" : "Notre équipe est composée de développeurs et d'éducateurs passionnés et engagés dans l'innovation, la convivialité et la qualité. Si vous avez des questions ou avez besoin d'aide, veuillez nous contacter via notre section Aide."
 }
 
-  // Function to translate page text
   function translatePageToFrench() {
     document.querySelector('.home-link').textContent = translations["Home"];
     document.querySelector('.about-link').textContent = translations["About"];
@@ -44,13 +43,12 @@ const translations = {
     localStorage.setItem('language', 'french');
   }
 
-  // Function to translate page back to English
+
   function translatePageToEnglish() {
-    location.reload(); // Reloads the page to reset to English
+    location.reload(); 
     localStorage.setItem('language', 'english');
   }
 
-  // Check Local Storage for Language Preference
   function loadLanguagePreference() {
     const language = localStorage.getItem('language');
     if (language === 'french') {
@@ -58,7 +56,6 @@ const translations = {
     }
   }
 
-  // Event Listeners for Language Switch
   document.querySelector('.language').addEventListener('click', (e) => {
     e.preventDefault();
     const currentLanguage = e.target.textContent;
