@@ -1,5 +1,5 @@
 # SOCS-WEBSITE
-Interactice and Dynamic Website for SOCS
+Interactice and Dynamic Website for SOCS 
 
 
 main/
@@ -30,3 +30,7 @@ Import the provided SQL files from the sql/ directory into your database.
 Update database connection details in the relevant PHP configuration files.
 5. Open the website in your browser:
 http://localhost/SOCS-WEBSITE
+
+
+#Room for improvement:
+    1. make the switch language function work for all content for all pages instead of just the menu
