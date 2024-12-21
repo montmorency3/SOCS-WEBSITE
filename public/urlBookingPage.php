@@ -258,8 +258,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form id="booking-form" action="#" method="POST">
           
         <!-- McGill ID -->
-        <label for="mcgill-id">McGill Email</label>
-        <input type="email" id="mcgill-email" name="mcgill-id" placeholder="Enter your McGill Email" required>
+<div style="margin-bottom: 20px;">
+    <label for="mcgill-email" style="display: block; font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #333;">McGill Email</label>
+    <input 
+        type="email" 
+        id="mcgill-email" 
+        name="mcgill-id" 
+        placeholder="Enter your McGill Email" 
+        required 
+        style="width: 100%; max-width: 300px; padding: 15px; font-size: 16px; border: 1px solid #ccc; border-radius: 10px; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);"
+    />
+</div>
+
 
 
           <!-- Booking Details -->
