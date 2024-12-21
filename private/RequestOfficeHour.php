@@ -466,7 +466,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
       </li>
       <li>
-        <a href="RequestOfficeHour.html" class="link-office-hours" style="text-decoration: none; color: inherit;">
+        <a href="RequestOfficeHour.php" class="link-office-hours" style="text-decoration: none; color: inherit;">
           📅 Request Office Hours
         </a>
       </li>
