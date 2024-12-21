@@ -1,3 +1,128 @@
+<?php
+// Start the session
+session_start();
+
+// Database connection
+$host = "127.0.0.1";
+$dbname = "phpmyadmin";
+$username = "root";
+$password = "";
+
+$conn = new mysqli($host, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if the student is logged in
+if (!isset($_SESSION['userID'])) {
+    echo "You need to log in first.";
+    exit();
+}
+
+// Get the logged-in student's ID from the session
+$studentID = $_SESSION['userID'];
+
+// Query to get the student's enrolled courses
+$queryStudentCourses = "
+    SELECT Courses 
+    FROM StudentInfo 
+    WHERE StudentID = '$studentID'
+";
+
+$resultCourses = $conn->query($queryStudentCourses);
+$courses = [];
+
+if ($resultCourses && $resultCourses->num_rows > 0) {
+    $row = $resultCourses->fetch_assoc();
+    // Decode the JSON array of courses
+    $courses = json_decode($row['Courses'], true);
+} else {
+    echo "No courses found for the student.";
+    exit();
+}
+
+// Query to get professors who teach the student's enrolled courses
+$queryProfessors = "
+    SELECT 
+        e.FirstName AS ProfessorFirstName, 
+        e.LastName AS ProfessorLastName, 
+        e.EmployeeID AS ProfessorID,
+        JSON_UNQUOTE(e.Courses) AS Courses 
+    FROM EmployeeInfo e
+";
+
+$resultProfessors = $conn->query($queryProfessors);
+$professors = [];
+
+if ($resultProfessors && $resultProfessors->num_rows > 0) {
+    while ($row = $resultProfessors->fetch_assoc()) {
+        $professorCourses = json_decode($row['Courses'], true);
+        // Filter professors based on the student's enrolled courses
+        $professorCoursesFiltered = array_intersect($professorCourses, $courses);
+
+        if (!empty($professorCoursesFiltered)) {
+            $professors[] = [
+                'professorID' => $row['ProfessorID'],
+                'fullName' => $row['ProfessorFirstName'] . ' ' . $row['ProfessorLastName'],
+                'courses' => implode(', ', $professorCoursesFiltered),
+                'email' => strtolower($row['ProfessorFirstName']) . '.' . strtolower($row['ProfessorLastName']) . '@mcgill.ca' // Email format
+            ];
+        }
+    }
+} else {
+    echo "No professors found.";
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get form data
+    $professorID = $_POST['prof'];
+    $date = $_POST['date'];
+    $startTime = $_POST['start-time'];
+    $endTime = $_POST['end-time'];
+    $description = $_POST['description'];
+    $alternateEmail = $_POST['altemail'];
+
+    // Find the professor's email
+    $professorEmail = '';
+    foreach ($professors as $professor) {
+        if ($professor['professorID'] == $professorID) {
+            $professorEmail = $professor['email'];
+            break;
+        }
+    }
+
+    // If alternate email is provided, use that
+    if (!empty($alternateEmail)) {
+        $toEmail = $alternateEmail;
+    } else {
+        $toEmail = $professorEmail;
+    }
+
+    // Create the email subject and message
+    $subject = "Request for Office Hours";
+    $message = "
+        <h2>Office Hours Request</h2>
+        <p><strong>Student ID:</strong> $studentID</p>
+        <p><strong>Request Date:</strong> $date</p>
+        <p><strong>Time:</strong> $startTime - $endTime</p>
+        <p><strong>Description:</strong> $description</p>
+    ";
+
+    // Headers for email
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8" . "\r\n";
+    $headers .= "From: nigel.ojuang@mail.mcgill.ca" . "\r\n";
+
+    // Send the email
+    $emailSuccess = mail($toEmail, $subject, $message, $headers);
+
+    // Return success or failure status
+    $status = $emailSuccess ? 'success' : 'failure';
+    echo "<script>window.location.href = '?status=$status';</script>";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -261,6 +386,54 @@
         padding: 15px;
       }
     }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .modal .modal-header {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .modal .modal-body {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .modal .modal-footer {
+      margin-top: 10px;
+    }
+
+    .modal .modal-btn {
+      background-color: #19344D;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .modal .modal-btn:hover {
+      background-color: #77A9B2;
+    }
   </style>
 </head>
 
@@ -314,35 +487,38 @@
     <!-- Main Form -->
     <div class="main-container">
       <h1>REQUEST OFFICE HOUR</h1>
-      <form>
+      <form action="" method="POST">
         <!-- Date and Time -->
         <div class="form-group">
           <label for="date">Monday, 25th November 13:00–15:00</label>
           <div class="time-row">
-            <input type="date" id="date" value="2024-11-25" />
-            <input type="time" id="start-time" value="13:00" />
+            <input type="date" id="date" name="date" value="2024-11-25" />
+            <input type="time" id="start-time" name="start-time" value="13:00" />
             <span>to</span>
-            <input type="time" id="end-time" value="15:00" />
+            <input type="time" id="end-time" name="end-time" value="15:00" />
           </div>
         </div>
 
-        <!-- Dropdowns -->
+        <!-- Professors -->
         <div class="form-group time-row">
-          <select id="course">
-            <option>Select Course</option>
-            <option>COMP303</option>
-            <option>COMP202</option>
-          </select>
-          <select id="prof">
-            <option>Select Prof/TA</option>
-            <option>Prof. Smith</option>
-            <option>Prof. Chen</option>
+          <select id="prof" name="prof">
+            <option value="">Select Prof/TA</option>
+            <?php
+            foreach ($professors as $professor) {
+                echo "<option value='" . $professor['professorID'] . "'>" . $professor['fullName'] . " (" . $professor['courses'] . ")</option>";
+            }
+            ?>
           </select>
         </div>
 
         <!-- Description -->
         <div class="form-group">
-          <textarea rows="3" placeholder="Description..."></textarea>
+          <textarea rows="3" name="description" placeholder="Description..."></textarea>
+        </div>
+
+        <!-- Alternate Email -->
+        <div class="form-group">
+          <textarea rows="3" name="altemail" placeholder="Alternate email..."></textarea>
         </div>
 
         <!-- Submit Button -->
@@ -350,8 +526,42 @@
       </form>
     </div>
   </div>
-</body>
-<script src="assets/javascript/switchLanguageMenu.js"> </script>
 
+  <!-- Success/Failure Modal -->
+  <div class="modal" id="status-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Status</h2>
+      </div>
+      <div class="modal-body" id="modal-message"></div>
+      <div class="modal-footer">
+        <button class="modal-btn" id="close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Show the modal based on the query status
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const modal = document.getElementById('status-modal');
+    const modalMessage = document.getElementById('modal-message');
+    
+    if (status === 'success') {
+        modalMessage.textContent = 'Your office hour request has been sent successfully!';
+    } else if (status === 'failure') {
+        modalMessage.textContent = 'Sorry, there was an error sending your request.';
+    }
+
+    if (status) {
+        modal.style.display = 'flex';
+    }
+
+    // Close the modal
+    document.getElementById('close-modal').onclick = function () {
+        modal.style.display = 'none';
+    };
+  </script>
+</body>
 
 </html>
