@@ -39,14 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Check if the email matches the format first.last for students
             if (count($nameParts) < 2) {
-                echo "<script>alert('Invalid email format for student. It should be in the format first.last@mail.mcgill.ca'); window.location.href = window.location.href;</script>";
+                echo "<script>alert('Invalid email format for student. It should be in the format first.last@mail.mcgill.ca'); window.location.href = '../public/login.html';</script>";
                 exit();
             }
 
             // Query for student login
             $query = "SELECT * FROM StudentLogin WHERE StudentID = '$userID' AND Email = '$email'";
         } else {
-            echo "<script>alert('Invalid email domain for student. It should end with @mail.mcgill.ca.'); window.location.href = window.location.href;</script>";
+            echo "<script>alert('Invalid email domain for student. It should end with @mail.mcgill.ca.'); window.location.href = '../public/login.html';</script>";
             exit();
         }
 
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emailDomain = end($emailParts);
 
         if ($emailDomain !== 'mcgill.ca') {
-            echo "<script>alert('Invalid email domain for professor. It should end with @mcgill.ca.'); window.location.href = window.location.href;</script>";
+            echo "<script>alert('Invalid email domain for professor. It should end with @mcgill.ca.'); window.location.href = '../public/login.html';</script>";
             exit();
         }
 
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = "SELECT * FROM EmployeeLogin WHERE EmployeeID = '$userID' AND Email = '$email'";
     }
     else {
-        echo "<script>alert('Invalid role selected.'); window.location.href = window.location.href;</script>";
+        echo "<script>alert('Invalid role selected.'); window.location.href = '../public/login.html';</script>";
         exit();
     }
 
@@ -95,11 +95,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();  // Ensure no further code is executed after the redirect
         } else {
             // Login failed
-            echo "<script>alert('Invalid credentials.'); window.location.href = window.location.href;</script>";
+            echo "<script>alert('Invalid credentials.'); window.location.href = '../public/login.html';</script>";
         }
     } else {
         // If no user found
-        echo "<script>alert('Invalid credentials.'); window.location.href = window.location.href;</script>";
+        echo "<script>alert('Invalid credentials.'); window.location.href = '../public/login.html';</script>";
     }
 }
 // Close database connection
