@@ -1,5 +1,15 @@
 <?php
+session_start();
 
+// Get the booking details from the URL
+$bookingID = $_GET['id'] ?? null;
+$date = $_GET['date'] ?? null;
+$startTime = $_GET['startTime'] ?? null;
+
+// Validate the required parameters
+if (!$bookingID || !$date || !$startTime) {
+    die("Invalid booking details.");
+}
 ?>
 
 <!DOCTYPE html>
@@ -205,8 +215,13 @@
 
           <!-- Booking Details -->
           <div class="booking-details-container">
-            <p class="booking-details">You are booking an office hour for <strong>COMP303 at 15:00</strong></p>
+              <p class="booking-details">
+                You are booking an office hour for <strong><?= htmlspecialchars($date) ?> at <?= htmlspecialchars($startTime) ?></strong>
+            </p>
           </div>
+
+          <!-- Hidden Input for Booking ID -->
+          <input type="hidden" name="bookingID" value="<?= htmlspecialchars($bookingID) ?>">
 
           <!-- Checkbox -->
           <div class="checkbox-container">
