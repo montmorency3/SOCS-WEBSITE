@@ -8,7 +8,6 @@
   <title>Student Dashboard</title>
   <!-- Internal Styles -->
   <style>
-    /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -22,7 +21,6 @@
       flex-direction: column;
     }
 
-    /* Background Image */
     .background {
       position: fixed;
       top: 0;
@@ -34,9 +32,8 @@
       z-index: -1;
     }
 
-    /* Sidebar */
     .sidebar {
-      background-color: rgba(39, 69, 90, 0.9); /* Slight transparency */
+      background-color: rgba(39, 69, 90, 0.9);
       color: white;
       width: 250px;
       height: 100vh;
@@ -89,11 +86,11 @@
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
-      margin: 15px 0 0px; /* Set consistent top and bottom margin */
+      margin: 15px 0 0px;
     }
 
     .sidebar li:last-child {
-      margin-bottom: 0; /* Remove extra space below the last list item */
+      margin-bottom: 0;
     }
 
     .sidebar p {
@@ -104,9 +101,9 @@
       gap: 10px;
     }
 
-    /* Main Content */
+
     .main-content {
-      margin-left: 250px; /* Sidebar width */
+      margin-left: 250px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -114,7 +111,6 @@
       height: 100vh;
     }
 
-    /* Main Container */
     .main-container {
       background-color: rgba(255, 255, 255, 0.9);
       width: 500px;
@@ -131,7 +127,6 @@
       color: #19344D;
     }
 
-    /* Rank List */
     .rank-list {
       display: flex;
       flex-direction: column;
@@ -186,9 +181,7 @@
       background-color: #77A9B2;
     }
 
-    /* Media Queries for Smaller Screens */
     @media (max-width: 768px) {
-      /* Adjust Sidebar */
       .sidebar {
         width: 200px;
         padding: 15px;
@@ -206,7 +199,6 @@
     }
 
     @media (max-width: 600px) {
-      /* Sidebar collapses on small screens */
       .sidebar {
         width: 100%;
         height: auto;
@@ -248,7 +240,6 @@
     }
 
     @media (max-width: 400px) {
-      /* Additional adjustments for very small screens */
       .main-container {
         width: 95%;
         padding: 10px;
