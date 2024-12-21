@@ -34,3 +34,6 @@ http://localhost/SOCS-WEBSITE
 
 #Room for improvement:
     1. make the switch language function work for all content for all pages instead of just the menu
+
+
+    

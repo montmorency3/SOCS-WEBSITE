@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//parses from url
 // Get the booking details from the URL
 $bookingID = htmlspecialchars($_GET['id'] ?? null);
 $date = htmlspecialchars($_GET['date'] ?? null);
