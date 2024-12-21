@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+header("Pragma: no-cache"); // HTTP 1.0
+header("Expires: 0"); // Proxies
+
 // Check if the user is logged in and has the role of 'professor'
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
     echo "<script>
@@ -277,9 +283,9 @@ $conn->close();
     <hr>
     <p>
       <div class="lang_logout_container">
-        <a href="../public/landingpage.html" class="link-logout" style="text-decoration: none; color: inherit;">
-          🔒 Log Out
-        </a>
+      <a href="../phpfiles/logout.php" class="link-logout" style="text-decoration: none; color: inherit;">
+        🔒 Log Out
+      </a>
         <a href="#" class="menu-language">FR</a>
       </div>
     </p>
