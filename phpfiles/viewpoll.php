@@ -3,8 +3,7 @@
    ini_set('display_errors', 1);
    
    session_start();
-
-   // Prevent caching
+   
    header("Cache-Control: no-cache, no-store, must-revalidate");
    header("Pragma: no-cache");
    header("Expires: 0");
@@ -51,7 +50,6 @@
        exit();
    }
    
-   // Fetch specific poll data
    if ($poll_id) {
        $sql = "SELECT * FROM Polls WHERE id = ?";
        $stmt = $conn->prepare($sql);
