@@ -1,7 +1,7 @@
 
 
 CREATE TABLE StudentAppointment(
-StudentID INT NOT NULL PRIMARY KEY, --DOMinatrix NIgel
+StudentID INT NOT NULL PRIMARY KEY, --DOMinatrix Nigel
 Appointments JSON NOT NULL,
 FOREIGN KEY (StudentID) REFERENCES StudentLogin(StudentID) ON DELETE CASCADE
 );
