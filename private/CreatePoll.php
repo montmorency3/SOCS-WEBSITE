@@ -2,14 +2,9 @@
 session_start();
 
 // Prevent caching
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-header("Pragma: no-cache"); // HTTP 1.0
-header("Expires: 0"); // Proxies
-
-// Prevent caching
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-header("Pragma: no-cache"); // HTTP 1.0
-header("Expires: 0"); // Proxies
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
 
 // Check if the user is logged in and has the role of 'professor'
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
@@ -20,13 +15,11 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
     exit();
 }
 
-// Database configuration
 $host = "localhost";
-$dbname = "phpmyadmin"; // Your database name
+$dbname = "phpmyadmin";
 $username = "root";
 $password = "";
 
-// Create database connection
 $conn = new mysqli($host, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -34,7 +27,6 @@ if ($conn->connect_error) {
 
 $userID = $_SESSION['userID'];
 
-// Fetch courses for the logged-in professor
 $sql = "SELECT Courses FROM EmployeeInfo WHERE EmployeeID = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userID);
@@ -44,7 +36,7 @@ $result = $stmt->get_result();
 $courses = [];
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $courses = json_decode($row['Courses'], true); // Decode JSON into an array
+    $courses = json_decode($row['Courses'], true);
 }
 $stmt->close();
 $conn->close();
@@ -59,7 +51,6 @@ $conn->close();
 
   <title>Create Poll</title>
   <style>
-    /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -70,8 +61,6 @@ $conn->close();
       display: flex;
       height: 100vh;
     }
-
-    /* Background Image */
     .background {
       position: fixed;
       top: 0;
@@ -82,8 +71,6 @@ $conn->close();
       filter: brightness(0.8);
       z-index: -1;
     }
-
-    /* Sidebar */
     .sidebar {
       background-color: rgba(39, 69, 90, 0.9);
       color: white;
@@ -112,8 +99,6 @@ $conn->close();
       margin-bottom: 20px;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
-    
-    /* Hover Effect */
       .sidebar button:hover {
       background-color: #f4f4f4;
     }
@@ -150,7 +135,6 @@ $conn->close();
       gap: 10px;
     }
 
-    /* Main Content */
     .main-content {
       margin-left: 270px;
       padding: 30px;
@@ -197,8 +181,6 @@ $conn->close();
       font-size: 1rem;
       font-family: 'Poppins', sans-serif;
     }
-
-    /* Flexbox Row for Alignment */
     .form-row {
       display: flex;
       align-items: center;
@@ -208,7 +190,7 @@ $conn->close();
 
     .form-row label {
       font-weight: 600;
-      flex: 0 0 100px; /* Consistent width for all labels */
+      flex: 0 0 100px;
       text-align: left;
     }
 

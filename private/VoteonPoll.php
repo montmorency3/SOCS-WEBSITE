@@ -1,34 +1,30 @@
 <?php
-   // Enable error reporting for debugging
    error_reporting(E_ALL);
    ini_set('display_errors', 1);
    
    session_start();
 
-   // Prevent caching
-   header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-   header("Pragma: no-cache"); // HTTP 1.0
-   header("Expires: 0"); // Proxies
+   header("Cache-Control: no-cache, no-store, must-revalidate");
+   header("Pragma: no-cache");
+   header("Expires: 0");
+
+   // Check if the user is logged in and has the role of 'student'
    if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'student') {
        echo "You must be logged in as a student to vote.";
        exit();
    }
    
-   // Database configuration
    $host = "localhost";
-   $dbname = "phpmyadmin"; // Update to your DB name
+   $dbname = "phpmyadmin";
    $username = "root";
    $password = "";
    
-   // Create database connection
    $conn = new mysqli($host, $username, $password, $dbname);
    
-   // Check connection
    if ($conn->connect_error) {
        die("Connection failed: " . $conn->connect_error);
    }
    
-   // Fetch student courses from `StudentInfo`
    $studentID = $_SESSION['userID'];
    $sql = "SELECT Courses FROM StudentInfo WHERE StudentID = ?";
    $stmt = $conn->prepare($sql);
@@ -38,20 +34,18 @@
    
    if ($result->num_rows > 0) {
        $studentInfo = $result->fetch_assoc();
-       $courses = json_decode($studentInfo['Courses'], true); // Parse JSON into an array
+       $courses = json_decode($studentInfo['Courses'], true);
    } else {
        header("Location: VoteonPoll.html");
-       exit(); // Stop further execution
+       exit();
    }
    
-   // Fetch polls matching the student’s courses
    $polls = [];
    if (!empty($courses)) {
        $placeholders = implode(',', array_fill(0, count($courses), '?'));
        $sql = "SELECT * FROM Polls WHERE course IN ($placeholders)";
        $stmt = $conn->prepare($sql);
    
-       // Bind course parameters dynamically
        $stmt->bind_param(str_repeat('s', count($courses)), ...$courses);
        $stmt->execute();
        $result = $stmt->get_result();
@@ -63,10 +57,9 @@
    
    if (empty($polls)) {
        header("Location: VoteonPoll.html");
-       exit(); // Redirect if no polls are found
+       exit();
    }
    
-   // Get selected poll
    $poll_id = isset($_GET['pollID']) ? intval($_GET['pollID']) : $polls[0]['id'];
    $selectedPoll = null;
    
@@ -83,23 +76,20 @@
        return $dateTime->format('F j, Y \a\t g:i A');
    }
    
-   // Handle form submission
    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-       $ranks = $_POST['rank']; // Array of original 'data-index' values
+       $ranks = $_POST['rank'];
        $pollId = intval($_POST['poll_id']);
    
        if (count($ranks) === 4) {
            // Points system: 1st = 4 points, 2nd = 3 points, 3rd = 2 points, 4th = 1 point
            $points = [4, 3, 2, 1];
    
-           // Initialize votes array
            $voteCounts = [0, 0, 0, 0];
    
            foreach ($ranks as $position => $dataIndex) {
                $voteCounts[$dataIndex - 1] = $points[$position];
            }
-   
-           // SQL to update the votes
+
            $sql = "UPDATE Polls 
                    SET votes1 = votes1 + ?, 
                        votes2 = votes2 + ?, 
@@ -134,7 +124,6 @@
   <link rel="stylesheet" href="assets/css/private.css">
   <title>Vote on Poll</title>
   <style>
-    /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -146,7 +135,6 @@
       flex-direction: column;
     }
 
-    /* Background Image */
     .background {
       position: fixed;
       top: 0;
@@ -158,9 +146,8 @@
       z-index: -1;
     }
 
-    /* Sidebar */
     .sidebar {
-      background-color: rgba(39, 69, 90, 0.9); /* Slight transparency */
+      background-color: rgba(39, 69, 90, 0.9);
       color: white;
       width: 250px;
       height: 100vh;
@@ -213,11 +200,11 @@
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
-      margin: 15px 0 0px; /* Set consistent top and bottom margin */
+      margin: 15px 0 0px;
     }
 
     .sidebar li:last-child {
-      margin-bottom: 0; /* Remove extra space below the last list item */
+      margin-bottom: 0;
     }
 
     .sidebar p {
@@ -251,7 +238,6 @@
       color: #19344D;
     }
 
-    /* Rank List */
     .rank-list {
       display: flex;
       flex-direction: column;
@@ -405,21 +391,18 @@
       if (targetRow && draggedItem) {
         const draggedRow = draggedItem.parentNode;
 
-        // Swap the whole rows instead of just swapping contents
         rankList.insertBefore(draggedRow, targetRow);
         rankList.insertBefore(targetRow, draggedRow.nextSibling);
 
-        updateRanks(); // Ensure the ranks are updated
+        updateRanks();
       }
     });
 
     function updateRanks() {
       const rows = document.querySelectorAll(".rank-row");
       rows.forEach((row, index) => {
-        // Update the rank number visually
         row.querySelector(".rank-number").textContent = index + 1;
 
-        // Update the hidden input value for submission
         row.querySelector("input[name='rank[]']").value = row.getAttribute("data-index");
       });
     }

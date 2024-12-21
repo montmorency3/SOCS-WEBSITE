@@ -1,14 +1,14 @@
 <?php
-   // Enable error reporting for debugging
    error_reporting(E_ALL);
    ini_set('display_errors', 1);
    
    session_start();
 
    // Prevent caching
-   header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-   header("Pragma: no-cache"); // HTTP 1.0
-   header("Expires: 0"); // Proxies
+   header("Cache-Control: no-cache, no-store, must-revalidate");
+   header("Pragma: no-cache");
+   header("Expires: 0");
+   
    // Check if the user is logged in and has the role of 'professor'
    if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
        echo "<script>
@@ -18,13 +18,11 @@
        exit();
    }
    
-   // Database configuration
    $host = "localhost";
-   $dbname = "phpmyadmin"; // Your database name
+   $dbname = "phpmyadmin";
    $username = "root";
    $password = "";
    
-   // Create database connection
    $conn = new mysqli($host, $username, $password, $dbname);
    if ($conn->connect_error) {
        die("Connection failed: " . $conn->connect_error);
@@ -32,7 +30,6 @@
    
    $professorID = $_SESSION['userID'];
    
-   // Fetch all polls associated with the logged-in professor
    $sql = "SELECT id, poll_title FROM Polls WHERE professorID = ?";
    $stmt = $conn->prepare($sql);
    $stmt->bind_param("i", $professorID);
@@ -48,10 +45,9 @@
    
    $poll_id = isset($_GET['pollID']) ? intval($_GET['pollID']) : null;
    
-   // Fetch the most recent poll if no pollID is selected
    if (!$poll_id && !empty($polls)) {
-       $poll_id = $polls[0]['id']; // Get the first poll from the list
-       header("Location: viewpoll.php?pollID=$poll_id"); // Redirect to the pollID for consistency
+       $poll_id = $polls[0]['id'];
+       header("Location: viewpoll.php?pollID=$poll_id");
        exit();
    }
    
@@ -74,7 +70,7 @@
                ["date" => $poll['date4'], "time" => $poll['time4'], "votes" => $poll['votes4']]
            ];
 
-          // Sort the dates array by votes in descending order
+          
           usort($dates, function($a, $b) {
             return $b['votes'] <=> $a['votes'];
           });
@@ -89,7 +85,7 @@
     function formatDate($date) {
         if ($date) {
             $dateTime = new DateTime($date);
-            return $dateTime->format('F j, Y'); // Example: December 6, 2024
+            return $dateTime->format('F j, Y');
         }
         return "Invalid date";
     }
@@ -98,7 +94,7 @@
     function formatTime($time) {
         if ($time) {
             $timeObject = new DateTime($time);
-            return $timeObject->format('g:i A'); // Example: 1:00 PM
+            return $timeObject->format('g:i A');
         }
         return "Invalid time";
     }
@@ -114,7 +110,6 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Poll Results</title>
       <style>
-         /* Import Poppins Font */
          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
          body {
          margin: 0;
@@ -124,7 +119,6 @@
          display: flex;
          height: 100vh;
          }
-         /* Background Image */
          .background {
          position: fixed;
          top: 0;
@@ -135,7 +129,6 @@
          filter: brightness(0.8);
          z-index: -1;
          }
-         /* Sidebar */
          .sidebar {
          background-color: rgba(39, 69, 90, 0.9);
          color: white;
@@ -162,7 +155,6 @@
          margin-bottom: 20px;
          transition: background-color 0.3s ease, color 0.3s ease;
          }
-         /* Hover Effect */
          .sidebar button:hover {
          background-color: #f4f4f4;
          }
@@ -193,7 +185,6 @@
          align-items: center;
          gap: 10px;
          }
-         /* Main Content */
          .main-content {
          margin-left: 270px;
          padding: 30px;
