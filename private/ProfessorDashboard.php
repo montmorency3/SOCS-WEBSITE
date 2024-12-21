@@ -2,14 +2,14 @@
 session_start();
 
 // Prevent caching
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-header("Pragma: no-cache"); // HTTP 1.0
-header("Expires: 0"); // Proxies
+header("Cache-Control: no-cache, no-store, must-revalidate"); 
+header("Pragma: no-cache"); 
+header("Expires: 0");
 
 
 // Fetch session ID and data for debugging
 $sessionID = session_id();
-$sessionData = json_encode($_SESSION); // Convert session variables to JSON
+$sessionData = json_encode($_SESSION); 
 
 // Check if the user is logged in and has the role of 'professor'
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
@@ -36,7 +36,7 @@ if(ob_get_contents()) {
   <title>Professor Dashboard</title>
   <link rel="stylesheet" href="assets/css/private.css">
   <style>
-    /* Import Poppins Font */
+    
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -46,7 +46,7 @@ if(ob_get_contents()) {
       color: #27455A;
     }
 
-    /* Background Image */
+    
     .background {
       position: fixed;
       top: 0;
@@ -55,12 +55,12 @@ if(ob_get_contents()) {
       height: 100vh;
       background: url('images/trottier.png') no-repeat center center/cover;
       filter: brightness(0.8);
-      z-index: -1; /* Keeps background behind everything */
+      z-index: -1; 
     }
 
-    /* Sidebar */
+   
     .sidebar {
-      background-color: rgba(39, 69, 90, 0.9); /* Slight transparency */
+      background-color: rgba(39, 69, 90, 0.9); 
       color: white;
       width: 250px;
       height: 100vh;
@@ -118,11 +118,11 @@ if(ob_get_contents()) {
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
-      margin: 15px 0 0px; /* Set consistent top and bottom margin */
+      margin: 15px 0 0px; 
     }
     
     .sidebar li:last-child {
-      margin-bottom: 0; /* Remove extra space below the last list item */
+      margin-bottom: 0; 
     }
     
     .sidebar p {
@@ -133,7 +133,7 @@ if(ob_get_contents()) {
       gap: 10px;
     }
 
-    /* Day in a Glance Section */
+   
     .day-summary {
       margin-top: 20px;
     }
@@ -163,9 +163,9 @@ if(ob_get_contents()) {
       font-size: 0.9rem;
     }
 
-    /* Hero Section */
+  
     .hero {
-      margin-left: 320px; /* This keeps the content aligned to the right of the sidebar */
+      margin-left: 320px; 
       position: absolute;
       top: 40px;
       font-size: 2.5rem;
@@ -175,11 +175,11 @@ if(ob_get_contents()) {
       z-index: 10;
     }
 
-    /* Table Layout for Events */
+
     .events-table {
-      width: calc(93% - 250px); /* Take up the remaining width minus the sidebar */
-      margin-left: 320px; /* Space for the sidebar */
-      margin-top: 120px; /* Space from the top */
+      width: calc(93% - 250px); 
+      margin-left: 320px; 
+      margin-top: 120px; 
       border-collapse: collapse;
       background-color: #FFFFFF;
       border-radius: 8px;
@@ -213,7 +213,7 @@ if(ob_get_contents()) {
       text-decoration: underline;
     }
 
-    /* Responsive Adjustments */
+
     @media (max-width: 850px) {
       body{
         width:100vw;
@@ -292,7 +292,7 @@ if(ob_get_contents()) {
     Professor Dashboard
   </div>
 
-  <!-- Table for Upcoming Events -->
+
   <table class="events-table">
     <thead>
       <tr>
@@ -303,7 +303,7 @@ if(ob_get_contents()) {
     </thead>
     <tbody>
       <?php 
-      // This will output the booked events
+      
       echo $generateOHContent; 
       ?>
     </tbody>

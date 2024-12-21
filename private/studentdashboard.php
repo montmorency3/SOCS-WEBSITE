@@ -3,18 +3,18 @@
 session_start();
 
    // Prevent caching
-   header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-   header("Pragma: no-cache"); // HTTP 1.0
-   header("Expires: 0"); // Proxies
+   header("Cache-Control: no-cache, no-store, must-revalidate"); 
+   header("Pragma: no-cache"); 
+   header("Expires: 0"); 
 
-// Fetch session ID and data for debugging
+
 $sessionID = session_id();
-$sessionData = json_encode($_SESSION); // Convert session variables to JSON
+$sessionData = json_encode($_SESSION); 
 
-// Include generateOH.php after starting the session
-ob_start(); // Start output buffering
+
+ob_start(); 
 include '../phpfiles/generateOH.php';
-$generateOHContent = ob_get_clean(); // Capture the output of generateOH.php into a variable
+$generateOHContent = ob_get_clean(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +25,6 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
   <link rel="stylesheet" href="landing.css">
   
   <style>
-    /* Import Poppins Font */
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -35,7 +34,6 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       color: #27455A;
     }
 
-    /* Background Image */
     .background {
       position: fixed;
       top: 0;
@@ -44,10 +42,10 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       height: 100vh;
       background: url('images/trottier.png') no-repeat center center/cover;
       filter: brightness(0.8);
-      z-index: -1; /* Keeps background behind everything */
+      z-index: -1; 
     }
 
-    /* Sidebar */
+    
     .sidebar {
       background-color: rgba(39, 69, 90, 0.9);
       color: white;
@@ -84,7 +82,7 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       margin-top: 10px;
     }
 
-    /* Hero Section */
+   
     .hero {
       margin-left: 320px;
       position: absolute;
@@ -94,7 +92,7 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       color: #FFFFFF;
     }
 
-    /* Events Table */
+   
     .events-table {
       width: calc(93% - 250px);
       margin-left: 320px;
@@ -123,7 +121,7 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       background-color: #f4f4f4;
     }
 
-    /* Book Button */
+
     .book-btn {
       background-color: #286a99;
       color: white;
@@ -145,7 +143,7 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       pointer-events: none;
     }
 
-    /* Submit Button */
+  
     .submit-btn {
       margin-left: 320px;
       margin-top: 20px;
@@ -200,7 +198,7 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
     </thead>
     <tbody>
       <?php
-      // Output the content captured from generateOH.php
+      
       echo $generateOHContent;
       ?>
     </tbody>
@@ -240,14 +238,14 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
     // Function to submit all booked events
     function submitBookings() {
   if (bookedEvents.length > 0) {
-    console.log("Booked Events:", JSON.stringify(bookedEvents)); // Check the data to be sent
+    console.log("Booked Events:", JSON.stringify(bookedEvents)); 
 
     // Send data as JSON instead of query string
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "../phpfiles/newBooking.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
 
-    // Debug: Check if send is called
+
     console.log("Sending data...");
 
     xhr.send(JSON.stringify(bookedEvents));
