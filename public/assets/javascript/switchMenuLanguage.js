@@ -1,3 +1,4 @@
+//DOMinatrix- Alex
 const translations = {
     "Home": "Accueil",
     "About": "À propos",
