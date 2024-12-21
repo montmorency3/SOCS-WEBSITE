@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Password validation
     $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
     if (!preg_match($pattern, $password)) {
-        echo "<script>alert('Password must have at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.'); window.history.back();</script>";
+        echo "<script>alert('Password must have at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.'); window.location.href = 'landing_page.html';</script>";
         exit();
     }
 
@@ -56,19 +56,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = $conn->query($checkQuery);
 
                 if ($result->num_rows > 0) {
-                    echo "StudentID already exists. Please choose a different ID.";
+                    echo "<script>alert('StudentID already exists. Please choose a different ID.'); window.location.href = 'landing_page.html';</script>";
                 } else {
                     // Insert student data into StudentLogin table
                     $query = "INSERT INTO StudentLogin (StudentID, Password, Email) VALUES ('$ID', '$hashedPassword', '$email')";
 
                     if ($conn->query($query) === TRUE) {
-                        echo "Signup successful! Your details have been added to the StudentLogin table.";
+                        echo "<script>alert('Signup successful! Your details have been added to the StudentLogin table.'); window.location.href = 'landing_page.html';</script>";
                     } else {
-                        echo "Error: " . $query . "<br>" . $conn->error;
+                        echo "<script>alert('Error: " . $conn->error . "'); window.location.href = 'landing_page.html';</script>";
                     }
                 }
             } else {
-                echo "Invalid email format for student. Use: firstname.lastname@mail.mcgill.ca.";
+                echo "<script>alert('Invalid email format for student. Use: firstname.lastname@mail.mcgill.ca.'); window.location.href = 'landing_page.html';</script>";
             }
         } elseif ($role == 'employee') {
             // Employee: email must match first and last name with @mcgill.ca
@@ -85,23 +85,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = $conn->query($checkQuery);
 
                 if ($result->num_rows > 0) {
-                    echo "EmployeeID already exists. Please choose a different ID.";
+                    echo "<script>alert('EmployeeID already exists. Please choose a different ID.'); window.location.href = '../public/landingpage.html';</script>";
                 } else {
                     // Insert professor data into EmployeeLogin table
                     $query = "INSERT INTO EmployeeLogin (EmployeeID, Password, Email) VALUES ('$ID', '$hashedPassword', '$email')";
 
                     if ($conn->query($query) === TRUE) {
-                        echo "Signup successful! Your details have been added to the EmployeeLogin table.";
+                        echo "<script>alert('Signup successful! Your details have been added to the EmployeeLogin table.'); window.location.href = '../public/landingpage.html';</script>";
                     } else {
-                        echo "Error: " . $query . "<br>" . $conn->error;
+                        echo "<script>alert('Error: " . $conn->error . "'); window.location.href = '../public/landingpage.html';</script>";
                     }
                 }
             } else {
-                echo "Invalid email format for professor. Use: firstname.lastname@mcgill.ca.";
+                echo "<script>alert('Invalid email format for professor. Use: firstname.lastname@mcgill.ca.'); window.location.href = window.location.href;</script>";
             }
         }
     } else {
-        echo "All fields are required. Please fill in all the details.";
+        echo "<script>alert('All fields are required. Please fill in all the details.'); window.location.href = window.location.href;</script>";
     }
 }
 
