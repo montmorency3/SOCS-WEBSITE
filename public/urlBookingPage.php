@@ -1,17 +1,15 @@
 <?php
 session_start();
-//parses from url
-// Get the booking details from the URL
+
 $bookingID = htmlspecialchars($_GET['id'] ?? null);
 $date = htmlspecialchars($_GET['date'] ?? null);
 $startTime = htmlspecialchars($_GET['startTime'] ?? null);
 
-// Validate the required parameters
 if (!$bookingID || !$date || !$startTime) {
     die("Invalid booking details.");
 }
 
-// Check if the form was submitted
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $studentEmail = filter_var($_POST['mcgill-id'] ?? null, FILTER_SANITIZE_EMAIL);
 
@@ -71,12 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   <!-- Internal Styles -->
   <style>
-    /* General Styles */
+    
     body {
       margin: 0;
       font-family: 'HK Grotesk', sans-serif;
       background-color: #27455A;
-      /* Blue background */
+   
       color: #27455A;
       height: 100vh;
       width:100%;
@@ -85,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       position: relative;
     }
 
-    /* Background Image with Transparency */
+ 
     body::before {
       content: "";
       position: absolute;
@@ -95,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       height: 100%;
       background: url('images/Trottier.png') no-repeat center center/cover;
       opacity: 0.5;
-      /* Transparency for the image */
+      
       z-index: 0;
     }
 
-    /* Navbar */
+    
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -122,13 +120,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     .main-content {
     display: flex;
-    justify-content: center; /* Horizontally centers the content */
-    align-items: center; /* Vertically centers the content */
-    width: 100vw; /* Take up 100% of the viewport width */
+    justify-content: center; 
+    align-items: center; 
+    width: 100vw; 
     height: calc(100vh - 60px); 
     }
 
-    /* Booking Container */
+    
     .booking-container {
       background-color: rgba(255, 255, 255, 0.9);
       width: 350px;
@@ -139,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       text-align: center;
       position: relative;
       z-index: 1;
-      /* Above background */
+    
     }
 
     .booking-container h1 {
@@ -155,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       color: #27455A;
     }
 
-    /* Booking Details Container */
+  
     .booking-details-container {
       display: flex;
       align-items: center;
@@ -166,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     .booking-details {
       font-size: 1rem;
       margin: 0;
-      /* Removes default margin for cleaner alignment */
+     
       color: #27455A;
     }
 
@@ -302,7 +300,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const confirmCheckbox = document.getElementById('confirm');
         const submitButton = document.getElementById('submit-btn');
 
-        // Enable/disable the submit button based on checkbox state
         confirmCheckbox.addEventListener('change', function () {
             submitButton.disabled = !confirmCheckbox.checked;
         });

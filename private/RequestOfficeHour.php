@@ -1,13 +1,13 @@
 <?php
-// Start the session
+
 session_start();
 
-   // Prevent caching
-   header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-   header("Pragma: no-cache"); // HTTP 1.0
-   header("Expires: 0"); // Proxies
+  
+   header("Cache-Control: no-cache, no-store, must-revalidate"); 
+   header("Pragma: no-cache"); 
+   header("Expires: 0"); 
 
-// Database connection
+
 $host = "127.0.0.1";
 $dbname = "phpmyadmin";
 $username = "root";
@@ -18,16 +18,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the student is logged in
+
 if (!isset($_SESSION['userID'])) {
     echo "You need to log in first.";
     exit();
 }
 
-// Get the logged-in student's ID from the session
+
 $studentID = $_SESSION['userID'];
 
-// Query to get the student's enrolled courses
+
 $queryStudentCourses = "
     SELECT Courses 
     FROM StudentInfo 
@@ -62,7 +62,7 @@ $professors = [];
 if ($resultProfessors && $resultProfessors->num_rows > 0) {
     while ($row = $resultProfessors->fetch_assoc()) {
         $professorCourses = json_decode($row['Courses'], true);
-        // Filter professors based on the student's enrolled courses
+        
         $professorCoursesFiltered = array_intersect($professorCourses, $courses);
 
         if (!empty($professorCoursesFiltered)) {
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Student Dashboard</title>
   <!-- Internal Styles -->
   <style>
-    /* Import Poppins Font */
+   
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -154,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       height: 100vh;
     }
 
-    /* Background Image */
+  
     .background {
       position: fixed;
       top: 0;
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       z-index: -1;
     }
 
-    /* Sidebar */
+    
     .sidebar {
       background-color: rgba(39, 69, 90, 0.9);
       color: white;
@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     .sidebar hr {
       border: 0.5px solid #FDFEFD;
-      margin: 0px; /* Set consistent top and bottom margin */
+      margin: 0px; 
     }
 
     .sidebar p {
@@ -228,10 +228,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       gap: 10px;
     }
 
-    /* Main Content */
+  
     .main-content {
       margin-left: 250px;
-      /* Sidebar width */
+    
       display: flex;
       justify-content: center;
       align-items: center;
@@ -239,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       height: 100vh;
     }
 
-    /* Main Container */
+    
     .main-container {
       background-color: rgba(255, 255, 255, 0.9);
       width: 500px;
@@ -310,66 +310,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     @media (max-width: 850px) {
 
-      /* Set the body as a flex container */
+     
       body {
         display: flex;
         flex-direction: column;
-        /* Stack elements vertically */
+       
         align-items: center;
         justify-content: flex-start;
-        /* Align items at the top */
+      
         height: 100vh;
-        /* Full viewport height */
+       
         margin: 0;
       }
 
-      /* Adjust the sidebar for small screens */
+
       .sidebar {
         background-color: rgba(39, 69, 90, 0.9);
         z-index: 3;
         width: 100vw;
-        /* Full width */
+    
         height: auto;
-        /* Allow it to adapt to content height */
+        
         position: static;
-        /* Remove the fixed positioning */
+        
         padding: 0;
       }
 
-      /* Adjust the main content container */
+     
       .main-content {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100vw;
-        /* Full viewport width */
+        
         height: 100vh;
-        /* Full viewport height */
+        
         padding: 0;
         margin-left: 0;
       }
 
-      /* Adjust the main container to take full width and height */
+      
       .main-container {
         width: 100vw;
-        /* Full width */
         height: 100vh;
-        /* Full height */
         padding: 30px;
         box-sizing: border-box;
-        /* Include padding in width/height */
+       
         border-radius: 0;
-        /* Remove rounded corners */
+      
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        /* Center content vertically */
+        
         align-items: center;
-        /* Center content horizontally */
+       
       }
 
-      /* Ensure form elements inside the main container adapt */
+
       .form-group input,
       .form-group select,
       .form-group textarea {
@@ -381,13 +379,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         background-color: #F7FAFC;
         color: #27455A;
         margin-bottom: 15px;
-        /* Space between inputs */
+        
       }
 
-      /* Adjust button style for smaller screens */
+      
       .submit-btn {
         width: 100%;
-        /* Full width button */
+       
         padding: 15px;
       }
     }

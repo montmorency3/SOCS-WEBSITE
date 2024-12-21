@@ -13,21 +13,21 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Database connection parameters
+
 $host = "127.0.0.1";
-$dbname = "phpmyadmin";  // Update to your database name
+$dbname = "phpmyadmin";  
 $username = "root";
 $password = "";
 
-// Create connection to the database
+
 $conn = new mysqli($host, $username, $password, $dbname);
 
-// Check if the connection is successful
+// Connection is successful
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Ensure the professor is logged in (you can add a check for valid session)
+
 if (!isset($_SESSION['userID'])) {
     // Redirect to login page if no professorID is found in session
     header("Location: login.php");
@@ -46,12 +46,12 @@ $professorID = $_SESSION['userID'];
   <link rel="stylesheet" href="assets/css/private.css">
   <title>Professor Calendar</title>
   
-  <!-- FullCalendar Library -->
+
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
   <style>
-    /* Your existing CSS here */
+   
   </style>
 </head>
 <body>
@@ -80,14 +80,14 @@ $professorID = $_SESSION['userID'];
   $appointments = [];
   if ($row = $result->fetch_assoc()) {
       // Decode the JSON from the Availability column
-      $availabilityData = json_decode($row['Availability'], true); // Decode JSON to associative array
+      $availabilityData = json_decode($row['Availability'], true); 
 
       // Process each availability in the JSON array
       foreach ($availabilityData as $availability) {
           if ($availability['status'] == 'B') {
-              $date = $availability['date']; // Availability date
-              $timeRange = $availability['time']; // Availability time range
-              $location = $availability['location']; // Availability location
+              $date = $availability['date']; 
+              $timeRange = $availability['time']; 
+              $location = $availability['location']; 
 
               // Split the time range into start and end times
               list($startTime, $endTime) = explode(" - ", $timeRange);
@@ -97,8 +97,8 @@ $professorID = $_SESSION['userID'];
               $endTime = date("H:i:s", strtotime($endTime));
 
               // Construct start and end times in ISO format
-              $start = $date . 'T' . $startTime;  // Start time in ISO format 'YYYY-MM-DDTHH:MM:SS'
-              $end = $date . 'T' . $endTime;      // End time in ISO format 'YYYY-MM-DDTHH:MM:SS'
+              $start = $date . 'T' . $startTime;  
+              $end = $date . 'T' . $endTime;      
 
               // Add the availability to the appointments array
               $appointments[] = [
@@ -127,12 +127,12 @@ $professorID = $_SESSION['userID'];
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay' // Add Monthly View
+          right: 'dayGridMonth,timeGridWeek,timeGridDay' 
         },
-        slotMinTime: '08:00:00', // Start time of the day
-        slotMaxTime: '20:00:00', // End time of the day
+        slotMinTime: '08:00:00',
+        slotMaxTime: '20:00:00', 
         allDaySlot: false,
-        events: <?php echo $appointmentsJson; ?> // Inject the JSON data from PHP
+        events: <?php echo $appointmentsJson; ?> 
       });
 
       calendar.render();

@@ -4,28 +4,26 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Database connection parameters
 $host = "127.0.0.1";
-$dbname = "phpmyadmin";  // Update to your database name
+$dbname = "phpmyadmin";  
 $username = "root";
 $password = "";
 
 // Create connection to the database
 $conn = new mysqli($host, $username, $password, $dbname);
 
-// Check if the connection is successful
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Ensure the student is logged in (you can add a check for valid session)
+
 if (!isset($_SESSION['userID'])) {
-    // Redirect to login page if no userID is found in session
+   
     header("Location: login.php");
     exit();
 }
 
-// Get the student ID from the session
+
 $studentID = $_SESSION['userID'];
 ?>
 
@@ -43,7 +41,7 @@ $studentID = $_SESSION['userID'];
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
   <style>
-    /* Your existing CSS here */
+  
   </style>
 </head>
 <body>
@@ -72,15 +70,14 @@ $studentID = $_SESSION['userID'];
   $appointments = [];
   if ($row = $result->fetch_assoc()) {
       // Decode the JSON from the Appointments column
-      $appointmentsData = json_decode($row['Appointments'], true); // Decode JSON to associative array
+      $appointmentsData = json_decode($row['Appointments'], true); 
 
-      // Process each appointment in the JSON array
+      
       foreach ($appointmentsData as $appointment) {
-          $date = $appointment['date']; // Appointment date
-          $timeRange = $appointment['time']; // Appointment time range
-          $professorID = $appointment['professorID']; // Professor ID
+          $date = $appointment['date']; 
+          $timeRange = $appointment['time']; 
+          $professorID = $appointment['professorID']; 
 
-          // Query to get the professor's last name using professorID
           $professorQuery = "SELECT LastName FROM EmployeeInfo WHERE EmployeeID = ?";
           $professorStmt = $conn->prepare($professorQuery);
           $professorStmt->bind_param("s", $professorID);
@@ -88,22 +85,20 @@ $studentID = $_SESSION['userID'];
           $professorResult = $professorStmt->get_result();
           $professorLastName = "";
           if ($professorRow = $professorResult->fetch_assoc()) {
-              $professorLastName = $professorRow['LastName']; // Get the professor's last name
+              $professorLastName = $professorRow['LastName']; 
           }
           $professorStmt->close();
 
-          // Split the time range into start and end times
           list($startTime, $endTime) = explode(" - ", $timeRange);
 
-          // Convert the 12-hour format time to 24-hour format
           $startTime = date("H:i:s", strtotime($startTime));
           $endTime = date("H:i:s", strtotime($endTime));
 
-          // Construct start and end times in ISO format
-          $start = $date . 'T' . $startTime;  // Start time in ISO format 'YYYY-MM-DDTHH:MM:SS'
-          $end = $date . 'T' . $endTime;      // End time in ISO format 'YYYY-MM-DDTHH:MM:SS'
+         
+          $start = $date . 'T' . $startTime;  
+          $end = $date . 'T' . $endTime;      
 
-          // Add the appointment to the array with professor's last name
+       
           $appointments[] = [
               'title' => "Appointment with Professor $professorLastName",
               'start' => $start,
@@ -115,7 +110,6 @@ $studentID = $_SESSION['userID'];
   $stmt->close();
   $conn->close();
 
-  // Convert the appointments array to a JSON format
   $appointmentsJson = json_encode($appointments);
   ?>
 
