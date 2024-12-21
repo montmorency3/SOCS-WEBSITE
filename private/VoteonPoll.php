@@ -4,6 +4,11 @@
    ini_set('display_errors', 1);
    
    session_start();
+
+   // Prevent caching
+   header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+   header("Pragma: no-cache"); // HTTP 1.0
+   header("Expires: 0"); // Proxies
    if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'student') {
        echo "You must be logged in as a student to vote.";
        exit();

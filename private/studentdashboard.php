@@ -2,6 +2,11 @@
 // Start the session at the top of the page
 session_start();
 
+   // Prevent caching
+   header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+   header("Pragma: no-cache"); // HTTP 1.0
+   header("Expires: 0"); // Proxies
+
 // Fetch session ID and data for debugging
 $sessionID = session_id();
 $sessionData = json_encode($_SESSION); // Convert session variables to JSON
@@ -173,7 +178,9 @@ $generateOHContent = ob_get_clean(); // Capture the output of generateOH.php int
       <li><a href="RequestEquiptment.html" style="color: inherit; text-decoration: none;">💻 Request Equipment</a></li>
     </ul>
     <hr>
-    <p><a href="../public/landingpage.html" style="color: inherit; text-decoration: none;">🔒 Log Out</a></p>
+    <p><a href="../phpfiles/logout.php" class="link-logout" style="text-decoration: none; color: inherit;">
+    🔒 Log Out
+</a></p>
   </aside>
 
   <!-- Hero Section -->

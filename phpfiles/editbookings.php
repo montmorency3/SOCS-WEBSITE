@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+header("Pragma: no-cache"); // HTTP 1.0
+header("Expires: 0"); // Proxies
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -298,7 +303,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <li><a href="editbookings.php" style="text-decoration: none; color: inherit;">⚙ Manage Bookings</a></li>
     </ul>
     <hr>
-    <p><a href="../public/landingpage.html" style="text-decoration: none; color: inherit;">🔒 Log Out</a></p>
+    <p><a href="../phpfiles/logout.php" class="link-logout" style="text-decoration: none; color: inherit;">
+    🔒 Log Out
+</a></p>
   </aside>
 
   <!-- Main Content -->

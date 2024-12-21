@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+header("Pragma: no-cache"); // HTTP 1.0
+header("Expires: 0"); // Proxies
+
 
 // Fetch session ID and data for debugging
 $sessionID = session_id();
@@ -267,9 +272,9 @@ if(ob_get_contents()) {
     <hr>
     <p>
     <div class="lang_logout_container">
-        <a href="../public/landingpage.html" class="link-logout" style="text-decoration: none; color: inherit;">
-          🔒 Log Out
-        </a>
+    <a href="../phpfiles/logout.php" class="link-logout" style="text-decoration: none; color: inherit;">
+    🔒 Log Out
+</a>
         <a href="#" class="menu-language">FR</a>
       </div>
     </p>
