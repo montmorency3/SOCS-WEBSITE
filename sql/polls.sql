@@ -1,3 +1,4 @@
+
 CREATE TABLE Polls (
     id INT AUTO_INCREMENT PRIMARY KEY,
     professorID INT NOT NULL,

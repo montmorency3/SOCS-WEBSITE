@@ -1,5 +1,6 @@
--- Active: 1734462787223@@127.0.0.1@3306@phpmyadmin
+-- Active: 1733630281008@@127.0.0.1@3306@phpmyadmin
 -- Active: 1733630281008@@127.0.0.1@3306@test
+
 CREATE TABLE AvailableEquipment (
     ID INT PRIMARY KEY,
     Equipment VARCHAR(50) NOT NULL,
