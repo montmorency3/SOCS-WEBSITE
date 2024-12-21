@@ -1,5 +1,5 @@
 
-CREATE TABLE Polls (
+CREATE TABLE Polls ( --DOMinatrix Muhammad
     id INT AUTO_INCREMENT PRIMARY KEY,
     professorID INT NOT NULL,
     poll_title VARCHAR(255) NOT NULL,

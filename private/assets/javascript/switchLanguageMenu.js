@@ -1,3 +1,4 @@
+//DOMinatrix- Alex
 const translations = {
     "Vote on Poll": "Voter au Sondage",
     "My Dashboard": "Mon Tableau de Bord",

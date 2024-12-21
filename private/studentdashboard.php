@@ -1,5 +1,7 @@
 <?php
+//DOMinatrix-Natasha, Nigel
 // Start the session at the top of the page
+
 session_start();
 
    // Prevent caching

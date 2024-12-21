@@ -1,4 +1,5 @@
 <?php
+//DOMinatrix: Nigel
 session_start();
 
 // Check if the user is logged in and has the role of 'professor'

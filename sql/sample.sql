@@ -1,5 +1,5 @@
 
-CREATE TABLE EmployeeLogin (
+CREATE TABLE EmployeeLogin ( --DOMinatrix Nigel
     EmployeeID INT PRIMARY KEY,
     Password VARCHAR(255) NOT NULL,
     Email VARCHAR(100) NOT NULL,

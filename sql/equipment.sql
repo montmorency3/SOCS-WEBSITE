@@ -1,7 +1,7 @@
 -- Active: 1733630281008@@127.0.0.1@3306@phpmyadmin
 -- Active: 1733630281008@@127.0.0.1@3306@test
 
-CREATE TABLE AvailableEquipment (
+CREATE TABLE AvailableEquipment ( --DOMinatrix Alex
     ID INT PRIMARY KEY,
     Equipment VARCHAR(50) NOT NULL,
     Amount INT NOT NULL

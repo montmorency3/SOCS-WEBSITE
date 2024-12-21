@@ -1,4 +1,5 @@
 <?php
+//DOMinatrix- Muhammad
 session_start();
 
 header("Cache-Control: no-cache, no-store, must-revalidate");

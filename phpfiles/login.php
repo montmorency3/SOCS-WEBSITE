@@ -1,5 +1,7 @@
 <?php
+//DOMinatrix- Natasha
 session_start();
+
 // Database configuration
 $host = "localhost";       
 $dbname = "phpmyadmin"; 

@@ -1,6 +1,6 @@
 -- Active: 1733630281008@@127.0.0.1@3306@phpmyadmin
 
-CREATE TABLE StudentInfo (
+CREATE TABLE StudentInfo ( --Natasha
     StudentID INT PRIMARY KEY,
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,

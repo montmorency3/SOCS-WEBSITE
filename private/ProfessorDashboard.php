@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//DOMinatrix-Nigel, Natasha
 // Prevent caching
 header("Cache-Control: no-cache, no-store, must-revalidate"); 
 header("Pragma: no-cache"); 
