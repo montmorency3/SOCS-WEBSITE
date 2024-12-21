@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Debugging: Print session variables to check if userID is set
+
 
 // Database connection
 $host = "127.0.0.1";

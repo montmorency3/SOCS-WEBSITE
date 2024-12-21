@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Prevent caching
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
-header("Pragma: no-cache"); // HTTP 1.0
-header("Expires: 0"); // Proxies
+
+header("Cache-Control: no-cache, no-store, must-revalidate"); 
+header("Pragma: no-cache"); 
+header("Expires: 0"); 
 
 $servername = "localhost";
 $username = "root";
@@ -14,7 +14,7 @@ $dbname = "phpmyadmin";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Collect form data
+  
   $date = $_POST['date'] ?? null;
   $startTime = $_POST['startTime'] ?? null;
   $endTime = $_POST['endTime'] ?? null;
@@ -29,13 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $bookingURL = "http://localhost/SOCS-WEBSITE/public/urlBookingPage.php?id=$uniqueID&date=$date&startTime=$startTime";
 
 
-  // Generate time range
+ 
   $time = "$startTime - $endTime";
 
-  // Default status
+ 
   $status = "NB";
 
-  // Create new booking object
+ 
   $newBooking = [
       "date" => $date,
       "time" => $time,
@@ -43,10 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       "status" => $status
   ];
 
-  // Hardcoded professor ID for this example (replace with dynamic value as needed)
   $professorID = $_SESSION['userID'];
 
-  // Check if professor has existing availability
   $sql = "SELECT Availability FROM ProfessorAvailability WHERE ProfessorID = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("i", $professorID);
@@ -59,11 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $currentAvailability = json_decode($row['Availability'], true);
       $currentAvailability[] = $newBooking;
   } else {
-      // Initialize availability with the new booking
+      
       $currentAvailability = [$newBooking];
   }
 
-  // Update the database
+  // update the database
   $updatedAvailability = json_encode($currentAvailability);
   $sql = "INSERT INTO ProfessorAvailability (ProfessorID, Availability) 
           VALUES (?, ?) 
@@ -91,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Bookings</title>
     <style>
-    /* Import Poppins Font */
+    
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     body {
@@ -104,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       display: flex;
     }
 
-    /* Background Image */
+   
     .background {
       position: fixed;
       top: 0;
@@ -116,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       z-index: -1;
     }
 
-    /* Sidebar */
+    
     .sidebar {
       background-color: rgba(39, 69, 90, 0.9);
       color: white;
@@ -146,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       transition: background-color 0.3s ease, color 0.3s ease;
     }
     
-    /* Hover Effect */
+   
     .sidebar button:hover {
       background-color: #f4f4f4;
     }
@@ -183,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       gap: 10px;
     }
 
-    /* Main Content */
+    
     .main-content {
       margin-left: 250px;
       display: flex;
@@ -222,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       font-family: 'Poppins', sans-serif;
     }
 
-    /* Two columns for time inputs */
+   
     .time-row {
       display: flex;
       justify-content: space-between;
@@ -265,7 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       background-color: #95A5A6;
     }
 
-    /* Responsive Design */
+
     @media (max-width: 900px) {
       body {
         flex-direction: column;
