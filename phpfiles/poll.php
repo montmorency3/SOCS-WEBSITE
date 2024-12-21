@@ -3,6 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+session_start(); // Start session to access session variables
+
 // Database configuration
 $host = "localhost";
 $dbname = "phpmyadmin"; // Update to your DB name
@@ -36,6 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("All fields are required. Please fill in the form correctly.");
     }
 
+    // Fetch professor's ID from session
+    $professorID = $_SESSION['userID'];
+
     // Sanitize input to prevent SQL injection
     $pollTitle = htmlspecialchars($pollTitle);
     $date1 = htmlspecialchars($date1);
@@ -49,13 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course = htmlspecialchars($course);
 
     // Prepare the INSERT query
-    $sql = "INSERT INTO Polls (poll_title, date1, time1, votes1, date2, time2, votes2, date3, time3, votes3, date4, time4, votes4, course) 
-            VALUES (?, ?, ?, 0, ?, ?, 0, ?, ?, 0, ?, ?, 0, ?)";
+    $sql = "INSERT INTO Polls (professorID, poll_title, date1, time1, votes1, date2, time2, votes2, date3, time3, votes3, date4, time4, votes4, course) 
+            VALUES (?, ?, ?, ?, 0, ?, ?, 0, ?, ?, 0, ?, ?, 0, ?)";
 
     // Use a prepared statement to prevent SQL injection
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssss", $pollTitle, $date1, $time1, $date2, $time2, $date3, $time3, $date4, $time4, $course);
+    if (!$stmt) {
+        die("Preparation failed: " . $conn->error);
+    }
+    $stmt->bind_param("issssssssss", $professorID, $pollTitle, $date1, $time1, $date2, $time2, $date3, $time3, $date4, $time4, $course);
 
+    // Execute the statement
     if ($stmt->execute()) {
         // Redirect to another PHP file, e.g., 'viewpoll.php'
         header("Location: viewpoll.php");

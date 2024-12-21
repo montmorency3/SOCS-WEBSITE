@@ -1,6 +1,6 @@
-
 CREATE TABLE Polls (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    professorID INT NOT NULL,
     poll_title VARCHAR(255) NOT NULL,
     date1 DATE NOT NULL,
     time1 TIME NOT NULL,

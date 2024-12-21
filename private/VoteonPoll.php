@@ -1,89 +1,124 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-session_start();
-if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'student') {
-    echo "You must be logged in as a student to vote.";
-    exit();
-}
-
-// Database configuration
-$host = "localhost";
-$dbname = "phpmyadmin"; // Update to your DB name
-$username = "root";
-$password = "";
-
-// Create database connection
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Fetch poll data (latest poll for simplicity)
-$sql = "SELECT * FROM Polls ORDER BY id DESC LIMIT 1";
-$result = $conn->query($sql);
-
-$pollData = [];
-if ($result && $result->num_rows > 0) {
-    $pollData = $result->fetch_assoc();
-} else {
-    // Redirect to VoteonPoll.html if no data is found
-    header("Location: VoteonPoll.html");
-    exit; // Make sure to stop further execution
-}
-
-// Helper function to format date and time
-function formatDateTime($date, $time) {
-    $dateTime = new DateTime($date . ' ' . $time);
-    return $dateTime->format('F j, Y \a\t g:i A'); // Example: "December 12, 2022 at 12:00 PM"
-}
-
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $ranks = $_POST['rank']; // Array of original 'data-index' values
-  $pollId = intval($_POST['poll_id']);
-
-  if (count($ranks) === 4) {
-      // Points system: 1st = 4 points, 2nd = 3 points, 3rd = 2 points, 4th = 1 point
-      $points = [4, 3, 2, 1];
-
-      // Initialize votes array
-      $voteCounts = [0, 0, 0, 0];
-
-      foreach ($ranks as $position => $dataIndex) {
-          // Subtract 1 to map to the correct index (e.g., dataIndex=1 maps to votes1)
-          $voteCounts[$dataIndex - 1] = $points[$position];
-      }
-
-      // SQL to update the votes
-      $sql = "UPDATE Polls 
-              SET votes1 = votes1 + ?, 
-                  votes2 = votes2 + ?, 
-                  votes3 = votes3 + ?, 
-                  votes4 = votes4 + ? 
-              WHERE id = ?";
-
-      $stmt = $conn->prepare($sql);
-      $stmt->bind_param("iiiii", $voteCounts[0], $voteCounts[1], $voteCounts[2], $voteCounts[3], $pollId);
-
-      if ($stmt->execute()) {
-          echo "<script>alert('Votes submitted successfully!');</script>";
-      } else {
-          echo "<script>alert('Error updating votes: " . $stmt->error . "');</script>";
-      }
-
-      $stmt->close();
-  } else {
-      echo "<script>alert('Invalid vote submission.');</script>";
-  }
-}
-
-$conn->close();
-?>
+   // Enable error reporting for debugging
+   error_reporting(E_ALL);
+   ini_set('display_errors', 1);
+   
+   session_start();
+   if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'student') {
+       echo "You must be logged in as a student to vote.";
+       exit();
+   }
+   
+   // Database configuration
+   $host = "localhost";
+   $dbname = "phpmyadmin"; // Update to your DB name
+   $username = "root";
+   $password = "";
+   
+   // Create database connection
+   $conn = new mysqli($host, $username, $password, $dbname);
+   
+   // Check connection
+   if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+   }
+   
+   // Fetch student courses from `StudentInfo`
+   $studentID = $_SESSION['userID'];
+   $sql = "SELECT Courses FROM StudentInfo WHERE StudentID = ?";
+   $stmt = $conn->prepare($sql);
+   $stmt->bind_param("i", $studentID);
+   $stmt->execute();
+   $result = $stmt->get_result();
+   
+   if ($result->num_rows > 0) {
+       $studentInfo = $result->fetch_assoc();
+       $courses = json_decode($studentInfo['Courses'], true); // Parse JSON into an array
+   } else {
+       header("Location: VoteonPoll.html");
+       exit(); // Stop further execution
+   }
+   
+   // Fetch polls matching the student’s courses
+   $polls = [];
+   if (!empty($courses)) {
+       $placeholders = implode(',', array_fill(0, count($courses), '?'));
+       $sql = "SELECT * FROM Polls WHERE course IN ($placeholders)";
+       $stmt = $conn->prepare($sql);
+   
+       // Bind course parameters dynamically
+       $stmt->bind_param(str_repeat('s', count($courses)), ...$courses);
+       $stmt->execute();
+       $result = $stmt->get_result();
+   
+       while ($row = $result->fetch_assoc()) {
+           $polls[] = $row;
+       }
+   }
+   
+   if (empty($polls)) {
+       header("Location: VoteonPoll.html");
+       exit(); // Redirect if no polls are found
+   }
+   
+   // Get selected poll
+   $poll_id = isset($_GET['pollID']) ? intval($_GET['pollID']) : $polls[0]['id'];
+   $selectedPoll = null;
+   
+   foreach ($polls as $poll) {
+       if ($poll['id'] == $poll_id) {
+           $selectedPoll = $poll;
+           break;
+       }
+   }
+   
+   // Helper function to format date and time
+   function formatDateTime($date, $time) {
+       $dateTime = new DateTime($date . ' ' . $time);
+       return $dateTime->format('F j, Y \a\t g:i A');
+   }
+   
+   // Handle form submission
+   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+       $ranks = $_POST['rank']; // Array of original 'data-index' values
+       $pollId = intval($_POST['poll_id']);
+   
+       if (count($ranks) === 4) {
+           // Points system: 1st = 4 points, 2nd = 3 points, 3rd = 2 points, 4th = 1 point
+           $points = [4, 3, 2, 1];
+   
+           // Initialize votes array
+           $voteCounts = [0, 0, 0, 0];
+   
+           foreach ($ranks as $position => $dataIndex) {
+               $voteCounts[$dataIndex - 1] = $points[$position];
+           }
+   
+           // SQL to update the votes
+           $sql = "UPDATE Polls 
+                   SET votes1 = votes1 + ?, 
+                       votes2 = votes2 + ?, 
+                       votes3 = votes3 + ?, 
+                       votes4 = votes4 + ? 
+                   WHERE id = ?";
+   
+           $stmt = $conn->prepare($sql);
+           $stmt->bind_param("iiiii", $voteCounts[0], $voteCounts[1], $voteCounts[2], $voteCounts[3], $pollId);
+   
+           if ($stmt->execute()) {
+               echo "<script>alert('Votes submitted successfully!');</script>";
+           } else {
+               echo "<script>alert('Error updating votes: " . $stmt->error . "');</script>";
+           }
+   
+           $stmt->close();
+       } else {
+           echo "<script>alert('Invalid vote submission.');</script>";
+       }
+   }
+   
+   $conn->close();
+   ?>
 
 
 <!DOCTYPE html>
@@ -292,19 +327,32 @@ $conn->close();
   <div class="main-content">
     <div class="main-container">
       <h1>Vote on OH Poll</h1>
-      <h3><?= htmlspecialchars($pollData['poll_title']) ?> (<?= htmlspecialchars($pollData['course']) ?>)</h3>
+      <h3><?= htmlspecialchars($selectedPoll['poll_title']) ?> (<?= htmlspecialchars($selectedPoll['course']) ?>)</h3>
       
+      <div style="text-align: center; margin-bottom: 20px;">
+        <form method="GET" action="VoteonPoll.php" style="display: inline-block;">
+            <label for="pollID" style="font-weight: bold;">Select a Poll:</label>
+            <select name="pollID" id="pollID" onchange="this.form.submit()" style="padding: 5px; font-size: 1rem;">
+              <?php foreach ($polls as $poll): ?>
+              <option value="<?= $poll['id'] ?>" <?= $poll['id'] == $poll_id ? 'selected' : '' ?>>
+                  <?= htmlspecialchars($poll['poll_title'] . " (" . $poll['course'] . ")") ?>
+              </option>
+              <?php endforeach; ?>
+            </select>
+        </form>
+      </div>
+
       <!-- Form for submitting ranks -->
       <form method="POST">
-        <input type="hidden" name="poll_id" value="<?= $pollData['id']; ?>">
+      <input type="hidden" name="poll_id" value="<?= $selectedPoll['id']; ?>">
 
         <div class="rank-list" id="rankList">
           <?php
             $dates = [
-                ['date' => $pollData['date1'], 'time' => $pollData['time1']],
-                ['date' => $pollData['date2'], 'time' => $pollData['time2']],
-                ['date' => $pollData['date3'], 'time' => $pollData['time3']],
-                ['date' => $pollData['date4'], 'time' => $pollData['time4']],
+                ['date' => $selectedPoll['date1'], 'time' => $selectedPoll['time1']],
+                ['date' => $selectedPoll['date2'], 'time' => $selectedPoll['time2']],
+                ['date' => $selectedPoll['date3'], 'time' => $selectedPoll['time3']],
+                ['date' => $selectedPoll['date4'], 'time' => $selectedPoll['time4']],
             ];
             foreach ($dates as $index => $dateTime) {
           ?>

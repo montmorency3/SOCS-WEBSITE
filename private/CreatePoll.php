@@ -2,12 +2,41 @@
 session_start();
 // Check if the user is logged in and has the role of 'professor'
 if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
-  echo "<script>
-          alert('You must be logged in as a professor to access this page.');
-          window.location.href = '../public/login.html'; // Redirect to login page
-        </script>";
-  exit();
+    echo "<script>
+            alert('You must be logged in as a professor to access this page.');
+            window.location.href = '../public/login.html'; // Redirect to login page
+          </script>";
+    exit();
 }
+
+// Database configuration
+$host = "localhost";
+$dbname = "phpmyadmin"; // Your database name
+$username = "root";
+$password = "";
+
+// Create database connection
+$conn = new mysqli($host, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$userID = $_SESSION['userID'];
+
+// Fetch courses for the logged-in professor
+$sql = "SELECT Courses FROM EmployeeInfo WHERE EmployeeID = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$courses = [];
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $courses = json_decode($row['Courses'], true); // Decode JSON into an array
+}
+$stmt->close();
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -299,15 +328,15 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'employee') {
           <input type="time" id="time4" name="time4" required>
         </div>
 
-        <!-- Course Selection -->
+        <!-- Course Dropdown -->
         <div class="form-row">
-          <label for="course">Course</label>
-          <select id="course" name="course" required>
-            <option value="">Select Course</option>
-            <option value="COMP202">COMP202</option>
-            <option value="COMP303">COMP303</option>
-            <option value="COMP307">COMP307</option>
-          </select>
+            <label for="course">Course</label>
+            <select id="course" name="course" required>
+              <option value="">Select Course</option>
+              <?php foreach ($courses as $course): ?>
+                <option value="<?= htmlspecialchars($course) ?>"><?= htmlspecialchars($course) ?></option>
+              <?php endforeach; ?>
+            </select>
         </div>
 
         <!-- Submit and Cancel Buttons -->

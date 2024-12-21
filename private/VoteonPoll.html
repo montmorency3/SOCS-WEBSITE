@@ -335,42 +335,6 @@
     </a>
   </div>
 </div>
-
-
-  <!-- Drag-and-Drop JavaScript -->
-  <script>
-    const rankItems = document.querySelectorAll(".rank-item");
-    const rankList = document.getElementById("rankList");
-    let draggedItem = null;
-
-    rankItems.forEach((item) => {
-      item.addEventListener("dragstart", () => {
-        draggedItem = item;
-        setTimeout(() => (item.style.display = "none"), 0);
-      });
-
-      item.addEventListener("dragend", () => {
-        setTimeout(() => {
-          draggedItem.style.display = "block";
-          draggedItem = null;
-        }, 0);
-      });
-    });
-
-    rankList.addEventListener("dragover", (e) => e.preventDefault());
-
-    rankList.addEventListener("drop", (e) => {
-      const targetRow = e.target.closest(".rank-row");
-      if (targetRow && draggedItem) {
-        const draggedRow = draggedItem.parentNode;
-        const tempContent = targetRow.querySelector(".rank-item").innerHTML;
-
-        // Swap contents only, numbers remain fixed
-        targetRow.querySelector(".rank-item").innerHTML = draggedItem.innerHTML;
-        draggedItem.innerHTML = tempContent;
-      }
-    });
-  </script>
   <script src="assets/javascript/switchLanguageMenu.js"> </script>
 </body>
 </html>
