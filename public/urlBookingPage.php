@@ -2,15 +2,62 @@
 session_start();
 
 // Get the booking details from the URL
-$bookingID = $_GET['id'] ?? null;
-$date = $_GET['date'] ?? null;
-$startTime = $_GET['startTime'] ?? null;
+$bookingID = htmlspecialchars($_GET['id'] ?? null);
+$date = htmlspecialchars($_GET['date'] ?? null);
+$startTime = htmlspecialchars($_GET['startTime'] ?? null);
 
 // Validate the required parameters
 if (!$bookingID || !$date || !$startTime) {
     die("Invalid booking details.");
 }
+
+// Check if the form was submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $studentEmail = filter_var($_POST['mcgill-id'] ?? null, FILTER_SANITIZE_EMAIL);
+
+    // Validate email
+    if (!filter_var($studentEmail, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email address.");
+    }
+
+    // Validate checkbox
+    if (empty($_POST['confirm'])) {
+        die("You must confirm your booking.");
+    }
+
+    // Send email notification
+    $to = $studentEmail;
+    $subject = "Office Hour Booking Confirmation";
+    $headers = "From: noreply@mcgill.ca" . "\r\n" .
+               "Content-Type: text/html; charset=UTF-8";
+
+    $message = "
+    <html>
+        <head>
+            <title>Office Hour Booking Confirmation</title>
+        </head>
+        <body>
+            <h2>Office Hour Booking Confirmed</h2>
+            <p>Dear Student,</p>
+            <p>Your booking has been confirmed for the following office hour:</p>
+            <p><strong>Date:</strong> $date</p>
+            <p><strong>Time:</strong> $startTime</p>
+            <p>Thank you for booking. Please ensure to arrive on time for your session.</p>
+            <p>Best regards,</p>
+            <p>The Office Hour Team</p>
+        </body>
+    </html>
+    ";
+
+    // Check if the email was sent successfully
+    if (mail($to, $subject, $message, $headers)) {
+        echo "<script>alert('Booking confirmed! A confirmation email has been sent to $studentEmail.');</script>";
+    } else {
+        echo "<script>alert('Booking confirmed, but the confirmation email failed to send.');</script>";
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -209,28 +256,31 @@ if (!$bookingID || !$date || !$startTime) {
       <div class="booking-container">
         <h1>CONFIRM OFFICE HOUR BOOKING</h1>
         <form id="booking-form" action="#" method="POST">
-          <!-- McGill ID -->
-          <label for="mcgill-id">McGill ID</label>
-          <input type="text" id="mcgill-email" name="mcgill-id" placeholder="Enter your McGill Email" required>
+          
+        <!-- McGill ID -->
+        <label for="mcgill-id">McGill Email</label>
+        <input type="email" id="mcgill-email" name="mcgill-id" placeholder="Enter your McGill Email" required>
+
 
           <!-- Booking Details -->
           <div class="booking-details-container">
               <p class="booking-details">
-                You are booking an office hour for <strong><?= htmlspecialchars($date) ?> at <?= htmlspecialchars($startTime) ?></strong>
-            </p>
+                  You are booking an office hour for <strong><?= htmlspecialchars($date) ?> at <?= htmlspecialchars($startTime) ?></strong>
+              </p>
           </div>
 
           <!-- Hidden Input for Booking ID -->
           <input type="hidden" name="bookingID" value="<?= htmlspecialchars($bookingID) ?>">
 
+
           <!-- Checkbox -->
           <div class="checkbox-container">
             <input type="checkbox" id="confirm" name="confirm">
             <label for="confirm">Click to confirm</label>
-          </div>
+        </div>
 
           <!-- Submit Button -->
-          <button type="button" class="submit-btn" id="submit-btn" disabled>SUBMIT</button>
+          <button type="submit" class="submit-btn" id="submit-btn" disabled>SUBMIT</button>
         </form>
       </div>
     </div>
@@ -239,14 +289,14 @@ if (!$bookingID || !$date || !$startTime) {
       <!-- JavaScript for Checkbox -->
       <script>
         document.addEventListener('DOMContentLoaded', function () {
-          const confirmCheckbox = document.getElementById('confirm');
-          const submitButton = document.getElementById('submit-btn');
+        const confirmCheckbox = document.getElementById('confirm');
+        const submitButton = document.getElementById('submit-btn');
 
-          // Enable/disable the submit button based on checkbox state
-          confirmCheckbox.addEventListener('change', function () {
+        // Enable/disable the submit button based on checkbox state
+        confirmCheckbox.addEventListener('change', function () {
             submitButton.disabled = !confirmCheckbox.checked;
-          });
         });
+    });
       </script>
 </body>
 <script src = assets/javascript/hamburger.js></script>
