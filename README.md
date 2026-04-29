@@ -1,114 +1,137 @@
 # SOCS-WEBSITE
-Interactice and Dynamic Website for SOCS 
+Interactive and Dynamic Website for SOCS
 
+---
+
+## 📁 Project Structure
 
 main/
-├── public/   #necessary html files and assets for the public facing pages
-│   ├── html_docs
+├── public/    # Public-facing pages (HTML + assets)
+│   ├── html_docs/
 │   ├── images/
 │   └── assets/
 │       ├── css/
 │       └── javascript/
-├── private/ #necessary html files and assets for the private facing pages
-│   ├── html_docs 
+├── private/   # Private/authenticated pages (HTML + assets)
+│   ├── html_docs/
 │   ├── images/
 │   └── assets/
 │       ├── css/
 │       └── javascript/
-├── php/
-├── sql/ 
+├── php/       # Backend PHP logic
+├── sql/       # Database schema and sample data
 
-# ==============================
-# SOCS WEBSITE LOCAL SETUP GUIDE
-# ==============================
+---
 
-# 1. Clone the repository
+## 🚀 Local Setup Guide
+
+### 1. Clone the repository
 git clone https://github.com/montmorency3/SOCS-WEBSITE.git
 cd SOCS-WEBSITE
 
-# 2. Move project into XAMPP htdocs (macOS)
+---
+
+### 2. Move project into XAMPP `htdocs` (macOS)
 cp -R SOCS-WEBSITE /Applications/XAMPP/xamppfiles/htdocs/
 
-# ==============================
-# 3. START SERVERS (DO THIS MANUALLY)
-# ==============================
-# Open XAMPP and start:
-# - Apache
-# - MySQL
+> Apache only serves files from the `htdocs` directory.
 
-# ==============================
-# 4. SET UP DATABASE (phpMyAdmin)
-# ==============================
+---
 
-# Open in browser:
-# http://localhost/phpmyadmin
+### 3. Start servers (XAMPP)
 
-# Then:
-# - Click "New"
-# - Create database: socs_website
-# - Click the database
-# - Go to "Import"
-# - Upload ALL .sql files from:
-#   /Applications/XAMPP/xamppfiles/htdocs/SOCS-WEBSITE/sql/
-# - Click "Go"
+Open XAMPP and start:
+- Apache
+- MySQL Database
 
-# ==============================
-# 5. CONFIGURE DATABASE CONNECTION (Already done)
-# ==============================
+---
 
-# Find the config file (likely in private/ or phpfiles/)
-# Update it to:
+### 4. Set up the database (phpMyAdmin)
+
+Open in browser:
+http://localhost/phpmyadmin
+
+Steps:
+- Click "New"
+- Create a database named:
+  socs_website
+- Select the database
+- Go to "Import"
+- Upload ALL `.sql` files from:
+  /Applications/XAMPP/xamppfiles/htdocs/SOCS-WEBSITE/sql/
+- Click "Go"
+
+---
+
+### 5. Configure database connection
+
+(Already configured in this project, but verify if needed)
 
 $host = "localhost";
 $username = "root";
 $password = "";
 $database = "socs_website";
 
-# ==============================
-# 6. RUN THE WEBSITE
-# ==============================
+---
 
-# project uses public/ folder:
-# http://localhost/SOCS-WEBSITE/public/landingpage.html
+### 6. Run the website
 
-# ==============================
-# 7. LOGIN / CREATE ACCOUNTS
-# ==============================
+http://localhost/SOCS-WEBSITE/public/landingpage.html
 
-# Use sample data from sample2.sql
+---
 
-# Student emails:
-# first.last@mail.mcgill.ca
+## 👤 Accounts & Login
 
-# Employee emails:
-# first.last@mcgill.ca
+Use the sample data from `sample2.sql`.
 
-# Use names provided in the SQL file
+Student emails:
+first.last@mail.mcgill.ca
 
-# ==============================
-# 8. EXPLORE FEATURES
-# ==============================
+Employee / Professor emails:
+first.last@mcgill.ca
 
-# Students:
-# - View courses
-# - Register / interact with content/office hours
-# - Rent Equipment
+Use the names provided in the SQL file.
 
-# Professors / Employees:
-# - Manage courses
+---
 
-# ==============================
-# TROUBLESHOOTING
-# ==============================
+## 🔍 Features
 
+Students:
+- View courses
+- Register / interact with course content
+- Book office hours
+- Rent equipment
 
-# ==============================
-# DONE
-# ==============================
+Professors / Employees:
+- Manage courses
+- Access administrative features
 
+---
 
-#Room for improvement:
-    1. make the switch language function work for all content for all pages instead of just the menu
+## ⚠️ Troubleshooting
+
+404 Error:
+- Make sure you are using:
+  http://localhost/SOCS-WEBSITE/public/landingpage.html
+
+Database errors:
+- Ensure MySQL is running
+- Check database name matches config
+
+"Create connection first":
+- Make sure SQL files were imported correctly
+
+---
+
+## 🛠️ Room for Improvement
+
+1. Improve the language switch feature:
+   - Apply translations across all page content (not just menu)
+   - Standardize font usage across languages
+
+---
+
+## ✅ Done
 
 
     
