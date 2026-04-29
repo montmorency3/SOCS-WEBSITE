@@ -46,7 +46,13 @@ Open XAMPP and start:
 
 ---
 
-### 4. Set up the database (phpMyAdmin)
+### 4. Set up the database
+
+You can either use **phpMyAdmin (recommended)** or connect through **VS Code / Cursor**.
+
+---
+
+#### Option A — phpMyAdmin (easiest)
 
 Open in browser:
 http://localhost/phpmyadmin
@@ -60,6 +66,27 @@ Steps:
 - Upload ALL `.sql` files from:
   /Applications/XAMPP/xamppfiles/htdocs/SOCS-WEBSITE/sql/
 - Click "Go"
+
+---
+
+#### Option B — VS Code / Cursor (SQLTools)
+
+1. Install the **SQLTools** extension  
+2. Add a new MySQL connection with:
+   - Host: localhost  
+   - User: root  
+   - Password: (leave empty for XAMPP)  
+   - Database: socs_website  
+
+3. Open any `.sql` file from the `sql/` folder  
+4. Run the queries using **"Execute Query"**
+
+⚠️ Important:
+- Make sure MySQL is running in XAMPP  
+- You must create the database (`socs_website`) first before running the SQL files  
+- If you see "create connection first", it means the database connection hasn’t been configured yet  
+
+---
 
 ---
 
