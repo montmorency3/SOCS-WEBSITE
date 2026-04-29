@@ -1,5 +1,5 @@
 
-CREATE TABLE EmployeeLogin ( --DOMinatrix Nigel
+CREATE TABLE EmployeeLogin ( 
     EmployeeID INT PRIMARY KEY,
     Password VARCHAR(255) NOT NULL,
     Email VARCHAR(100) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE EmployeeLogin ( --DOMinatrix Nigel
     
 );
 
--- Create Students table with an Email column
+
 CREATE TABLE StudentLogin (
     StudentID INT PRIMARY KEY,
     Password VARCHAR(255) NOT NULL,

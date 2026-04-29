@@ -18,18 +18,93 @@ main/
 ├── php/
 ├── sql/ 
 
+# ==============================
+# SOCS WEBSITE LOCAL SETUP GUIDE
+# ==============================
 
-to have this work on your computer: 
-1. clone the repo (git clone https://github.com/montmorency3/SOCS-WEBSITE.git)
-2. cd SOCS-WEBSITE
-3. Set up the server environment:
-Ensure you have PHP and a compatible web server (e.g., Apache) installed.
-Place the project folder in your web server's root directory.
-4. Configure the database:
-Import the provided SQL files from the sql/ directory into your database.
-Update database connection details in the relevant PHP configuration files.
-5. Open the website in your browser:
-http://localhost/SOCS-WEBSITE
+# 1. Clone the repository
+git clone https://github.com/montmorency3/SOCS-WEBSITE.git
+cd SOCS-WEBSITE
+
+# 2. Move project into XAMPP htdocs (macOS)
+cp -R SOCS-WEBSITE /Applications/XAMPP/xamppfiles/htdocs/
+
+# ==============================
+# 3. START SERVERS (DO THIS MANUALLY)
+# ==============================
+# Open XAMPP and start:
+# - Apache
+# - MySQL
+
+# ==============================
+# 4. SET UP DATABASE (phpMyAdmin)
+# ==============================
+
+# Open in browser:
+# http://localhost/phpmyadmin
+
+# Then:
+# - Click "New"
+# - Create database: socs_website
+# - Click the database
+# - Go to "Import"
+# - Upload ALL .sql files from:
+#   /Applications/XAMPP/xamppfiles/htdocs/SOCS-WEBSITE/sql/
+# - Click "Go"
+
+# ==============================
+# 5. CONFIGURE DATABASE CONNECTION (Already done)
+# ==============================
+
+# Find the config file (likely in private/ or phpfiles/)
+# Update it to:
+
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "socs_website";
+
+# ==============================
+# 6. RUN THE WEBSITE
+# ==============================
+
+# project uses public/ folder:
+# http://localhost/SOCS-WEBSITE/public/landingpage.html
+
+# ==============================
+# 7. LOGIN / CREATE ACCOUNTS
+# ==============================
+
+# Use sample data from sample2.sql
+
+# Student emails:
+# first.last@mail.mcgill.ca
+
+# Employee emails:
+# first.last@mcgill.ca
+
+# Use names provided in the SQL file
+
+# ==============================
+# 8. EXPLORE FEATURES
+# ==============================
+
+# Students:
+# - View courses
+# - Register / interact with content/office hours
+# - Rent Equipment
+
+# Professors / Employees:
+# - Manage courses
+
+# ==============================
+# TROUBLESHOOTING
+# ==============================
+
+
+# ==============================
+# DONE
+# ==============================
 
 
 #Room for improvement:
